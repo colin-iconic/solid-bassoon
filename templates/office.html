@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+	<ul>
+		<li><a href="{{ url_for('wsop') }}">Weekly Shipments and Orders and POs</a></li>
+		<li><a href="{{ url_for('configurator') }}">Headache Rack Configurator</a></li>
+		<li><a href="{{ url_for('parts_charts') }}">Weekly Part Orders</a></li>
+		<br />
+		<li><a href="{{ url_for('wip') }}">Work In Progress - In Production</a></li>
+		<li><a href="{{ url_for('active_orders') }}">Work In Progress - All Entered Orders</a></li>
+	</ul>
+{% endblock %}

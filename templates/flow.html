@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{ title }}</h2>
+<form method="GET">
+		Date: <input name="date" placeholder="{{ day }}">
+		<input type="submit">
+</form>
+<table>
+{% for wc in work_center_jobs %}
+	<tr>
+		<td>
+			<h3> {{ wc }} In </h3>
+			{% for job in work_center_jobs[wc]['wc_in'] %}
+				{{ job }} </br>
+			{% endfor %}
+		</td>
+		<td>
+			<h3> {{ wc }} Out </h3>
+			{% for job in work_center_jobs[wc]['wc_out'] %}
+				{{ job }} </br>
+			{% endfor %}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}

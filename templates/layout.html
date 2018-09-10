@@ -1,0 +1,16 @@
+<!doctype html>
+<title>Iconic Metalgear Portal</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='tablesort.min.js') }}"></script>
+
+<!-- Include sort types you need -->
+<script src="{{ url_for('static', filename='tablesort.date.min.js') }}"></script>
+<script src="{{ url_for('static', filename='tablesort.number.min.js') }}"></script>
+
+<div class="page">
+	<h1>Iconic Metalgear List Portal<a class="nav" href="{{ url_for('home') }}">Production</a><a class="nav" href="{{ url_for('office') }}">Office</a></h1>
+  {% block body %}{% endblock %}
+

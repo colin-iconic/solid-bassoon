@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Customer POs</h2>
+{% for customer_po in po_list %}
+<h3 class="clickable" style="cursor: pointer;">{{customer_po[2]}}{{ ' - ' + customer_po[0]|default('', true) + ' - ' + customer_po[1]|default('', true)}}</h3>
+<table id="{{customer_po[1]|default('', true)}}" border=1 frame=void rules=rows>
+	<thead>
+		<tr>
+			<th>Job Number</th>
+			<th>Order Quantity</th>
+			<th>Part Number</th>
+			<th>Description</th>
+			<th>Work Center</th>
+		</tr>
+	</thead>
+{% for job in customer_po[3] %}
+	<tr>
+		<td>{{job[0]}}</td>
+		<td>{{job[1]}}</td>
+		<td>{{job[2]}}</td>
+		<td>{{job[3]}}</td>
+		<td>{{job[6]}}</td>
+	</tr>
+{% endfor %}
+</table>
+{% endfor %}
+<div>
+	{{ body }}
+</div>
+<script>
+{% for customer_po in po_list %}
+	new Tablesort(document.getElementById('{{customer_po[1]|default('', true)}}'));
+{% endfor %}
+</script>
+<script>
+	$(".clickable").click(function() {
+		$(this).next().toggle();
+	});
+</script>
+{% endblock %}

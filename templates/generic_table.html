@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{title}}</h2>
+<table id="table-id" border=1 frame=void rules=rows>
+	<thead>
+		<tr>
+	{% for header in head %}
+			<th>{{header}}</th>
+	{% endfor %}
+	</thead>
+{% for row in rows %}
+	<tr>
+	{% for column in row %}
+		<td>{{column}}</td>
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
+<div>
+	{% for item in body %}
+		{{item}} <br /><br />
+	{% endfor %}
+</div>
+<script>
+	new Tablesort(document.getElementById('table-id'));
+</script>
+{% endblock %}

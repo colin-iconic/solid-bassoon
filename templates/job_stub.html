@@ -1,0 +1,41 @@
+<!doctype html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{% for stub in rows %}
+<div id="print_{{ stub[0] }}">
+	<table style="text-align: center; width: 900px; page-break-inside: avoid;">
+		<tr>
+			<td colspan="2" style="border: 2px solid black; font-size: 3.5em; text-align: right;">Job# {{ stub[0] }}</td>
+		</tr>
+		<tr>
+			<td style="border: 2px solid black; font-size: 2em; font-weight: bold;">{{ stub[1] }}</td>
+			<td style="border: 2px solid black; font-size: 2em;">PO: {{ stub[2] }}</td>
+		</tr>
+		<tr>
+			<td style="border: 2px solid black; font-size: 2em; overflow: hidden;">{{ stub[3] }}</td>
+			<td style="border: 2px solid black; font-size: 2em;">{{ stub[4] }} pcs</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="border: 2px solid black; font-size: 2.5em;">{{ stub[8] }} Hours</td>
+		</tr>
+	</table>
+	<input type="checkbox" id="{{ stub[0] }}" name="print" value="print" class="check no-print" /><label class="no-print">Print</label>
+</div>
+<br />
+{% endfor %}
+<div>
+	<input type="button" class="click" value="Print Selected" />
+</div>
+<script>
+	$('.click').click(function() {
+		var stuff_to_print = '';
+		$(':checkbox:checked').each(function(i){
+			e = $(this).parent().html();
+			stuff_to_print = stuff_to_print + e;
+		});
+		stuff_to_print = '<link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="style.css") }}"/><link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">' + stuff_to_print;
+		w = window.open();
+		w.document.write(stuff_to_print);
+	});
+</script>

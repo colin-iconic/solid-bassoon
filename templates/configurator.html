@@ -1,0 +1,546 @@
+<html>
+	<head>
+		<title>Iconic Configurator</title>
+		<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous"></script>
+		<style type="text/css">
+			body {
+				margin-bottom: 50px;
+				font-family: 'Play', sans-serif;
+			}
+			h1 {
+				background-color: #131633;
+				color: #e5e5e5;
+				width: 100%;
+				margin: 0px -170px 0px -170px;
+				padding: 10px 0px 10px 0px;
+				padding-left: 170px;
+				border: 1px solid #e5e5e5;
+				box-sizing: border-box;
+				font-size: 2.5em;
+			}
+			#options {
+				margin-left: 30px;
+				margin-top: 20px;
+			}
+			#sets {
+				display: inline-block;
+				width: 930px;
+				margin: 0px 0px 0px 120px;
+				padding: 0px;
+			}
+			#sets div {
+				float: left;
+				width: 220px;
+			}
+			#sets button {
+				margin: 5px;
+			}
+			#optionsform {
+				display: inline-block;
+				width: 930px;
+				background-image: url("{{ url_for('static', filename='headacherack.png') }}");
+				background-repeat: no-repeat;
+				background-size: 670px;
+				background-position: 110px 20px;
+				padding-left: 150px;
+			}
+			select {
+				border: 2px solid black;
+				margin: 5px;
+			}
+			.changer {
+				background-color: 8A8AF0;
+			}
+			.cab {
+				background-color: C4E663;
+			}
+			.tray24 {
+				background-color: F37069;
+			}
+			.tray20 {
+				background-color: 87F67B;
+			}
+			.tray18 {
+				background-color: C87DEE;
+			}
+			.full {
+				background-color: 5A7706;
+			}
+			.none {
+				background-color: white;
+			}
+			.ez {
+				background-color: FFFEA0;
+			}
+			.jb {
+				background-color: FFC3A0;
+			}
+			#rack {
+				margin-bottom: 70px;
+				margin-left: 20px;
+				font-size: 1.2em;
+			}
+			#leftside {
+				float: left;
+				width: 200px;
+				height: 250px;
+			}
+			#leftside select {
+				margin-bottom: 165px;
+			}
+			#middleside {
+				float: left;
+				width: 200px;
+				height: 130px;
+			}
+			#rightside {
+				float: left;
+				width: 200px;
+				height: 250px;
+			}
+			#rightside select {
+				margin-bottom: 165px;
+			}
+			#rack {
+				display:inline-block;
+				width: 900px;
+				padding-bottom: 20px;
+			}
+			#tank {
+				display:inline-block;
+				width: 100px;
+				padding-bottom: 20px;
+				padding-left: 250px;
+				margin-top: 50px;
+				margin-right: 800px;
+			}
+			#tank label {
+				display: block;
+			}
+			#miscoptions {
+				margin-top: 80px;
+				width: 600px;
+			}
+			li {
+				display: block;
+				float: left;
+				width: 50%;
+			}
+			#calc {
+				display: inline-block;
+				width: 100px;
+			}
+			#currency {
+				margin-top: 20px;
+				margin-bottom: 10px;
+			}
+			#details {
+				margin-left: 180px;
+				margin-top: -30px;
+			}
+			#descriptions {
+				margin-left: 180px;
+				width: 600px;
+			}
+			#discoutline {
+				border: 2px solid black;
+				padding: 15px;
+			}
+			.nav {
+				padding-left: 20px;
+			}
+		</style>
+	</head>
+	<body>
+	<h1>Iconic Metalgear List Portal<a class="nav" href="{{ url_for('home') }}">Production</a><a class="nav" href="{{ url_for('office') }}">Office</a></h1>
+		<div id="options">
+			<h3>Select Combo:</h3>
+			<div id="sets">
+				<div id="70inch">
+					<button id="1351">P/N: 1351<br>70" Rack/Tank Combo - 30GA</button>
+					<button id="1352">P/N: 1352<br>70" Rack/Tank Combo - 50GA</button>
+					<button id="1353">P/N: 1353<br>70" Rack/Tank Combo - 70GA</button>
+				</div>
+				<div id="76inch">
+					<button id="1355">P/N: 1355<br>76" Rack/Tank Combo - 30GA</button>
+					<button id="1356">P/N: 1356<br>76" Rack/Tank Combo - 50GA</button>
+					<button id="1357">P/N: 1357<br>76" Rack/Tank Combo - 70GA</button>
+				</div>
+				<div id="86inch">
+					<button id="1359">P/N: 1359<br>86" Rack/Tank Combo - 30GA</button>
+					<button id="1360">P/N: 1360<br>86" Rack/Tank Combo - 50GA</button>
+					<button id="1361">P/N: 1361<br>86" Rack/Tank Combo - 70GA</button>
+				</div>
+			</div>
+			<h3>Select Options:</h3>
+			<form id="optionsform">
+				<div id="rack">
+					<input class="1351 1352 1353" type="radio" id="70" name="rack" value="901.46">
+					<label for="70">70" Headache Rack</label>
+			
+					<input class="1355 1356 1357" type="radio" id="76" name="rack" value="988.40">
+					<label for="76">76" Headache Rack</label>
+			
+					<input class="1359 1360 1361" type="radio" id="86" name="rack" value="1069.91">
+					<label for="86">86" Headache Rack</label>
+				</div>
+				<div id="leftside">
+					<select name="lefttop">
+						<option class="none" value="0">None</option>
+						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361 changer" value="100.52">P/N: 1404 Chain Hanger</option>
+						<option class="cab" value="533.87">P/N: 1414 Cabinet</option>
+					</select>
+					<br >
+					<select name="leftbottom">
+						<option class="notray none" value="0">None</option>
+						<option class="1355 1356 1357 1359 1360 1361 tray24" value="98.90">P/N: 1411 24" Chain Tray</option>
+						<option class="1351 1352 1353 tray20" value="89.12">P/N: 1410 20" Chain Tray</option>
+						<option class="tray18" value="82.6">P/N: 1409 18" Chain Tray</option>
+						<option class="full" value="188.01">Full Chain Tray</option>
+					</select>
+				</div>
+				<div id="middleside">
+					<select name="middle">
+						<option class="none" value="0">None</option>
+						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361 jb" value="167.90">P/N: 1400 Jail Bar Window</option>
+						<option class="ez" value="57.05">P/N: 1412 EZ View Window</option>
+						<option class="cab" value="628.14">P/N: 1415 Center Cabinet</option>
+						<option class="changer" value="100.52">P/N: 1404 Chain Hanger</option>
+					</select>
+				</div>
+				<div id="rightside">
+					<select name="righttop">
+						<option class="notray none" value="0">None</option>
+						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361 changer" value="100.52">P/N: 1404 Chain Hanger</option>
+						<option class="cab" value="533.87">P/N: 1414 Cabinet</option>
+					</select>
+					<br >
+					<select name="rightbottom">
+						<option class="notray none" value="0">None</option>
+						<option class="1355 1356 1357 1359 1360 1361 tray24" value="98.90">P/N: 1411 24" Chain Tray</option>
+						<option class="1351 1352 1353 tray20" value="89.12">P/N: 1410 20" Chain Tray</option>
+						<option class="tray18" value="82.6">P/N: 1409 18" Chain Tray</option>
+						<option class="full" value="188.01">Full Chain Tray</option>
+					</select>
+				</div>
+				<div id="tank">
+					<label for="notank"><input type="radio" id="notank" name="tank" value="0">No Tank</label>
+					<label for="30gallon"><input class="1351 1355 1359" type="radio" id="30gallon" name="tank" value="1182.38">30 Gallon</label>
+					<label for="50gallon"><input class="1352 1356 1360" type="radio" id="50gallon" name="tank" value="1280.19">50 Gallon</label>
+					<label for="70gallon"><input class="1353 1357 1361" type="radio" id="70gallon" name="tank" value="1345.39">70 Gallon</label>
+				</div>
+				<div id="miscoptions">
+					<div id="lightbar">
+						<h3>Lightbar Options:</h3>
+						<li><label for="1406"><input id="1406" type="checkbox" value="227.13">P/N: 1406 Light Mount</label></li>
+						<li><label for="1417"><input id="1417" type="checkbox" value="87.00">P/N: 1417 Beacon Light</label></li>
+						<li><label for="1408"><input id="1408" type="checkbox" value="175.00">P/N: 1408 Short Light Bar</label></li>
+						<li><label for="1407"><input type="checkbox" value="87.48" id="1407">P/N: 1407 Light Box</label></li>
+						<li><label for="1425"><input type="checkbox" value="508.20" id="1425">P/N: 142X Light Bar</label></li>
+						<li><label for="1431"><input type="checkbox" value="63.53" id="1431">P/N: 1431 Light Tabs</label></li>
+					</div>
+					<br >
+					<label for="mounting">Mounting Kit Options:</label>
+					<select name="mounting">
+						<option id="nomounting" value="0">None</option>
+						<option value="104.00">P/N: 1906 17" U-bolt Mounting Kit</option>
+						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361" value="109.00">P/N: 1907 21" U-bolt Mounting Kit</option>
+						<option value="69.55">P/N: 1908 Quick-Mount Mounting Kit</option>
+					</select>
+				</div>
+				<div id="currency">
+					<input type="radio" id="cad" name="currency" value="cad">
+					<label for="cad">Canadian Dollars</label>
+			
+					<input type="radio" id="usd" name="currency" value="usd">
+					<label for="usd">U.S. Dollars</label>
+				</div>
+				<!--<button type="button" id="calc">Calculate</button>-->
+			</form>
+		</div>
+		<div id="details">
+			<h2>Price:</h2>
+		</div>
+		<div id="descriptions">
+		</div>
+	</body>
+		<script>
+			function calculate() {
+				var rack = $('input[name="rack"]:checked').val();
+				var lefttop = $('select[name="lefttop"]').val();
+				var leftbottom = $('select[name="leftbottom"]').val();
+				var middle = $('select[name="middle"]').val();
+				var righttop = $('select[name="righttop"]').val();
+				var rightbottom = $('select[name="rightbottom"]').val();
+				var tank = $('input[name="tank"]:checked').val();
+				
+				var mounting = $('select[name="mounting"]').val();
+				var currency = $('input[name="currency"]:checked').val();
+				
+				var light = 0
+				$('#lightbar input[type="checkbox"]:checked').each(function () {
+					light = light + Number($(this).val());
+				});
+				
+				var total = 0;
+				
+				/* Reset options */
+				$('#50gallon').prop("disabled", false);
+				$('#70gallon').prop("disabled", false);
+				$('#1407').prop('disabled', false);
+				$('#1425').prop('disabled', false);
+				
+				/* If full trays are selected, remove tray from right slot, get price based on width of rack */
+				if(leftbottom == '188.01' || rightbottom == '188.01') {
+					if(rack == '901.46') {
+						leftbottom = '188.01';
+						rightbottom = '0';
+						$('select[name="leftbottom"] option.full').prop("selected", true);
+						$('select[name="rightbottom"] option.notray').prop("selected", true);
+						if(tank == '1280.19' || tank == '1345.39' ) {
+							$('#notank').prop("checked", true);
+						}
+						$('#50gallon').prop("disabled", true);
+						$('#70gallon').prop("disabled", true);
+					}
+					if(rack == '988.40') {
+						leftbottom = '193.13';
+						rightbottom = '0';
+						$('select[name="leftbottom"] option.full').prop("selected", true);
+						$('select[name="rightbottom"] option.notray').prop("selected", true);
+						if(tank == '1280.19' || tank == '1345.39' ) {
+							$('#notank').prop("checked", true);
+						}
+						$('#50gallon').prop("disabled", true);
+						$('#70gallon').prop("disabled", true);	
+					}
+					if(rack == '1069.91') {
+						leftbottom = '211.66';
+						rightbottom = '0';
+						$('select[name="leftbottom"] option.full').prop("selected", true);
+						$('select[name="rightbottom"] option.notray').prop("selected", true);
+						if(tank == '1280.19' || tank == '1345.39' ) {
+							$('#notank').prop("checked", true);
+						}
+						$('#50gallon').prop("disabled", true);
+						$('#70gallon').prop("disabled", true);
+					}
+				}
+				
+				/* If cabinets are selected remove trays, disable tanks for middle, disable 142* and 1407 lightbars */
+				if(lefttop == '533.87') {
+					$('select[name="leftbottom"] option.notray').prop("selected", true);
+					$('#1425').prop('checked', false);
+					$('#1425').prop('disabled', true);
+					$('#1407').prop('checked', false);
+					$('#1407').prop('disabled', true);
+				}
+				
+				if(righttop == '533.87') {
+					$('select[name="rightbottom"] option.notray').prop("selected", true);
+					$('#1425').prop('checked', false);
+					$('#1425').prop('disabled', true);
+					$('#1407').prop('checked', false);
+					$('#1407').prop('disabled', true);
+				}
+				
+				if(middle == '628.14') {
+					if(tank == '1280.19' || tank == '1345.39' ) {
+							$('#notank').prop("checked", true);
+					}
+					$('#50gallon').prop("disabled", true);
+					$('#70gallon').prop("disabled", true);
+					$('#1425').prop('checked', false);
+					$('#1425').prop('disabled', true);
+				}
+				
+				/* Mounting Kit included with all tanks, disable option */
+				var tank = $('input[name="tank"]:checked').val();
+				if(tank != '0') {
+					$('select[name="mounting"] option.1351').prop('value', '0');
+					$('select[name="mounting"] option.1351').prop('selected', true);
+					$('select[name="mounting"]').prop("disabled", true);
+				} else {
+					$('select[name="mounting"]').prop("disabled", false);
+					$('select[name="mounting"] option.1351').prop('value', '97.18');
+				}
+				
+				/* 70" racks with tanks do not get 24" trays */
+				if(rack == '901.46' && tank != '0') {
+					if(rightbottom == '98.90') {
+						$('select[name="rightbottom"] option.1351').prop("selected", true);
+					}
+					if(leftbottom == '98.90') {
+						$('select[name="leftbottom"] option.1351').prop("selected", true);
+					}
+				}
+				
+				/* get correct pricing for 142* lightbars */
+				if($('#1425').prop('checked') == true) {
+					if(rack == '901.46') {
+						$('#1425').prop('value', 508.20);
+					} else if(rack == '988.40') {
+						$('#1425').prop('value', 514.50);
+					} else if(rack == '1069.91') {
+						$('#1425').prop('value', 520.80);
+					}
+				}
+				
+				/* if 1425 selected disable 1407 */
+				if($('#1425').prop('checked') == true) {
+					$('#1407').prop('checked', false);
+					$('#1407').prop('disabled', true);
+				}
+				
+				/* if 1407 selected disable 1425 */
+				if($('#1407').prop('checked') == true) {
+					$('#1425').prop('checked', false);
+					$('#1425').prop('disabled', true);
+				}
+					
+				/* Update prices */
+				var rack = $('input[name="rack"]:checked').val();
+				var lefttop = $('select[name="lefttop"]').val();
+				var leftbottom = $('select[name="leftbottom"]').val();
+				var middle = $('select[name="middle"]').val();
+				var righttop = $('select[name="righttop"]').val();
+				var rightbottom = $('select[name="rightbottom"]').val();
+				var tank = $('input[name="tank"]:checked').val();
+				var mounting = $('select[name="mounting"]').val();
+				var currency = $('input[name="currency"]:checked').val();
+				
+				var light = 0
+				$('#lightbar input[type="checkbox"]:checked').each(function () {
+					light = light + Number($(this).val());
+				});
+				
+				var options = [rack, lefttop, leftbottom, middle, righttop, rightbottom, tank, light, mounting];
+				var optionslen = options.length;
+				
+				/* Calculate total price, with changes if USD */
+				if(currency == 'cad') {
+					for (var i = 0; i < optionslen; i++) {
+						total = total + Number(options[i]);
+					}
+				} else if(currency == 'usd' && tank == '0') {
+					for (var i = 0; i < optionslen; i++) {
+						total = total + Number(options[i]);
+					}
+					/* US prices are just 15% below CAD ones, except with tanks */
+					total = total - total * 0.15;
+				} else {
+					options = [rack, lefttop, leftbottom, middle, righttop, rightbottom, light, mounting]
+					optionslen = options.length;
+					tank = Number(tank);
+					rack = Number(rack);
+					
+					/* Annoying math to deal with tanks */
+					if(rack == 901.46) {
+						tank = tank + 206.95 + 10.35;
+					} else if(rack == 988.40) {
+						tank = tank + 206.95 + 15.21 + 11.11;
+					} else {
+						tank = tank + 206.95 + 26.86 + 11.69;
+					}
+					
+					/* Options are priced in US at 15% less than CAD, the tank is priced the same in CAD and USD */
+					for (var i = 0; i < optionslen; i++) {
+						total = total + Number(options[i]);
+					}
+					total = total - total * 0.15;
+					total = total + tank;
+				}
+				
+				$('#details > h2').remove();
+				total = total.toFixed(2);
+				$('#details').prepend('<h2>Price: ' + total + '</h2>');
+				
+				/* Update dropdown background color to be the same as the selected option */
+				$('select').each(
+					function (){
+						var color = $('option:selected',this).css('background-color');
+						$(this).css('background-color',color);
+					}
+				);
+				
+				/* Get options text for description */
+				var idVal = $('input[name="rack"]:checked').prop("id");
+				var rackt = $("label[for='"+idVal+"']").text();
+				var lefttopt = $('select[name="lefttop"] option:selected').text();
+				var leftbottomt = $('select[name="leftbottom"] option:selected').text();
+				var middlet = $('select[name="middle"] option:selected').text();
+				var righttopt = $('select[name="righttop"] option:selected').text();
+				var rightbottomt = $('select[name="rightbottom"] option:selected').text();
+				idVal = $('input[name="tank"]:checked').prop("id");
+				var tankt = $("label[for='"+idVal+"']").text();
+				var mountingt = $('select[name="mounting"] option:selected').text();
+				idVal = $('input[name="currency"]:checked').prop("id");
+				var currencyt = $("label[for='"+idVal+"']").text();
+				
+				var lightt = ''
+				$('#lightbar input[type="checkbox"]:checked').each(function() {
+					idVal = $(this).prop("id");
+					 lightt = lightt + $("label[for='"+idVal+"']").text() + '<br>';
+				});
+				
+				var desc = '<span><h3>Description:</h3>'+
+				'<div id="discoutline">'+rackt+'<br>'+'<br>'+
+				'Top Left: '+'<br>'+lefttopt+'<br>'+'<br>'+
+				'Top Right: '+'<br>'+righttopt+'<br>'+'<br>'+
+				'Middle: '+'<br>'+middlet+'<br>'+'<br>'+
+				'Bottom Left: '+'<br>'+leftbottomt+'<br>'+'<br>'+
+				'Bottom Right: '+'<br>'+rightbottomt+'<br>'+'<br>'+
+				'Tank: '+'<br>'+tankt+'<br>'+'<br>'+
+				'Light: '+'<br>'+lightt+'<br>'+
+				'Mounting: '+'<br>'+mountingt+'<br></div>'+'<br>'+
+				'Currency: '+'<br>'+currencyt+'</span>';
+				
+				$('#descriptions > span').remove();
+				$('#descriptions').prepend(desc);
+				
+				/* outline for checkboxes/radio buttons */
+				$('input:checked').each(function () {
+					$(this).css('outline-color', 'red');
+					$(this).css('outline-style', 'solid');
+					$(this).css('outline-width', 'thin');
+				});
+				$('input:not(:checked)').each(function () {
+					$(this).css('outline', '0');
+				});
+			}
+			
+			/* Update on change */
+			
+			$('#optionsform').change(calculate);
+
+			/* Fill out form for standard combos */
+			$('#sets button').click(function() {
+				var set = $(this).attr('id');
+				$('#rack').trigger("reset");
+				$('input.'+set+'[type="radio"]').each(function (i) {
+					$(this).prop("checked", true);
+				});
+				$('select option.'+set).each(function (i) {
+					$(this).prop("selected", true);
+				});
+				calculate();
+			});
+			
+			/* Set to 1351 combo on page load */
+			$(document).ready(function() {
+				$('input.1351[type="radio"]').each(function (i) {
+					$(this).prop("checked", true);
+				});
+				$('select option.1351').each(function (i) {
+					$(this).prop("selected", true);
+				});
+				$('#cad').prop("checked", true);
+				
+				calculate()
+			});
+		</script>
+</html>

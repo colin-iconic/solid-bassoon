@@ -1444,13 +1444,13 @@ def daily_progress(name=None):
 	head = ['job', 'date', 'customer', 'description', 'part number', 'quantity']
 	return render_template('flow.html', day = day, work_center_jobs = work_center_jobs, head = head, title = 'Daily Routing Changes')
 
-@app.route('/write_test')
-def write_test():
-	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
-	cursor = connection.cursor()
-	cursor.execute("update job set order_quantity = 2 where job.job = '19080'")
-    cursor.commit()
-    return render_template('generic_table.html', title = 'Updated')
-    
+#@app.route('/write_test')
+#def write_test():
+#	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+#	cursor = connection.cursor()
+#	cursor.execute("update job set order_quantity = 2 where job.job = '19080'")
+#    cursor.commit()
+#    return render_template('generic_table.html', title = 'Updated')
+
 if __name__ == '__main__':
     app.run()

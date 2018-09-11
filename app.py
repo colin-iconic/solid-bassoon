@@ -1426,9 +1426,11 @@ def daily_progress(name=None):
 		text = request.args['date']
         mod = request.args['mod']
         if mod == 'prev':
-            text = text - timedelta(days='1')
+            text = datetime.strptime(text, "%m/%d/%Y").date() - timedelta(days='1')
+            text = text.strftime('%m/%d/%Y')
         elif mod == 'next':
-            text = text + timedelta(days='1')
+            text = datetime.strptime(text, "%m/%d/%Y").date() + timedelta(days='1')
+            text = text.strftime('%m/%d/%Y')
         else:
             text = request.args['date']
 	except:

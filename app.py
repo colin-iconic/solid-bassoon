@@ -1423,11 +1423,11 @@ def part_status():
 @app.route('/report/daily_progress')
 def daily_progress(name=None):
 	try:
-		text = request.args['date']
-        if request.args['nav'] == 'prev':
+		text = request.args.get('date')
+        if request.args.get('nav') == 'prev':
             text = datetime.strptime(text, "%m/%d/%Y").date() - timedelta(days='1')
             text = text.strftime('%m/%d/%Y')
-        elif request.args['nav'] == 'next':
+        elif request.args.get('nav') == 'next':
             text = datetime.strptime(text, "%m/%d/%Y").date() + timedelta(days='1')
             text = text.strftime('%m/%d/%Y')
         else:

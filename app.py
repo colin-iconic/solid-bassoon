@@ -1424,11 +1424,10 @@ def part_status():
 def daily_progress(name=None):
 	try:
 		text = request.args['date']
-        nav = request.args['nav']
-        if nav == 'prev':
+        if request.args['nav'] == 'prev':
             text = datetime.strptime(text, "%m/%d/%Y").date() - timedelta(days='1')
             text = text.strftime('%m/%d/%Y')
-        elif nav == 'next':
+        elif request.args['nav'] == 'next':
             text = datetime.strptime(text, "%m/%d/%Y").date() + timedelta(days='1')
             text = text.strftime('%m/%d/%Y')
         else:

@@ -4,6 +4,12 @@
 <form method="GET">
 		Date: <input name="date" placeholder="{{ day }}">
 		<input type="submit">
+
+		<input type="hidden" name="mod" value="prev">
+		<input type="submit" value="Previous">
+
+		<input type="hidden" name="mod" value="next">
+		<input type="submit" value="Next">
 </form>
 <table>
 {% for wc in work_center_jobs %}

@@ -1424,6 +1424,13 @@ def part_status():
 def daily_progress(name=None):
 	try:
 		text = request.args['date']
+        mod = request.args['mod']
+        if mod == 'prev':
+            text = text - timedelta(days='1')
+        elif mod == 'next':
+            text = text + timedelta(days='1')
+        else:
+            text = request.args['date']
 	except:
 		text = datetime.datetime.now().strftime('%m/%d/%Y')
 

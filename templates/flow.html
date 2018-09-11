@@ -3,11 +3,10 @@
 <h2>{{ title }}</h2>
 <form method="GET">
 		Date: <input name="date" placeholder="{{ day }}">
-		<input type="submit">
+		<button type="submit">
 
-		<input type="button" name="nav" value="prev">
-
-		<input type="button" name="nav" value="next">
+		<button name="nav" value="prev">Previous</button>
+		<button name="nav" value="next">Next</button>
 </form>
 <table>
 {% for wc in work_center_jobs %}

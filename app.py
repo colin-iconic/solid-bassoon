@@ -1422,17 +1422,17 @@ def part_status():
 
 @app.route('/report/daily_progress')
 def daily_progress(name=None):
-	try:
-		day = request.args['date']
-#        if request.args.get('nav') == 'prev':
-#            text = datetime.strptime(text, "%m/%d/%Y").date() - timedelta(days='1')
-#            text = text.strftime('%m/%d/%Y')
-#        elif request.args.get('nav') == 'next':
-#            text = datetime.strptime(text, "%m/%d/%Y").date() + timedelta(days='1')
-#            text = text.strftime('%m/%d/%Y')
-#        else:
-#            text = request.args['date']
-	except:
+	if request.args['next']:
+        day = request.args['next']
+        day = datetime.strptime(day, "%m/%d/%Y").date() + timedelta(days='1')
+        day = day.strftime('%m/%d/%Y')
+    elif request.args['prev']:
+        day = request.args['prev']
+        day = datetime.strptime(day, "%m/%d/%Y").date() - timedelta(days='1')
+        day = day.strftime('%m/%d/%Y')
+    elif request.args['date']:
+        day = request.args['date']
+	else:
 		day = datetime.datetime.now().strftime('%m/%d/%Y')
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')

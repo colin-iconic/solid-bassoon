@@ -1448,6 +1448,8 @@ def daily_progress(name=None):
 		work_center_out = [list(x) for x in cursor.fetchall()]
 		work_center_jobs[work_center[1]]['wc_out'] = work_center_out
 
+	wc_order = [1,2,3,0]
+	work_center_jobs = [work_center_jobs[i] for i in wc_order]
 	head = ['job', 'date', 'customer', 'description', 'part number', 'quantity']
 	return render_template('flow.html', day = day, work_center_jobs = work_center_jobs, head = head, title = 'Daily Routing Changes')
 

@@ -15,7 +15,7 @@
 		<td>
 			<h3> {{ wc }} In </h3>
 			{% for job in work_center_jobs[wc]['wc_in'] %}
-				{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</br>
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
 			{% endfor %}
 		</td>
 		<td>

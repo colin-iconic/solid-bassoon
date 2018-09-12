@@ -19,13 +19,13 @@ from flask_mail import Message
 app = Flask(__name__)
 
 app.config.update(dict(
-    DEBUG = False,
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS = True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'colin@iconicmetalgear.com',
-    MAIL_PASSWORD = 'CamLock1065',
+	DEBUG = False,
+	MAIL_SERVER = 'smtp.gmail.com',
+	MAIL_PORT = 587,
+	MAIL_USE_TLS = True,
+	MAIL_USE_SSL = False,
+	MAIL_USERNAME = 'colin@iconicmetalgear.com',
+	MAIL_PASSWORD = 'CamLock1065',
 ))
 
 mail = Mail(app)
@@ -1423,15 +1423,15 @@ def part_status():
 @app.route('/report/daily_progress')
 def daily_progress(name=None):
 	if request.args['next']:
-        day = request.args['next']
-        day = datetime.strptime(day, "%m/%d/%Y").date() + timedelta(days='1')
-        day = day.strftime('%m/%d/%Y')
-    elif request.args['prev']:
-        day = request.args['prev']
-        day = datetime.strptime(day, "%m/%d/%Y").date() - timedelta(days='1')
-        day = day.strftime('%m/%d/%Y')
-    elif request.args['date']:
-        day = request.args['date']
+		day = request.args['next']
+		day = datetime.strptime(day, "%m/%d/%Y").date() + timedelta(days='1')
+		day = day.strftime('%m/%d/%Y')
+	elif request.args['prev']:
+		day = request.args['prev']
+		day = datetime.strptime(day, "%m/%d/%Y").date() - timedelta(days='1')
+		day = day.strftime('%m/%d/%Y')
+	elif request.args['date']:
+		day = request.args['date']
 	else:
 		day = datetime.datetime.now().strftime('%m/%d/%Y')
 
@@ -1460,4 +1460,4 @@ def daily_progress(name=None):
 #    return render_template('generic_table.html', title = 'Updated')
 
 if __name__ == '__main__':
-    app.run()
+	app.run()

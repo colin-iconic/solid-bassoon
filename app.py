@@ -1424,11 +1424,11 @@ def part_status():
 def daily_progress(name=None):
 	if request.args.get('next'):
 		day = request.args.get('next')
-		day = datetime.datetime.strptime(day, "%m/%d/%Y").date() + datetime.timedelta(days='1')
+		day = datetime.datetime.strptime(day, "%m/%d/%Y").date() + datetime.timedelta(days=1)
 		day = day.strftime('%m/%d/%Y')
 	elif request.args.get('prev'):
 		day = request.args.get('prev')
-		day = datetime.datetime.strptime(day, "%m/%d/%Y").date() - datetime.timedelta(days='1')
+		day = datetime.datetime.strptime(day, "%m/%d/%Y").date() - datetime.timedelta(days=1)
 		day = day.strftime('%m/%d/%Y')
 	elif request.args.get('date'):
 		day = request.args.get('date')

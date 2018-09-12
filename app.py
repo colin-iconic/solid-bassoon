@@ -1423,7 +1423,7 @@ def part_status():
 @app.route('/report/daily_progress')
 def daily_progress(name=None):
 	try:
-		text = request.args['date']
+		day = request.args['date']
 #        if request.args.get('nav') == 'prev':
 #            text = datetime.strptime(text, "%m/%d/%Y").date() - timedelta(days='1')
 #            text = text.strftime('%m/%d/%Y')
@@ -1433,9 +1433,8 @@ def daily_progress(name=None):
 #        else:
 #            text = request.args['date']
 	except:
-		text = datetime.datetime.now().strftime('%m/%d/%Y')
+		day = datetime.datetime.now().strftime('%m/%d/%Y')
 
-	day = text
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 	work_center_jobs = {}

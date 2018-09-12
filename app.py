@@ -1444,7 +1444,7 @@ def daily_progress(name=None):
 		work_center_jobs[work_center[1]] = {}
 		work_center_jobs[work_center[1]]['wc_in'] = work_center_in
 
-		cursor.execute("select change_history.job, cast(change_history.change_date as date), job.customer, job.part_number, job.order_quantity, job.note_text from change_history left join job on change_history.job = job.job where change_history.change_date between '" + day + " 00:00:00.00' and '" + day + " 23:59:59.99' and change_history.wc_vendor = '" + work_center[1] + "' and change_history.change_type = 14 and job.status = 'active'")
+		cursor.execute("select change_history.job, cast(change_history.change_date as date), job.customer, job.part_number, job.order_quantity, job.note_text from change_history left join job on change_history.job = job.job where change_history.change_date between '" + day + " 00:00:00.00' and '" + day + " 23:59:59.99' and change_history.wc_vendor = '" + work_center[1] + "' and change_history.change_type = 14")
 		work_center_out = [list(x) for x in cursor.fetchall()]
 		work_center_jobs[work_center[1]]['wc_out'] = work_center_out
 

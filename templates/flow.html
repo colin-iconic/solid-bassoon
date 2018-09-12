@@ -10,22 +10,62 @@
 		<button name="next" value="{{ day }}">Next</button>
 </form>
 <table>
-{% for wc in work_center_jobs %}
 	<tr>
 		<td>
-			<h3> {{ wc }} In </h3>
-			{% for job in work_center_jobs[wc]['wc_in'] %}
+			<h3> Laser In </h3>
+			{% for job in work_center_jobs['LASER']['wc_in'] %}
 				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
 			{% endfor %}
 		</td>
 		<td>
-			<h3> {{ wc }} Out </h3>
-			{% for job in work_center_jobs[wc]['wc_out'] %}
+			<h3> Laser Out </h3>
+			{% for job in work_center_jobs['LASER']['wc_out'] %}
 				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
 			{% endfor %}
 		</td>
 	</tr>
-{% endfor %}
+	<tr>
+		<td>
+			<h3> Toyokoki In </h3>
+			{% for job in work_center_jobs['TOYOKOKI']['wc_in'] %}
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
+			{% endfor %}
+		</td>
+		<td>
+			<h3> Toyokoki Out </h3>
+			{% for job in work_center_jobs['TOYOKOKI']['wc_out'] %}
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
+			{% endfor %}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3> Welding In </h3>
+			{% for job in work_center_jobs['WELDING']['wc_in'] %}
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
+			{% endfor %}
+		</td>
+		<td>
+			<h3> Welding Out </h3>
+			{% for job in work_center_jobs['WELDING']['wc_out'] %}
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
+			{% endfor %}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3> Shop In </h3>
+			{% for job in work_center_jobs['SHOP']['wc_in'] %}
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
+			{% endfor %}
+		</td>
+		<td>
+			<h3> Shop Out </h3>
+			{% for job in work_center_jobs['SHOP']['wc_out'] %}
+				<span title="{{ job[5] }}">{{ job[0] }}: {{ job[2] }} - {{ job[3] }} Qty: {{ job[4] }}</span></br>
+			{% endfor %}
+		</td>
+	</tr>
 </table>
 </div>
 {% endblock %}

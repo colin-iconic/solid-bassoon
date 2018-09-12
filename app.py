@@ -1422,16 +1422,16 @@ def part_status():
 
 @app.route('/report/daily_progress')
 def daily_progress(name=None):
-	if request.args['next']:
-		day = request.args['next']
+	if request.args.get('next'):
+		day = request.args.get('next')
 		day = datetime.strptime(day, "%m/%d/%Y").date() + timedelta(days='1')
 		day = day.strftime('%m/%d/%Y')
-	elif request.args['prev']:
-		day = request.args['prev']
+	elif request.args.get('prev'):
+		day = request.args.get('prev')
 		day = datetime.strptime(day, "%m/%d/%Y").date() - timedelta(days='1')
 		day = day.strftime('%m/%d/%Y')
-	elif request.args['date']:
-		day = request.args['date']
+	elif request.args.get('date'):
+		day = request.args.get('date')
 	else:
 		day = datetime.datetime.now().strftime('%m/%d/%Y')
 

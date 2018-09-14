@@ -129,6 +129,10 @@
 			font-size: 3em;
 			text-align: center;
 			font-family: sans-serif;
+			border: none;
+		}
+		.table_title {
+			font-weight: bold;
 		}
 		input[type="checkbox"]{
 		  width: 30px; /*Desired width*/

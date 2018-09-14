@@ -1477,7 +1477,7 @@ def ship_list(name=None):
 	customer = jobs[0]['customer']
 
 	head = ['job', 'customer', 'description', 'part number', 'quantity']
-	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', customer = checklist, jobs = [])
+	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', customer = checklist)
 
 if __name__ == '__main__':
 	app.run()

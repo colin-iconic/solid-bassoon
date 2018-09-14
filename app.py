@@ -1474,7 +1474,7 @@ def ship_list(name=None):
 		data = [list(x) for x in cursor.fetchall()]
 		checklist.append(data)
 
-	customer = jobs[0]['customer']
+	#customer = jobs[0]['customer']
 
 	head = ['job', 'customer', 'description', 'part number', 'quantity']
 	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', customer = checklist)

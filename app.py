@@ -1463,7 +1463,7 @@ def ship_list(name=None):
 
 	jobs = []
 	for p in po_number:
-		cursor.execute("select job in job where customer_po = '" + p + "'")
+		cursor.execute("select job from job where customer_po = '" + p + "'")
 		j = [list(x) for x in cursor.fetchall()]
 		jobs.extend(j)
 

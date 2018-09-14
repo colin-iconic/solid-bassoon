@@ -1472,7 +1472,7 @@ def ship_list(name=None):
 	for job in jobs:
 		cursor.execute("select customer, part_number, order_quantity, description from job where job = '" + job + "'")
 		data = [list(x) for x in cursor.fetchall()]
-		checklist.append({'customer': data[0][0]})
+		checklist.append({'customer': data[0][0], 'part number': data[0][1], 'order quantity': data[0][2], 'description': data[0][3]})
 
 	#customer = checklist[0]['customer']
 

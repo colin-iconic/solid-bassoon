@@ -1464,7 +1464,7 @@ def ship_list(name=None):
 	jobs = []
 	for p in po_number:
 		cursor.execute("select job from job where customer_po = '" + p + "'")
-		j = [list(x) for x in cursor.fetchall()]
+		j = [str(x) for x in cursor.fetchall()]
 		jobs.extend(j)
 
 	checklist = []

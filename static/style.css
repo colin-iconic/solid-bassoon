@@ -118,8 +118,14 @@
 			width: 100%;
 			margin: 0px;
 			font-size: 2em;
+			border-collapse: collapse;
 		}
 		td {
 			height: 50px;
+			border: 1px solid black;
+		}
+		.banner {
+			font-size: 3em;
+			text-align: center;
 		}
 }

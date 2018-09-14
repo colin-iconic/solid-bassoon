@@ -1469,15 +1469,15 @@ def ship_list(name=None):
 
 	checklist = []
 
-	#for job in jobs:
-	#	cursor.execute("select customer, part_number, order_quantity, description from job where job = '" + job[0] + "'")
-	#	data = [list(x) for x in cursor.fetchall()]
-	#	checklist.append({'job number': job, 'customer': data[0], 'part number': data[1], 'order quantity': data[2], 'description': data[3]})
+	for job in jobs:
+		cursor.execute("select customer, part_number, order_quantity, description from job where job = '" + job[0] + "'")
+		data = [list(x) for x in cursor.fetchall()]
+		checklist.append({'job number': job, 'customer': data[0], 'part number': data[1], 'order quantity': data[2], 'description': data[3]})
 
-	#customer = jobs[0]['customer']
+	customer = jobs[0]['customer']
 
 	head = ['job', 'customer', 'description', 'part number', 'quantity']
-	return render_template('ship_list.html', head = head, title = jobs)
+	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', customer = customer, jobs = jobs)
 
 if __name__ == '__main__':
 	app.run()

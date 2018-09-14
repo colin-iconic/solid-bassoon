@@ -1451,13 +1451,32 @@ def daily_progress(name=None):
 	head = ['job', 'date', 'customer', 'description', 'part number', 'quantity']
 	return render_template('flow.html', day = day, work_center_jobs = work_center_jobs, head = head, title = 'Daily Routing Changes')
 
-#@app.route('/write_test')
-#def write_test():
-#	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
-#	cursor = connection.cursor()
-#	cursor.execute("update job set order_quantity = 2 where job.job = '19080'")
-#    cursor.commit()
-#    return render_template('generic_table.html', title = 'Updated')
+@app.route('/report/ship_list')
+def ship_list(name=None):
+	if request.args.get('po'):
+		po_number = request.args.get('po')
+		po_number = [x.strip() for x in po_number.split(',')]
+	else:
+		return render_template('ship_list.html', title = 'No Jobs Match PO Number')
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	jobs = []
+	for p in po_number:
+		cursor.execute("select job in job where customer_po = '" + p + "'")
+		j = [list(x) for x in cursor.fetchall()]
+		jobs.extend(j)
+
+	checklist = []
+	for job in jobs:
+		cursor.execute("select customer, part_number, order_quantity, description from job where job = '" + job "'")
+		data = [list(x) for x in cursor.fetchall()]
+		checklist.append({'job number': job, 'customer': data[0], 'part number': data[1], 'order quantity': data[2], 'description': data[3]})
+
+	customer = jobs[0]['customer']
+
+	head = ['job', 'customer', 'description', 'part number', 'quantity']
+	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', po_number = po_number, jobs = jobs, customer = customer)
 
 if __name__ == '__main__':
 	app.run()

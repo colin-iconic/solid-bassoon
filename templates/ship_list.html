@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{ title }}</h2>
+<form method="GET">
+	Customer PO: <input name="po">
+	<button type="submit">Submit</button>
+</form>
+<table>
+  <tr>
+    <td>Shipping Checklist</td>
+  </tr>
+  <tr>
+    <td>PO: {{ po_number }}</td>
+    <td>{{ customer }}</td>
+  </tr>
+  {% for job in jobs %}
+  <tr>
+    <td>{{ job['job'] }}</td>
+    <td>{{ job['description'] }}</td>
+    <td>{{ job['part number'] }}</td>
+    <td>{{ job['quantity'] }}</td>
+    <td></td>
+    <td></td>
+  </tr>
+  {% endfor %}
+</table>

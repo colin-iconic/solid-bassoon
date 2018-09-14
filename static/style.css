@@ -129,4 +129,8 @@
 			font-size: 3em;
 			text-align: center;
 		}
+		input[type="checkbox"]{
+		  width: 30px; /*Desired width*/
+		  height: 30px; /*Desired height*/
+		}
 }

@@ -10,7 +10,7 @@
     <td>Shipping Checklist</td>
   </tr>
   <tr>
-    <td>PO: {{ po_number }}</td>
+    <td>PO: {% for each in po_number %}{{ each }} {% endfor %}</td>
   </tr>
   <tr>
     <td>Job</td>

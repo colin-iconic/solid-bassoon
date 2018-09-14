@@ -114,4 +114,12 @@
     {
         display: none !important;
     }
+		table {
+			width: 100%;
+			margin: 0px;
+			font-size: 2em;
+		}
+		td {
+			height: 50px;
+		}
 }

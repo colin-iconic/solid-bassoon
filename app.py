@@ -1491,7 +1491,6 @@ def analytics(name=None):
 	data = data.set_index('date')
 
 	data = data['price'].resample('W', how='sum')
-	data = data.to_json(date_unit='ns')
 
 	return render_template('analytics.html', data = data)
 

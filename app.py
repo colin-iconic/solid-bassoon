@@ -1482,11 +1482,15 @@ def analytics(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select customer, order_date, total_price, part_number from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%'")
+	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
-	data = [{'customer': x[0], 'order date': x[1], 'total price': x[2], 'part number': x[3]} for x in data]
-	
-	return render_template('analytics.html', data = data)
+	data = [{'order date': x[0].date(), 'total price': x[1]} for x in data]
+
+	data = pd.DataFrame(data)
+
+	weekly_data = data['total price'].resample('W', how='sum')
+
+	return render_template('analytics.html', data = weekly_data)
 
 if __name__ == '__main__':
 	app.run()

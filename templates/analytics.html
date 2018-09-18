@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
-	{% for each in data %}
-  {{ each }}<br />
-  {% endfor %}
+<div id="graphDiv"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    // Our Custom D3 JavaScript here!
+</script>
+{% for each in data %}
+{{ each }}<br />
+{% endfor %}
 {% endblock %}

@@ -1484,7 +1484,7 @@ def analytics(name=None):
 
 	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
-	data = [{'date': x[0].date(), 'price': x[1]} for x in data]
+	data = [{'date': x[0], 'price': x[1]} for x in data]
 
 	data = pd.DataFrame(data)
 	data = data.set_index('date')

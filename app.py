@@ -1488,7 +1488,7 @@ def analytics(name=None):
 	data = [{'date': x[0], 'price': x[1]} for x in data]
 
 	data = pd.DataFrame(data)
-	#data = data.set_index('date')
+	data = data.set_index('date')
 
 	#data = data['price'].resample('W', how='sum')
 	#data['date'] = data.index

@@ -1477,5 +1477,14 @@ def ship_list(name=None):
 	head = ['job', 'customer', 'description', 'part number', 'quantity']
 	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', po_number = po_number, checklist = checklist)
 
+@app.route('/analytics')
+def ship_list(name=None):
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select customer, order_date, order_total, part_number from job where order_total not 0 and customer not like 'I-H%' and job not like '%-%'")
+	data = [list(x) for x in cursor.fetchall()]
+	return render_template('analytics.html', data = data)
+
 if __name__ == '__main__':
 	app.run()

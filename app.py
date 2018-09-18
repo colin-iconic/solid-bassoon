@@ -1487,6 +1487,7 @@ def analytics(name=None):
 	data = [{'date': x[0].date(), 'price': x[1]} for x in data]
 
 	data = pd.DataFrame(data)
+	data = data.set_index('date')
 
 	weekly_data = data['price'].resample('W', how='sum')
 

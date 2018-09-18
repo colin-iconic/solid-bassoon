@@ -1482,7 +1482,7 @@ def analytics(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select customer, order_date, order_total, part_number from job where order_total not 0 and customer not like 'I-H%' and job not like '%-%'")
+	cursor.execute("select customer, order_date, order_total, part_number from job where order_total <> 0 and customer not like 'I-H%' and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
 	return render_template('analytics.html', data = data)
 

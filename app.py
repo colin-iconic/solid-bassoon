@@ -1491,7 +1491,10 @@ def analytics(name=None):
 
 	weekly_data = data['price'].resample('W', how='sum')
 
-	return render_template('analytics.html', data = weekly_data)
+	chart_data = json.dumps(weekly_data, indent=2)
+    data = {'chart_data': chart_data}
+
+	return render_template('analytics.html', data = data)
 
 if __name__ == '__main__':
 	app.run()

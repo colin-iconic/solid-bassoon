@@ -1484,6 +1484,8 @@ def analytics(name=None):
 
 	cursor.execute("select customer, order_date, total_price, part_number from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
+	data = [{'customer': x[0], 'order date': x[1], 'total price': x[2], 'part number': x[3]} for x in data]
+	
 	return render_template('analytics.html', data = data)
 
 if __name__ == '__main__':

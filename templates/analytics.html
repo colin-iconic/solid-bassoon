@@ -3,7 +3,7 @@
 <div id="graphDiv"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-  var graphData = {{ data | safe }}
+  var graphData = {{ data }}
 
   var margin = {top: 30, right: 50, bottom: 30, left: 50};
   var svgWidth = 600;
@@ -70,6 +70,6 @@
   drawGraph(graphData);
 </script>
 {% for each in data %}
-each <br />
+{{ each }}<br />
 {% endfor %}
 {% endblock %}

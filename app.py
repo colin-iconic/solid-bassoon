@@ -1457,7 +1457,7 @@ def ship_list(name=None):
 		po_number = request.args.get('po')
 		po_number = [x.strip() for x in po_number.split(',')]
 	else:
-		return render_template('ship_list.html', title = 'No Jobs Match PO Number')
+		return render_template('ship_list.html', title = 'No Jobs Match PO Number', checklist = [])
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

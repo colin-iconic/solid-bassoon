@@ -1492,7 +1492,7 @@ def analytics(name=None):
 
 	data = data['price'].resample('W', how='sum')
 	data['date'] = data.index
-	data['date'] = date['date'].astype(str)
+	data['date'] = data['date'].astype(str)
 	data = data.to_dict()
 	data = json.dumps(data, indent=2)
 

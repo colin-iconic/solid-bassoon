@@ -1492,8 +1492,7 @@ def analytics(name=None):
 
 	data = data['price'].resample('W', how='sum')
 	data['date'] = data.index
-	data.head()
-	raw_input('wait')
+	data = data.head()
 	#data = data.to_dict()
 	#data = json.dumps(data, indent=2)
 

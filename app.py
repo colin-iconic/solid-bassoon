@@ -1484,11 +1484,11 @@ def analytics(name=None):
 
 	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
-	data = [{'order date': x[0].date(), 'total price': x[1]} for x in data]
+	data = [{'date': x[0].date(), 'price': x[1]} for x in data]
 
 	data = pd.DataFrame(data)
 
-	weekly_data = data['total price'].resample('W', how='sum')
+	weekly_data = data['price'].resample('W', how='sum')
 
 	return render_template('analytics.html', data = weekly_data)
 

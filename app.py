@@ -1491,7 +1491,7 @@ def analytics(name=None):
 	data = data.set_index('date')
 
 	data = data['price'].resample('W', how='sum')
-	data = data.to_dict('index')
+	data = data.to_dict()
 	return render_template('analytics.html', data = data)
 
 if __name__ == '__main__':

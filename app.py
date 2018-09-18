@@ -1491,7 +1491,7 @@ def analytics(name=None):
 	data = data.set_index('date')
 
 	weekly_data = data['price'].resample('W', how='sum')
-
+	weekly_data = df.to_dict(orient='records')
 	chart_data = json.dumps(weekly_data, indent=2)
 	data = {'chart_data': chart_data}
 

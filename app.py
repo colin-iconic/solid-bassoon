@@ -1478,7 +1478,7 @@ def ship_list(name=None):
 	return render_template('ship_list.html', head = head, title = 'Shipping Checklist', po_number = po_number, checklist = checklist)
 
 @app.route('/analytics')
-def ship_list(name=None):
+def analytics(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

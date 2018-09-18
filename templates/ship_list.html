@@ -9,8 +9,9 @@
   <tr>
     <td colspan="6" class="banner">Shipping Checklist</td>
   </tr>
-  <tr>
-    <td colspan="6">PO: {% for each in po_number %}{{ each }} {% endfor %}</td>
+  <tr class="banner">
+    <td colspan="3">PO: {% for each in po_number %}{{ each }} {% endfor %}</td>
+		<td colspan="3">{{ checklist[0]['customer'] }}</td>
   </tr>
   <tr class="table_title">
     <td>Job</td>

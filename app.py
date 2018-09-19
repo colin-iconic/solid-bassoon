@@ -1492,7 +1492,7 @@ def analytics(name=None):
 	data = data['price'].resample('W', how='sum')
 	data['date'] = data.index.astype(str)
 	data = data.reset_index()
-	data = data.to_dict()
+	data = data.to_dict('records')
 	#data = json.dumps(data, indent=2)
 
 	return render_template('analytics.html', data = data)

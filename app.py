@@ -1489,11 +1489,10 @@ def analytics(name=None):
 
 	data = pd.DataFrame(query)
 	data = data.set_index(['date'])
-	data = data['price'].resample('W', how='sum')
+	data = data['price'].resample('W').sum()
 	data['date'] = data.index
 	data = data.reset_index()
 	data = data.fillna(0)
-	data['date'] = pd.to_datetime(data['date'])
 	data['date'] = data['date'].astype(str)
 	data = data.to_dict('records')
 	data = data[0:-1]

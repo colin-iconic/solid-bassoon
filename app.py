@@ -1484,19 +1484,16 @@ def analytics(name=None):
 	cursor = connection.cursor()
 
 	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%'")
-	data = [list(x) for x in cursor.fetchall()]
-	data = [{'date': x[0], 'price': x[1]} for x in data]
+	query = [list(x) for x in cursor.fetchall()]
+	query = [{'date': x[0], 'price': x[1]} for x in data]
 
-	data = pd.DataFrame(data)
+	data = pd.DataFrame(query)
 	data = data.set_index(['date'])
 	data = data['price'].resample('W', how='sum')
 	data['date'] = data.index
 	data = data.reset_index()
 	data = data.to_dict('records')
 	data = data[0:-1]
-	for each in data:
-		if each['price'] == "false":
-			each['price'] = "0"
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
 

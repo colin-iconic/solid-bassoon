@@ -1495,6 +1495,8 @@ def analytics(name=None):
 	data = data.fillna(0)
 	data = data.to_dict('records')
 	data = data[0:-1]
+	for each in data:
+		each['date'] = each['date'][0:-9]
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
 

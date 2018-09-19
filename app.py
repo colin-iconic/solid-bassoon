@@ -1493,7 +1493,6 @@ def analytics(name=None):
 	data['date'] = data.index
 	data = data.reset_index()
 	data = data.fillna(0)
-	data['date'] = data['date'].astype(str)[0:-9]
 	data = data.to_dict('records')
 	data = data[0:-1]
 	data = json.dumps(data, indent=2, default=str)

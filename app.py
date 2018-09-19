@@ -1488,9 +1488,9 @@ def analytics(name=None):
 	data = [{'date': x[0], 'price': x[1]} for x in data]
 
 	data = pd.DataFrame(data)
-
-	#data = data['price'].resample('W', how='sum')
-	#data['date'] = data.index
+	data = data.set_index(['date'])
+	data = data['price'].resample('W', how='sum')
+	data['date'] = data.index.astype(str)
 	#data = data.to_dict()
 	#data = json.dumps(data, indent=2)
 

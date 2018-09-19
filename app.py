@@ -1494,6 +1494,9 @@ def analytics(name=None):
 	data = data.reset_index()
 	data = data.to_dict('records')
 	data = data[0:-1]
+	for each in data:
+		if each['price'] == "false":
+			each['price'] = "0"
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
 

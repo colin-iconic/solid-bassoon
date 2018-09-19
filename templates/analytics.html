@@ -11,6 +11,8 @@
   var graphWidth = svgWidth - margin.left - margin.right;
   var graphHeight = svgHeight - margin.top - margin.bottom;
 
+  var parseDate = d3.time.format("%Y-%m-%d").parse;
+
   var x = d3.time.scale().range([0, graphWidth]);
   var y = d3.scale.linear().range([graphHeight, 0]);
 

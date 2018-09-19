@@ -1491,7 +1491,7 @@ def analytics(name=None):
 	data = data.set_index(['date'])
 	data = data['price'].resample('W', how='sum')
 	data['date'] = data.index
-	data['date'] = data['date'].to_datetime()
+	data['date'] = pd.to_datetime(data['date'])
 	data = data.reset_index()
 	data = data.to_dict('records')
 	data = json.dumps(data, indent=2)

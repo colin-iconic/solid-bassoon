@@ -4,6 +4,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
   var graphData = {{ data.data }}
+  graphData.pop()
 
   var margin = {top: 30, right: 50, bottom: 30, left: 50};
   var svgWidth = 600;

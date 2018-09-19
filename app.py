@@ -1490,13 +1490,11 @@ def analytics(name=None):
 	data = pd.DataFrame(query)
 	data = data.set_index(['date'])
 	data = data['price'].resample('W').sum()
-	data['date'] = data.index
+	data['date'] = data.index.date().astype(str)
 	data = data.reset_index()
 	data = data.fillna(0)
 	data = data.to_dict('records')
 	data = data[0:-1]
-	for each in data:
-		each['date'] = each['date'].astype(str)
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
 

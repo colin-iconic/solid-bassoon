@@ -1493,10 +1493,10 @@ def analytics(name=None):
 	data['date'] = data.index
 	data = data.reset_index()
 	data = data.fillna(0)
+	data['date'] = pd.to_datetime(data['date'])
+	data['date'] = data['date'].astype(str)
 	data = data.to_dict('records')
 	data = data[0:-1]
-	for each in data:
-		each['date'] = each['date'][0:-9]
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
 

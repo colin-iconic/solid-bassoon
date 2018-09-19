@@ -33,7 +33,7 @@
       .attr("transform",
       "translate(" + margin.left + "," + margin.top + ")")
 
-  function drawGraph(data) {
+  function drawGraph(graphData) {
     // For each row in the data, parse the date
     // and use + to make sure data is numerical
     data.forEach(function(d) {
@@ -41,8 +41,8 @@
       d.Price = +d.Price;
     });
     // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.Date; }));
-    y.domain([d3.min(data, function(d) {
+    x.domain(d3.extent(graphData, function(d) { return d.Date; }));
+    y.domain([d3.min(graphData, function(d) {
       return Math.min(d.Price) }),
       d3.max(data, function(d) {
       return Math.max(d.Price) })]);

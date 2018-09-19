@@ -1493,9 +1493,10 @@ def analytics(name=None):
 	data['date'] = data.index
 	data = data.reset_index()
 	data = data.to_dict('records')
+	data = data[0:-1]
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
-	
+
 	return render_template('analytics.html', data = data)
 
 if __name__ == '__main__':

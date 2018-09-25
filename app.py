@@ -1409,7 +1409,7 @@ def part_status():
 
 	total_pull_from = 0
 	for each in pull_from_list:
-		cursor.execute("select count(sequence) from job_operation where job = '" + str(each[0]) + "'")
+		cursor.execute("select count(sequence) from job_operation where job = '" + str(each[0]) + "' and status = 'o'")
 		operation_count = cursor.fetchall()[0][0]
 		if operation_count == 2:
 			total_pull_from += each[1]

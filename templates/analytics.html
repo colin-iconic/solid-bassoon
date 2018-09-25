@@ -64,7 +64,7 @@
       .call(yAxis);
     // Add the text for the "Price" line
     svg.append("text")
-      .attr("transform", "translate("+(graphWidth+3)+","+y(data[-1].price)+")")
+      .attr("transform", "translate("+(graphWidth+3)+","+y(data[data.length-1].price)+")")
       .attr("dy", ".35em")
       .attr("text-anchor", "start")
       .style("fill", "green")

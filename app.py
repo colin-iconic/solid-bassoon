@@ -1491,7 +1491,6 @@ def analytics(name=None):
 	data = data.set_index(['date'])
 	data = data['price'].resample('W').sum()
 	data['date'] = data.index
-	data['date'] = data['date'].strftime('%Y-%m-%d')
 	data = data.reset_index()
 	data = data.fillna(0)
 	data = data.to_dict('records')

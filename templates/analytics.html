@@ -39,6 +39,7 @@
     data.forEach(function(d) {
       d.date = parseDate(d.date);
       d.price = +d.price;
+      console.log(d.date, d.price)
     });
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));

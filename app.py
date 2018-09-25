@@ -1497,8 +1497,8 @@ def analytics(name=None):
 	data = data[0:-1]
 	for e in data:
 		e['date'] = e['date'].strftime('%Y-%m-%d')
-		
-	data = json.dumps(data, indent=2, default=str)
+
+	data = json.dumps(data, indent=2)
 	data = {'data': data}
 
 	return render_template('analytics.html', data = data)

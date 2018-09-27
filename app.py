@@ -1315,7 +1315,10 @@ def daimler_reminder():
 			else:
 				promised = promised[0][0]
 
-			j.append([job[0], promised, centers[0][0]])
+			cursor.execute("select order_quantity from job where job = '" + job[0] + "'")
+			quantity = [list(x) for x in cursor.fetchall()]
+
+			j.append([job[0], promised, centers[0][0], quantity])
 
 		po_list.append([po[0], j])
 

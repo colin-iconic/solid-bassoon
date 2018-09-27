@@ -35,6 +35,12 @@
       "translate(" + margin.left + "," + margin.top + ")")
 
   function drawGraph(data) {
+    var ordersByMonth = d3.nest()
+      .key(function(d) { return d.date.split('-')[1]; })
+      .rollup(function(v) { return d3.sum(v, function(d) { return d.price; }); })
+      .object(data);
+    console.log(JSON.stringify(ordersByMonth));
+    
     // For each row in the data, parse the date
     // and use + to make sure data is numerical
     data.forEach(function(d) {

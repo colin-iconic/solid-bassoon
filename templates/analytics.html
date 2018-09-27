@@ -45,7 +45,7 @@
     // For each row in the data, parse the date
     // and use + to make sure data is numerical
     data.forEach(function(d) {
-      d.date = parseDate(d.key);
+      d.date = parseDate(d.key + "-01");
       d.price = +d.values;
     });
     // Scale the range of the data

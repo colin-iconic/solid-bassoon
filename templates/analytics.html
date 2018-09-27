@@ -36,10 +36,10 @@
 
   function drawGraph(data) {
     var ordersByMonth = d3.nest()
-      .key(function(d) { return d.date.split('-')[1]; })
+      .key(function(d) { return d.date[:7]; })
       .rollup(function(v) { return d3.sum(v, function(d) { return d.price; }); })
       .entries(data);
-      
+
     console.log(JSON.stringify(ordersByMonth));
 
     // For each row in the data, parse the date

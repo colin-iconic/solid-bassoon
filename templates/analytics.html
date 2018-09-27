@@ -41,13 +41,12 @@
       .entries(data);
 
     console.log(JSON.stringify(ordersByMonth));
-
+    data = ordersByMonth
     // For each row in the data, parse the date
     // and use + to make sure data is numerical
     data.forEach(function(d) {
       d.date = parseDate(d.date);
       d.price = +d.price;
-      console.log(d.date, d.price)
     });
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));

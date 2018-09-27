@@ -1493,14 +1493,15 @@ def analytics(name=None):
 	query = [list(x) for x in cursor.fetchall()]
 	query = [{'date': x[0], 'price': x[1]} for x in query]
 
-	data = pd.DataFrame(query)
-	data = data.set_index(['date'])
-	data = data['price'].resample('W').sum()
-	data['date'] = data.index
-	data = data.reset_index()
-	data = data.fillna(0)
-	data = data.to_dict('records')
-	data = data[0:-1]
+#	data = pd.DataFrame(query)
+#	data = data.set_index(['date'])
+#	data = data['price'].resample('W').sum()
+#	data['date'] = data.index
+#	data = data.reset_index()
+#	data = data.fillna(0)
+#	data = data.to_dict('records')
+#	data = data[0:-1]
+	data = query
 	for e in data:
 		e['date'] = e['date'].strftime('%Y-%m-%d')
 

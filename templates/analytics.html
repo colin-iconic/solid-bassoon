@@ -36,7 +36,7 @@
 
   function drawGraph(data) {
     var ordersByMonth = d3.nest()
-      .key(function(d) { return d.date[:7] })
+      .key(function(d) { return d.date.substring(0,7); })
       .rollup(function(v) { return d3.sum(v, function(d) { return d.price; }); })
       .entries(data);
 

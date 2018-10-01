@@ -245,7 +245,7 @@ def racklist(name=None):
 	shipped = cursor.fetchall()
 	jb86.shipped = shipped[0][0] or 0
 
-	cursor.execute("select job.job from job where job.description like '%headache%' and job.part_number like '%0202%' and job.status = 'active' and job.job not like '%-s%' and job.job not like '%-ncr%'")
+	cursor.execute("select job.job from job where job.description like '%headache%' and (job.part_number like '%0202%' or job.part_number like '6900' or job.part_number like '6910') and job.status = 'active' and job.job not like '%-s%' and job.job not like '%-ncr%'")
 
 	custom_racks = cursor.fetchall()
 

@@ -999,7 +999,7 @@ def parts_charts():
 		cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.order_quantity FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and job.description like 'camlock%' and job.part_number not like '0202' order by job.order_date desc")
 
 	elif part_number == 'racks':
-		cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.order_quantity FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and (job.description like '%headache%' or job.part_number like '6900' or job.part_number like '6910') and job.part_number not like '0202' order by job.order_date desc")
+		cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.order_quantity FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and (job.description like '%headache%' or job.part_number like '6910') and job.part_number not like '0202' order by job.order_date desc")
 
 	else:
 		cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.order_quantity FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and job.part_number like '" + part_number + "' order by job.order_date desc")

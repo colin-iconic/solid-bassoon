@@ -867,7 +867,7 @@ def wsop():
 		if each[3] == 0: #if currency is CAD do nothing
 			pass
 		elif each[3] == 1: #if currency is USD convert to CAD
-			each[2] = each[2]*1.27
+			each[2] = float(each[2])*1.27
 		else:
 			pass
 

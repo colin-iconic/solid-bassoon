@@ -880,7 +880,8 @@ def wsop():
 			yr = datetime.datetime.now().year
 		data_wk1.append([(yr, wk), 0])
 
-	df1 = pd.DataFrame(data_wk1, columns=['week', 'price'])
+	df1 = pd.DataFrame(data_wk1, columns=['week', 'price', 'currency'])
+	df1.drop(columns='currency')
 
 	table1 = pd.pivot_table(df1, values='price', columns='week', aggfunc=np.sum)
 

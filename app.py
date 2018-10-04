@@ -863,13 +863,15 @@ def wsop():
 			weeks.remove(each[0][1])
 		except ValueError:
 			pass
-		data_wk1.append(each[1:])
+
 		if each[3] == 1: #if currency is CAD do nothing
 			pass
 		elif each[3] == 2: #if currency is USD convert to CAD
 			each[2] = float(each[2])*1.27
 		else:
 			pass
+
+		data_wk1.append(each[1:])
 
 	for wk in weeks:
 		n = datetime.datetime.now().isocalendar()[1]

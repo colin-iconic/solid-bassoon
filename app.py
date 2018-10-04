@@ -871,6 +871,7 @@ def wsop():
 		else:
 			pass
 
+	return render_template('generic_table.html', rows = data)
 
 	for wk in weeks:
 		n = datetime.datetime.now().isocalendar()[1]

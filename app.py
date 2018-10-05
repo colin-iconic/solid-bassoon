@@ -13,6 +13,7 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flask import request
+from decimal import Decimal
 
 from flask_mail import Mail
 from flask_mail import Message
@@ -866,7 +867,7 @@ def wsop():
 		if each[3] == 1: #if currency is CAD do nothing
 			pass
 		elif each[3] == 2: #if currency is USD convert to CAD
-			each[2] = decimal.Decimal(each[2])*decimal.Decimal(1.27)
+			each[2] = Decimal(each[2])*Decimal(1.27)
 		else:
 			pass
 		data_wk1.append(each[1:])

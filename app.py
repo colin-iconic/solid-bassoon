@@ -897,11 +897,9 @@ def wsop():
 	values_trend1 = np.polyfit(d1.week, d1.value, 1)
 	r_x1, r_y1 = zip(*((i, i*values_trend1[0] + values_trend1[1]) for i in d1.week))
 
-	#cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
-	cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > '2018-09-03 00:00:00' AND packlist_header.packlist_date < '2018-09-07 00:00:00' AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+	cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
 
 	data = cursor.fetchall()
-	return render_template('generic_table.html', rows = data)
 	data_wk2 = []
 	weeks = [x for x in range(1,53)]
 	for each in data:
@@ -910,9 +908,9 @@ def wsop():
 			weeks.remove(each[0][1])
 		except ValueError:
 			pass
-		if each[4] == 1: #if currency is CAD do nothing
+		if each[4] == 2: #if currency is CAD do nothing
 			pass
-		elif each[4] == 2: #if currency is USD convert to CAD
+		elif each[4] == 1: #if currency is USD convert to CAD
 			each[1] = Decimal(each[1])*Decimal(1.27)
 		else:
 			pass

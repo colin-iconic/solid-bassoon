@@ -852,7 +852,7 @@ def wsop():
 
 	now = str(datetime.datetime.now().date())
 
-	#cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
+	cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
 
 	data = cursor.fetchall()
 
@@ -899,6 +899,7 @@ def wsop():
 
 	#cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
 	cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > '2018-09-03 00:00:00' AND packlist_header.packlist_date < '2018-09-07 00:00:00' AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+
 	data = cursor.fetchall()
 	return render_template('generic_table.html', rows = data)
 	data_wk2 = []

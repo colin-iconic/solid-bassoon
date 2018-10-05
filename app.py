@@ -852,9 +852,11 @@ def wsop():
 
 	now = str(datetime.datetime.now().date())
 
-	cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
-
+	#cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
+	cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND '2018-09-07 00:00:00' > Job.Order_Date and job.order_date > '2018-09-03 00:00:00' AND Job.Job Not Like '%-%' order by job.order_date desc")
 	data = cursor.fetchall()
+
+	return render_template('generic_table.html', rows = data)
 
 	data_wk1 = []
 	weeks = [x for x in range(1,53)]
@@ -953,7 +955,7 @@ def wsop():
 		except ValueError:
 			pass
 		if each[3] == 1:
-			cost = each[2] * 1.3
+			cost = each[2] * 1.27
 		else:
 			cost = each[2]
 		price = round(each[1] * cost, 2)

@@ -1586,7 +1586,7 @@ def in_stock():
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
-cast(on_hand_qty as int) from material_location where material = '" + part_number + "' and location_id = 'BUFFALO'
+	
 	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(categories[category])))
 	try:
 		part_data = list(cursor.fetchall()[0])
@@ -1613,7 +1613,7 @@ cast(on_hand_qty as int) from material_location where material = '" + part_numbe
 			shop_quantity = list(data)[0][0]
 
 		parts.append(make_part(each[0], each[1], each[2], part_currency, shop_quantity, buffalo_quantity))
-		
+
 
 	return render_template('in_stock.html', parts = parts)
 

@@ -182,7 +182,7 @@
 			font-size: 1.75em;
 			border-collapse: collapse;
 		}
-		#parts {
+		#category {
 			font-size: .75em;
 		}
 		td {
@@ -190,7 +190,7 @@
 			border: 1px solid black;
 			padding: 10px;
 		}
-		#parts td {
+		#category td {
 			height: auto;
 			padding: 0px;
 		}

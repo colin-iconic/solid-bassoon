@@ -51,7 +51,7 @@
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([d3.min(data, function(d) {
-      return Math.min(d.price) }),
+      return 0 }),
       d3.max(data, function(d) {
       return Math.max(d.price) })]);
     // Add the priceLine as a green line

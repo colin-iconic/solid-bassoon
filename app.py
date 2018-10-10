@@ -1572,7 +1572,7 @@ def in_stock(name=None):
 		shop_stock = 0
 		dc_stock = 0
 
-		def __init__(self, number, description, currency, price=0, shop_stock=0, dc_stock = 0):
+		def __init__(self, number, description, currency, price, shop_stock, dc_stock):
 			self.number = number
 			self.description = description
 			self.price = price
@@ -1580,8 +1580,8 @@ def in_stock(name=None):
 			self.shop_stock = shop_stock
 			self.dc_stock = dc_stock
 
-	def make_part(number, description, currency, price=0, shop_stock=0, dc_stock = 0):
-		part = Part(number, description, currency, price=0, shop_stock=0, dc_stock = 0)
+	def make_part(number, description, currency, price, shop_stock, dc_stock):
+		part = Part(number, description, currency, price, shop_stock, dc_stock)
 		return part
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')

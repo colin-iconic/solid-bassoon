@@ -1529,7 +1529,7 @@ def in_stock(name=None):
 		category = request.args.get('category')
 	else:
 		category = 'all'
-	return render_template('in_stock.html', parts = [], data = category)
+
 	categories = {
 	'camlock': [1076,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1020,1021,1022,1023,1024,1075,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1070,1071,1072,1073,1074,1068],
 	'thandle': [1100,1101,1102,1103,1122,1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1123,1171,1172,1150,1151,1152,1153,1154,1155,1156,1157,1158,1159,1160,1161,1162,1163,1164,1165,1166,1167,1168,1169,1170,1173,1174,1175],
@@ -1586,7 +1586,7 @@ def in_stock(name=None):
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
-
+	return render_template('in_stock.html', parts = [], data = categories[category])
 	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(str(categories[category]))))
 	try:
 		part_data = list(cursor.fetchall()[0])

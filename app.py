@@ -1621,7 +1621,7 @@ def in_stock(name=None):
 			continue
 
 		part_category = ''
-		for i in categories:
+		for i in categories.iteritems():
 			for c, n in i.items():
 				if each[0] in [str(x) for x in n]:
 					part_category = c

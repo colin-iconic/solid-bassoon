@@ -1622,7 +1622,7 @@ def in_stock(name=None):
 
 		part_category = ''
 		for c, n in categories.items():
-			if each[0] in n:
+			if each[0] in [str(x) for x in n]:
 				part_category = c
 			else:
 				part_category = 'uncategorized'

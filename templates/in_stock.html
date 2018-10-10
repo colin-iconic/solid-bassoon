@@ -27,11 +27,13 @@
     {% for category in parts %}
 		<div id="category">
     <h3>{{ category["category"] }}</h3>
-			{% for part in category["parts"] %}
-      <p class="part_title">{{ part.number }} - {{ part.description }}</p>
-      <p class="part_description">Shop Qty:{{ part.shop_stock }} | DC Qty:{{ part.dc_stock }}</p>
-			<br />
-			{% endfor %}
+			<div>
+				{% for part in category["parts"] %}
+	      <p class="part_title">{{ part.number }} - {{ part.description }}</p>
+	      <p class="part_description">Shop Qty:{{ part.shop_stock }} | DC Qty:{{ part.dc_stock }}</p>
+				<br />
+				{% endfor %}
+		</div>
 		</div>
     {% endfor %}
   </div>

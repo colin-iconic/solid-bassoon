@@ -1615,8 +1615,6 @@ def in_stock(name=None):
 		if data:
 			shop_quantity = list(data)[0][0]
 
-		return render_template('in_stock.html', parts = [], data = [buffalo_quantity, shop_quantity])
-
 		if shop_quantity == buffalo_quantity == '0':
 			continue
 

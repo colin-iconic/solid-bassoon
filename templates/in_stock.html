@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h2>What's In Stock?</h2>
+	<form method="GET">
+		<label for="category">Select Category:</label>
+    <select id="category">
+      <option value="all">All</option>
+      <option value="toolbox">Toolboxes</option>
+      <option value="camlock">- Camlock</option>
+      <option value="thandle">- T-Handle</option>
+      <option value="headache">Headache Racks</option>
+      <option value="flatrack">- Flat</option>
+      <option value="enclosed">- Enclosed</option>
+      <option value="stepbox">Step Boxes</option>
+      <option value="topstep">- Top Step</option>
+      <option value="bigmouh">- Big Mouth</option>
+      <option value="framebox">Frame Mounted Boxes</option>
+      <option value="loadleveler">Load Levelers</option>
+      <option value="fifthwheel">Fifth Wheel Ramps</option>
+      <option value="other">Other</option>
+    </select>
+    <br />
+		<input type="submit">
+	</form>
+  <hr>
+  <div id="parts">
+    {% for part in parts %}
+    <div class="part">
+      <tr>
+        <td class="part_title" colspan="2">{{ part.number }} - {{ part.description }}</td>
+      </tr>
+      <tr class="part_description">
+        <td colspan="2">{{ part.price }}</td>
+      </tr>
+      <tr class="part_description">
+        <td>Shop Qty:{{ part.shop_stock }}</td>
+        <td>DC Qty:{{ part.dc_stock }}</td>
+      </tr>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+{% endblock %}

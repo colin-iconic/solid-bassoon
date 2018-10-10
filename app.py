@@ -1526,18 +1526,18 @@ def analytics(name=None):
 @app.route("/report/in_stock")
 def in_stock():
 	try:
-		text = request.args['part']
+		category = request.args['category']
 	except:
-		text = ''
+		category = 'all'
 
 	categories = {
 	'camlock': [1076,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1020,1021,1022,1023,1024,1075,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1070,1071,1072,1073,1074,1068],
 	'thandle': [1100,1101,1102,1103,1122,1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1123,1171,1172,1150,1151,1152,1153,1154,1155,1156,1157,1158,1159,1160,1161,1162,1163,1164,1165,1166,1167,1168,1169,1170,1173,1174,1175],
-	'headache':
+	'flatrack':
 	[1300,1301,1302,1364,1365,1366,1319,1320,1321,1322,1323,1324,1328,1329,1330,1331,1332,1333,1351,1352,1353,1355,1356,1357,1359,1360,1361,1362],
 	'enclosed':
 	[1303,1304,1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1317,1367,1368,1369,1370,1371,1372,1373,1318,1374],
-	'stepbox':
+	'topstep':
 	[1500,1501,1502,1503,1504,1505,1506,1507,1508,1509,1510,1511,1512,1513,1526,1527],
 	'bigmouth':
 	[1514,1515,1516,1517,1518,1525,1519,1520,1521,1522,1523,1524],
@@ -1545,95 +1545,77 @@ def in_stock():
 	[1600,1601,1602,1603,1604,1605,1606,1607,1608],
 	'framebox':
 	[1800,1809,1810,1801,1802,1814,1807,1803,1804,1808,1811,1812,1813],
-	'5thwheelramp':
-	[1950,1951,1954,1955]}
+	'fifthwheel':
+	[1950,1951,1954,1955]
+	}
+
+	all = []
+	for each in categories.values():
+		all.extend(each)
+
+	categories['all'] = all
+
+	toolboxes = [item for sublist in [categories['thandle'], categories['camlock']] for item in sublist]
+	categories['toolbox'] = toolboxes
+
+	racks = [item for sublist in [categories['flatrack'], categories['enclosed']] for item in sublist]
+	categories['headache'] = racks
+
+	stepboxes = [item for sublist in [categories['topstep'], categories['bigmouth']] for item in sublist]
+	categories['stepbox'] = stepboxes
+
+	class Part(object):
+		number = ''
+		description = ''
+		price = 0
+		currency = ''
+		shop_stock = 0
+		dc_stock = 0
+
+		def __init__(self, number, description, price=0, currency, shop_stock=0, dc_stock = 0):
+			self.number = number
+			self.description = description
+			self.price = price
+			self.currency = currency
+			self.shop_stock = shop_stock
+			self.dc_stock = dc_stock
+
+	def make_part(number, description, price=0, currency, shop_stock=0, dc_stock = 0):
+		part = Part(number, description, price=0, currency, shop_stock=0, dc_stock = 0)
+		return part
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
-
-	cursor.execute("select description from material where material = '" + part_number + "'")
+cast(on_hand_qty as int) from material_location where material = '" + part_number + "' and location_id = 'BUFFALO'
+	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(categories[category])))
 	try:
-		description = cursor.fetchall()[0][0]
+		part_data = list(cursor.fetchall()[0])
 	except:
 		return render_template('in_stock.html', title="No Part Found")
 
-	cursor.execute("select selling_price, price_unit_conv from material where material = '" + part_number + "'")
-	data = cursor.fetchall()
-	part_price = list(data)[0][0]
-	c = list(data)[0][1]
-	if c == 1.0:
-		part_currency = 'CAD'
-	elif not c:
-		part_currency = ''
-	else:
-		part_currency = 'USD'
+	parts = []
+	for each in part_data:
+		c = each[3]
+		if c == 1.0:
+			part_currency = 'CAD'
+		elif not c:
+			part_currency = ''
+		else:
+			part_currency = 'USD'
+		cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + each[0] + "' and location_id = 'BUFFALO'")
+		data = cursor.fetchall()
+		if data:
+			buffalo_quantity = list(data)[0][0]
 
-	cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + part_number + "' and location_id = 'SHOP'")
-	data = cursor.fetchall()
-	if data:
-		stock_quantity = list(data)[0][0]
-	else:
-		stock_quantity = 0
+		cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + each[0] + "' and location_id = 'SHOP'")
+		data = cursor.fetchall()
+		if data:
+			shop_quantity = list(data)[0][0]
 
-	cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + part_number + "' and location_id = 'BUFFALO'")
-	data = cursor.fetchall()
-	if data:
-		buffalo_quantity = list(data)[0][0]
-	else:
-		buffalo_quantity = 0
+		parts.append(make_part(each[0], each[1], each[2], part_currency, shop_quantity, buffalo_quantity))
+		
 
-
-	cursor.execute("select job.job, delivery.remaining_quantity, job.customer, delivery.promised_date as date from job left join delivery on job.job = delivery.job where job.part_number = '" + part_number + "' and job.status = 'active' and job.job not like '%-%' and job.customer not like 'I-H%'")
-	customer_jobs = [list(x) for x in cursor.fetchall()]
-
-	pull_from_list = []
-	make_list = []
-	ship_list = []
-
-	for job in customer_jobs:
-		cursor.execute("select count(sequence) from job_operation where job = '" + str(job[0]) + "'")
-		operation_count = cursor.fetchall()[0][0]
-
-		if operation_count > 2:
-			make_list.append(job)
-
-		if operation_count == 2:
-			pull_from_list.append(job)
-
-		if operation_count == 1:
-			ship_list.append(job)
-
-	cursor.execute("select job, order_quantity from job where part_number = '" + part_number + "' and job.status = 'active' and job.job not like '%-%' and job.customer like 'I-H PROD'")
-	stock_jobs = [list(x) for x in cursor.fetchall()]
-
-	for job in stock_jobs:
-		cursor.execute("select work_center, sequence from job_operation where status = 'o' and job = '" + job[0] + "'")
-
-		centers = [list(x) for x in cursor.fetchall()]
-		centers.sort(key=itemgetter(1))
-
-		job.append(centers[0][0])
-
-	stock_in_production = 0
-	for each in stock_jobs:
-		stock_in_production += each[1]
-
-	total_pull_from = 0
-	for each in pull_from_list:
-		cursor.execute("select count(sequence) from job_operation where job = '" + str(each[0]) + "' and status = 'o'")
-		operation_count = cursor.fetchall()[0][0]
-		if operation_count == 2:
-			total_pull_from += each[1]
-
-	total_ship = 0
-	for each in ship_list:
-		total_ship += each[1]
-
-	title = part_number.capitalize() + ' Stock Status'
-
-	available = stock_quantity + stock_in_production - total_pull_from - total_ship
-
-	return render_template('part_status.html', title=title, description = description, part_price = part_price, part_currency = part_currency, available = available, stock_quantity = stock_quantity, buffalo_quantity = buffalo_quantity, stock_in_production = stock_in_production, total_pull_from = total_pull_from, make_list = make_list, pull_from_list = pull_from_list, stock_jobs = stock_jobs, ship_list = ship_list)
+	return render_template('in_stock.html', parts = parts)
 
 
 if __name__ == '__main__':

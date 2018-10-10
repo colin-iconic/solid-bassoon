@@ -1621,12 +1621,12 @@ def in_stock(name=None):
 			continue
 
 		part_category = ''
-		for c, n in categories.items():
-			return render_template('in_stock.html', parts = [], category = category.capitalize(), data = [c, n])
-			if each[0] in [str(x) for x in n]:
-				part_category = c
-			else:
-				part_category = 'uncategorized'
+		for i in categories:
+			for c, n in i.items():
+				if each[0] in [str(x) for x in n]:
+					part_category = c
+				else:
+					part_category = 'uncategorized'
 
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity, part_category))
 

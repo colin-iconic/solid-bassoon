@@ -30,9 +30,9 @@
       <tr>
         <td class="part_title" colspan="2">{{ part.number }} - {{ part.description }} - ${{ part.price }}{{ part.currency }}</td>
       </tr>
-      <tr class="part_description">
-        <td>Shop Qty:{{ part.shop_stock }}</td>
-        <td>DC Qty:{{ part.dc_stock }}</td>
+      <tr>
+        <td class="part_description">Shop Qty:{{ part.shop_stock }}</td>
+        <td class="part_description">DC Qty:{{ part.dc_stock }}</td>
       </tr>
       {% endfor %}
     </table>

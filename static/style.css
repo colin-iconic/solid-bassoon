@@ -165,10 +165,7 @@
 		font-size: 1em;
 	}
 	.part_description {
-		padding-bottom: 15px;
-	}
-	.e {
-		width: 50%;
+		text-align: right;
 	}
 }
 @media print {
@@ -193,9 +190,6 @@
 		#parts td {
 			height: auto;
 			padding: 0px;
-		}
-		.e {
-			width: 50%;
 		}
 		.banner {
 			font-size: 2.1em;

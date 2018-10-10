@@ -158,14 +158,14 @@
 	.part_title {
 		background-color: #e8e9f2;
 		color: black;
-		padding: 5px 0px 5px 0px;
+		padding: 5px 5px 5px 5px;
 		box-sizing: border-box;
 		font-size: 1em;
 	}
 	.part_description {
 		text-align: right;
 		background-color: #e8e9f2;
-		padding: 5px 0px 5px 0px;
+		padding: 5px 5px 5px 5px;
 	}
 }
 @media print {

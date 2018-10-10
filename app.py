@@ -1524,10 +1524,10 @@ def analytics(name=None):
 	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")
-def in_stock():
-	try:
-		category = request.args['category']
-	except:
+def in_stock(name=None):
+	if request.args.get('category'):
+		category = request.args.get('category')
+	else:
 		category = 'all'
 
 	categories = {

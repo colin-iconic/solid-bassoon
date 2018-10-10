@@ -1572,7 +1572,7 @@ def in_stock():
 		shop_stock = 0
 		dc_stock = 0
 
-		def __init__(self, number, description, price=0, currency, shop_stock=0, dc_stock = 0):
+		def __init__(self, number, description, currency, price=0, shop_stock=0, dc_stock = 0):
 			self.number = number
 			self.description = description
 			self.price = price
@@ -1580,13 +1580,13 @@ def in_stock():
 			self.shop_stock = shop_stock
 			self.dc_stock = dc_stock
 
-	def make_part(number, description, price=0, currency, shop_stock=0, dc_stock = 0):
-		part = Part(number, description, price=0, currency, shop_stock=0, dc_stock = 0)
+	def make_part(number, description, currency, price=0, shop_stock=0, dc_stock = 0):
+		part = Part(number, description, currency, price=0, shop_stock=0, dc_stock = 0)
 		return part
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
-	
+
 	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(categories[category])))
 	try:
 		part_data = list(cursor.fetchall()[0])
@@ -1612,7 +1612,7 @@ def in_stock():
 		if data:
 			shop_quantity = list(data)[0][0]
 
-		parts.append(make_part(each[0], each[1], each[2], part_currency, shop_quantity, buffalo_quantity))
+		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity))
 
 
 	return render_template('in_stock.html', parts = parts)

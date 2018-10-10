@@ -1593,13 +1593,13 @@ def in_stock(name=None):
 	try:
 		part_data = list(cursor.fetchall())
 	except:
-		return render_template('in_stock.html', parts = [], data = categories[category])
+		return render_template('in_stock.html', parts = [])
 
 	del categories['all']
 	del categories['toolbox']
 	del categories['headache']
 	del categories['stepbox']
-	
+
 	parts = []
 	for each in part_data:
 		c = each[3]

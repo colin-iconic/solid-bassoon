@@ -1623,7 +1623,7 @@ def in_stock(name=None):
 		part_category = ''
 		for c, n in categories.iteritems():
 			if each[0] in [str(x) for x in n]:
-				part_category = c
+				part_category = c.capitalize()
 
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity, part_category))
 

@@ -1588,9 +1588,9 @@ def in_stock(name=None):
 	cursor = connection.cursor()
 
 	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(str(categories[category]))))
+	return render_template('in_stock.html', parts = [], data = "select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(str(categories[category]))))
 	try:
 		part_data = list(cursor.fetchall()[0])
-		return render_template('in_stock.html', parts = [], data = part_data)
 	except:
 		return render_template('in_stock.html', parts = [], data = categories[category])
 

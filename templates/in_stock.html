@@ -25,15 +25,14 @@
   <hr class="no-print">
   <div>
     {% for category in parts %}
-		<div id="category">
+		<table id="category">
     <h3>{{ category["category"] }}</h3>
-			<div>
-				{% for part in category["parts"] %}
-	      <p class="part_title">{{ part.number }} - {{ part.description }}</p>
-	      <p class="part_description">Shop Qty:{{ part.shop_stock }} | DC Qty:{{ part.dc_stock }}</p>
-				<br />
-				{% endfor %}
-		</div>
+			{% for part in category["parts"] %}
+			<tr>
+	      <td class="part_title">{{ part.number }} - {{ part.description }}</td>
+	      <td class="part_description">Shop Qty:{{ part.shop_stock }} | DC Qty:{{ part.dc_stock }}</td>
+			</tr>
+			{% endfor %}
 		</div>
     {% endfor %}
   </div>

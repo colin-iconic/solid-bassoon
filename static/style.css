@@ -162,15 +162,13 @@
 		background-color: #e8e9f2;
 		color: black;
 		font-size: 1em;
-		width: 600px;
+		width: 400px;
 		padding: 10px 0px 10px 0px;
-		display: block;
 	}
 	.part_description {
 		background-color: #e8e9f2;
 		width: 200px;
 		padding: 10px 0px 10px 0px;
-		display: block;
 	}
 }
 @media print {

@@ -26,7 +26,7 @@
   <div>
     {{ data }}
     {% for category in parts %}
-		<div>
+		<div id="category">
     <h3>{{ category["category"] }}</h3>
 			{% for part in category["parts"] %}
       <span class="part_title">{{ part.number }} - {{ part.description }}</span>

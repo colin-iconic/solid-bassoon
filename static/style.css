@@ -155,14 +155,21 @@
 	}
 	#parts {
 	}
+	.category {
+		width: 800px;
+	}
 	.part_title {
 		background-color: #e8e9f2;
 		color: black;
 		font-size: 1em;
+		width: 600px;
+		padding: 10px 0px 10px 0px;		
 	}
 	.part_description {
 		background-color: #e8e9f2;
-		text-align: right;
+		margin-left: 600px;
+		width: 200px;
+		padding: 10px 0px 10px 0px;
 	}
 }
 @media print {

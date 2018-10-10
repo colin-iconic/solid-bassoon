@@ -183,7 +183,7 @@
 			border-collapse: collapse;
 		}
 		#parts {
-			font-size: .5em;
+			font-size: .75em;
 		}
 		td {
 			height: 40px;
@@ -193,6 +193,9 @@
 		#parts td {
 			height: auto;
 			padding: 0px;
+		}
+		.e {
+			width: 50%;
 		}
 		.banner {
 			font-size: 2.1em;

@@ -23,25 +23,22 @@
     <button type="submit">Submit</button>
 	</form>
   <hr>
-  <div id="parts">
+  <div>
     {{ data }}
-    <div class="part">
-      <table>
-        {% for part in parts %}
-        <tr>
-          <td class="part_title" colspan="2">{{ part.number }} - {{ part.description }}</td>
-        </tr>
-        <tr class="part_description">
-          <td colspan="2">{{ part.price }}</td>
-        </tr>
-        <tr class="part_description">
-          <td>Shop Qty:{{ part.shop_stock }}</td>
-          <td>DC Qty:{{ part.dc_stock }}</td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
-
+    <table id="parts">
+      {% for part in parts %}
+      <tr>
+        <td class="part_title" colspan="2">{{ part.number }} - {{ part.description }}</td>
+      </tr>
+      <tr class="part_description">
+        <td colspan="2">{{ part.price }}</td>
+      </tr>
+      <tr class="part_description">
+        <td>Shop Qty:{{ part.shop_stock }}</td>
+        <td>DC Qty:{{ part.dc_stock }}</td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
 </body>
 {% endblock %}

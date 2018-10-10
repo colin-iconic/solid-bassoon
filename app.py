@@ -1586,12 +1586,13 @@ def in_stock(name=None):
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
-	return render_template('in_stock.html', parts = [], data = categories[category])
+
 	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(str(categories[category]))))
 	try:
 		part_data = list(cursor.fetchall()[0])
+		return render_template('in_stock.html', parts = [], data = part_data)
 	except:
-		return render_template('in_stock.html', title="No Part Found")
+		return render_template('in_stock.html', parts = [], data = categories[category])
 
 	parts = []
 	for each in part_data:

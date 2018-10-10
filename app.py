@@ -1617,7 +1617,7 @@ def in_stock(name=None):
 
 		return render_template('in_stock.html', parts = [], data = [buffalo_quantity, shop_quantity])
 
-		if shop_quantity == buffalo_quantity == 0:
+		if shop_quantity == buffalo_quantity == '0':
 			continue
 
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity))

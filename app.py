@@ -1623,7 +1623,9 @@ def in_stock(name=None):
 		part_category = ''
 		for c, n in categories.items():
 			if n == each[0]:
-				part_category = n
+				part_category = c
+			else:
+				part_category = 'uncategorized'
 
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity, part_category))
 

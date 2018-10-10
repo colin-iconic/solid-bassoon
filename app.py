@@ -1615,7 +1615,7 @@ def in_stock():
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity))
 
 
-	return render_template('in_stock.html', parts = parts)
+	return render_template('in_stock.html', parts = parts, data = [category, part_data])
 
 
 if __name__ == '__main__':

@@ -153,11 +153,14 @@
 	  border: 0px;
 	  pointer-events: none;
 	}
+	#parts {
+		min-width: 800px;
+	}
 	.part_title {
-		background-color: #131633;
-		color: #e5e5e5;
+		background-color: #d7d8e0;
+		color: black;
 		width: 100%;
-		padding: 10px 0px 10px 0px;
+		padding: 5px 0px 5px 0px;
 		box-sizing: border-box;
 		font-size: 1.25em;
 	}

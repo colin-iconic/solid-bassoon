@@ -119,6 +119,9 @@
 		border-top: 1px solid #aaaaaa;
 		border-bottom: 1px solid #ffffff;
   }
+	form {
+		padding: 20px;
+	}
 	.clickable {
 		cursor: pointer;
 	}
@@ -149,6 +152,12 @@
   background: white;
   border: 0px;
   pointer-events: none;
+	}
+	#parts {
+		padding: 20;
+	}
+	.part {
+		border: 1px solid black;
 	}
 }
 @media print {

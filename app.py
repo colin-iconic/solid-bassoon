@@ -1634,7 +1634,7 @@ def in_stock(name=None):
 		else:
 			result[each.category] = {'category': each.category, 'parts': [each]}
 
-	return render_template('in_stock.html', parts = result, category = category.capitalize())
+	return render_template('in_stock.html', parts = result, category = category.capitalize(), data = result)
 
 
 if __name__ == '__main__':

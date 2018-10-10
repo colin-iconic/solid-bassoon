@@ -1621,12 +1621,11 @@ def in_stock(name=None):
 			continue
 
 		part_category = ''
-		for i in categories.iteritems():
-			for c, n in i.items():
-				if each[0] in [str(x) for x in n]:
-					part_category = c
-				else:
-					part_category = 'uncategorized'
+		for c, n in categories.iteritems():
+			if each[0] in [str(x) for x in n]:
+				part_category = c
+			else:
+				part_category = 'uncategorized'
 
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity, part_category))
 

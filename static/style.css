@@ -167,6 +167,9 @@
 	.part_description {
 		padding-bottom: 15px;
 	}
+	.e {
+		width: 50%;
+	}
 }
 @media print {
     .no-print, .no-print *
@@ -180,7 +183,7 @@
 			border-collapse: collapse;
 		}
 		#parts {
-			font-size: .75em;
+			font-size: .5em;
 		}
 		td {
 			height: 40px;
@@ -189,6 +192,7 @@
 		}
 		#parts td {
 			height: auto;
+			padding: 0px;
 		}
 		.banner {
 			font-size: 2.1em;

@@ -1615,6 +1615,9 @@ def in_stock(name=None):
 		if data:
 			shop_quantity = list(data)[0][0]
 
+		if shop_quantity == buffalo_quantity == 0:
+			continue
+
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity))
 
 

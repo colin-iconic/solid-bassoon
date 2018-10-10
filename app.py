@@ -1571,17 +1571,19 @@ def in_stock(name=None):
 		currency = ''
 		shop_stock = 0
 		dc_stock = 0
+		category = ''
 
-		def __init__(self, number, description, currency, price, shop_stock, dc_stock):
+		def __init__(self, number, description, currency, price, shop_stock, dc_stock, category):
 			self.number = number
 			self.description = description
 			self.price = price
 			self.currency = currency
 			self.shop_stock = shop_stock
 			self.dc_stock = dc_stock
+			self.category = category
 
-	def make_part(number, description, currency, price, shop_stock, dc_stock):
-		part = Part(number, description, currency, price, shop_stock, dc_stock)
+	def make_part(number, description, currency, price, shop_stock, dc_stock, category):
+		part = Part(number, description, currency, price, shop_stock, dc_stock, category)
 		return part
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
@@ -1618,10 +1620,20 @@ def in_stock(name=None):
 		if shop_quantity == buffalo_quantity == 0:
 			continue
 
-		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity))
+		for c, n in categories.items():
+			if n == each[0]:
+				part_category = n
 
+		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity, part_category))
 
-	return render_template('in_stock.html', parts = parts, category = category.capitalize())
+	result = {}
+	for each in parts:
+		if each.category in result:
+			result[each.category]['parts'].append(each)
+		else:
+			result[each.category] = {'category': each.category, 'parts': [each]}
+
+	return render_template('in_stock.html', parts = result, category = category.capitalize())
 
 
 if __name__ == '__main__':

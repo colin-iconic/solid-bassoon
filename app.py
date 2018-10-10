@@ -1602,11 +1602,14 @@ def in_stock(name=None):
 			part_currency = ''
 		else:
 			part_currency = 'USD'
+
+		buffalo_quantity = 0
 		cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + each[0] + "' and location_id = 'BUFFALO'")
 		data = cursor.fetchall()
 		if data:
 			buffalo_quantity = list(data)[0][0]
 
+		shop_quantity = 0
 		cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + each[0] + "' and location_id = 'SHOP'")
 		data = cursor.fetchall()
 		if data:

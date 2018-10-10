@@ -1593,6 +1593,7 @@ def in_stock(name=None):
 	except:
 		return render_template('in_stock.html', parts = [], data = categories[category])
 
+	return render_template('in_stock.html', parts = []], data = part_data)
 	parts = []
 	for each in part_data:
 		c = each[3]

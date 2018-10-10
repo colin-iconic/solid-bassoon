@@ -162,7 +162,7 @@
 	}
 	.part_description {
 		background-color: #e8e9f2;
-		float: right;
+		text-align: right;
 	}
 }
 @media print {

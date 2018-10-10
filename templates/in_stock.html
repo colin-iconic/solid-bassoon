@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-	<h2>What's In Stock? {{ category }}</h2>
-	<form method="GET">
+	<h2>What's In Stock? - {{ category }}</h2>
+	<form method="GET" class="no-print">
 		<label for="category">Select Category:</label>
     <select id="category" name="category">
       <option value="all">All</option>
@@ -17,20 +17,21 @@
       <option value="framebox">Frame Mounted Boxes</option>
       <!-- <option value="loadleveler">Load Levelers</option> -->
       <option value="fifthwheel">Fifth Wheel Ramps</option>
-      <option value="other">Other</option>
+      <!-- <option value="other">Other</option> -->
     </select>
     <br />
     <button type="submit">Submit</button>
 	</form>
-  <hr>
+  <hr class="no-print">
   <div>
     {{ data }}
     <table id="parts">
       {% for part in parts %}
       <tr>
-        <td class="part_title" colspan="2">{{ part.number }} - {{ part.description }} - ${{ part.price }}{{ part.currency }}</td>
+        <td class="part_title" colspan="4">{{ part.number }} - {{ part.description }} - ${{ part.price }}{{ part.currency }}</td>
       </tr>
       <tr>
+        <td colspan="2"> </td>
         <td class="part_description">Shop Qty:{{ part.shop_stock }}</td>
         <td class="part_description">DC Qty:{{ part.dc_stock }}</td>
       </tr>

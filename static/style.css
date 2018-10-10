@@ -179,10 +179,16 @@
 			font-size: 1.75em;
 			border-collapse: collapse;
 		}
+		#parts {
+			font-size: .75em;
+		}
 		td {
 			height: 40px;
 			border: 1px solid black;
 			padding: 10px;
+		}
+		#parts td {
+			height: auto;
 		}
 		.banner {
 			font-size: 2.1em;

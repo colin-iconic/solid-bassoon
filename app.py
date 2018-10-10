@@ -1587,7 +1587,7 @@ def in_stock():
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(categories[category])))
+	cursor.execute("select material, description, selling_price, price_unit_conv from material where material in ('{0}')".format("', '".join(str(categories[category]))))
 	try:
 		part_data = list(cursor.fetchall()[0])
 	except:

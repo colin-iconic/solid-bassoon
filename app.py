@@ -1627,12 +1627,14 @@ def in_stock(name=None):
 
 		parts.append(make_part(each[0], each[1], part_currency, each[2], shop_quantity, buffalo_quantity, part_category))
 
-	result = {}
+	result = []
 	for each in parts:
-		if each.category in result:
-			result[each.category]['parts'].append(each)
+		if each.category in [x['category'] for x in result]:
+			for e in result:
+				if e['category'] == each.category:
+					e['parts'].append(each)
 		else:
-			result[each.category] = {'category': each.category, 'parts': [each]}
+			result.append({'category': each.category, 'parts': [each]})
 
 	return render_template('in_stock.html', parts = result, category = category.capitalize(), data = result)
 

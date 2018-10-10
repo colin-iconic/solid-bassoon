@@ -165,6 +165,7 @@
 		width: 600px;
 		padding: 10px 0px 10px 0px;
 		display: block;
+		float: left;
 	}
 	.part_description {
 		background-color: #e8e9f2;
@@ -172,7 +173,7 @@
 		width: 200px;
 		padding: 10px 0px 10px 0px;
 		display: block;
-		float: right;
+		float: left;
 	}
 }
 @media print {

@@ -1620,6 +1620,7 @@ def in_stock(name=None):
 		if shop_quantity == buffalo_quantity == 0:
 			continue
 
+		part_category = ''
 		for c, n in categories.items():
 			if n == each[0]:
 				part_category = n

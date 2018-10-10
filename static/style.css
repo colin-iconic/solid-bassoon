@@ -154,7 +154,6 @@
 	  pointer-events: none;
 	}
 	#parts {
-		min-width: 800px;
 	}
 	.part_title {
 		background-color: #e8e9f2;
@@ -165,6 +164,7 @@
 	}
 	.part_description {
 		text-align: right;
+		background-color: #e8e9f2;
 	}
 }
 @media print {

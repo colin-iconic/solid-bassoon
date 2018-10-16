@@ -990,7 +990,7 @@ def wsop():
 	legend = ['','Orders Trend', 'Weekly Order Totals', 'Shipment Trend', 'Weekly Shipment Totals', 'PO Trend', 'Weekly PO Value Total']
 	caption = [averages, "Order totals calculated from total price of customer orders totaled each week. Shipment totals calculated from Packing List values totaled each week. PO totals calculated from the value of POs issued totaled each week."]
 	values = [r_y1, values_order1, r_y2, values_order2, r_y3, values_order3]
-	return render_template('chart.html', values=values, labels=week_order, legend=legend, title=title, caption=caption)
+	return render_template('chart.html', values=values, labels=week_order, legend=legend, title=title, caption=caption, body = values)
 
 @app.route("/chart/parts_charts")
 def parts_charts():

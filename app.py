@@ -475,56 +475,6 @@ def routing_changes(name=None):
 	head = ['Changed By', 'Change Date', 'Old', 'New', 'Work Center', 'Job', 'Customer', 'Description', 'Part Number', 'Order Quantity']
 	return render_template('generic_table.html', rows = info, head = head, title = 'Daily Routing Changes')
 
-@app.route("/chart/weekly_s&o")
-def wso():
-	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
-	cursor = connection.cursor()
-
-	now = str(datetime.datetime.now().date())
-
-	cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
-
-	data = cursor.fetchall()
-
-	data_wk1 = []
-	for each in data:
-		each[1] = each[1].isocalendar()[:-1]
-		data_wk1.append(each[1:])
-
-	df1 = pd.DataFrame(data_wk1, columns=['week', 'price'])
-
-	table1 = pd.pivot_table(df1, values='price', columns='week', aggfunc=np.sum)
-
-	week_order = list(table1)
-
-	values_order1 = table1.values.tolist()
-
-	cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
-
-	data = cursor.fetchall()
-
-	data_wk2 = []
-	for each in data:
-		each[0] = each[0].isocalendar()[:-1]
-		price = round(each[1] * each[2], 2)
-		data_wk2.append([each[0], price])
-
-	df2 = pd.DataFrame(data_wk2, columns=['week', 'price'])
-
-	table2 = pd.pivot_table(df2, values='price', columns='week', aggfunc=np.sum)
-
-	values_order2 = table2.values.tolist()
-
-	avg_order = round(sum(values_order1[0])/len(values_order1[0]),2)
-	avg_ship = round(sum(values_order2[0])/len(values_order2[0]),2)
-	so_diff = avg_order - avg_ship
-	averages = "Average Orders: " + str(avg_order) + " | Average Shipments: " + str(avg_ship) + " | Order Surplus: " + str(so_diff)
-	title = 'Past Year Shipped & Ordered Totals'
-	legend = ['', 'Weekly Order Totals', 'Weekly Shipment Totals']
-	caption = averages
-	values = [values_order1[0], values_order2[0]]
-	return render_template('chart.html', values=values, labels=week_order, legend=legend, title=title, caption=caption)
-
 @app.route('/report/pos') #Active jobs grouped by PO with routing
 def pos(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')

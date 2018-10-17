@@ -52,7 +52,7 @@
 			$('#shop_stock').change(function() {
 				if(! this.checked) {
 					$(".shop").hide().addClass("hidden")
-					$(":not(.hidden), .dc > span").each(function( index ) {
+					$(":not(.hidden) + .dc > span").each(function( index ) {
 						if ($(this).text() == 0) {
 							$(this).parent().parent().hide().addClass("hidden")
 						}
@@ -62,7 +62,7 @@
 					if(! $('#dc_stock').is(":checked")) {
 						$(".dc").hide().addClass("hidden")
 					}
-					$(":not(.hidden), .shop > span").each(function( index ) {
+					$(":not(.hidden) + .shop > span").each(function( index ) {
 						if ($(this).text() == 0) {
 							$(this).parent().parent().hide().addClass("hidden")
 						}
@@ -72,7 +72,7 @@
 			$('#dc_stock').change(function() {
 				if(! this.checked) {
 					$(".dc").hide().addClass("hidden")
-					$(":not(.hidden), .shop > span").each(function( index ) {
+					$(":not(.hidden) + .shop > span").each(function( index ) {
 						if ($(this).text() == 0) {
 							$(this).parent().parent().hide().addClass("hidden")
 						}
@@ -82,7 +82,7 @@
 					if(! $('#shop_stock').is(":checked")) {
 						$(".shop").hide().addClass("hidden")
 					}
-					$(":not(.hidden), .dc > span").each(function( index ) {
+					$(":not(.hidden) + .dc > span").each(function( index ) {
 						if ($(this).text() == 0) {
 							$(this).parent().parent().hide().addClass("hidden")
 						}

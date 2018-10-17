@@ -51,40 +51,40 @@
 
 			$('#shop_stock').change(function() {
 				if(! this.checked) {
-					$(".shop").hide()
+					$(".shop").hide().addClass("hidden")
 					$(".dc > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).parent().parent().hide()
+							$(this).parent().parent().hide().addClass("hidden")
 						}
 					});
 				} else {
-					$("*").each(function() {$(this).show()})
+					$(".hidden").each(function() {$(this).show()})
 					if(! $('#dc_stock').is(":checked")) {
-						$(".dc").hide()
+						$(".dc").hide().addClass("hidden")
 					}
 					$(".shop > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).parent().parent().hide()
+							$(this).parent().parent().hide().addClass("hidden")
 						}
 					});
 				}
 			});
 			$('#dc_stock').change(function() {
 				if(! this.checked) {
-					$(".dc").hide()
+					$(".dc").hide().addClass("hidden")
 					$(".shop > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).parent().parent().hide()
+							$(this).parent().parent().hide().addClass("hidden")
 						}
 					});
 				} else {
-					$("*").each(function() {$(this).show()});
+					$(".hidden").each(function() {$(this).show()});
 					if(! $('#shop_stock').is(":checked")) {
-						$(".shop").hide()
+						$(".shop").hide().addClass("hidden")
 					}
 					$(".dc > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).parent().parent().hide()
+							$(this).parent().parent().hide().addClass("hidden")
 						}
 					});
 				}

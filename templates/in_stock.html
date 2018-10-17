@@ -53,8 +53,8 @@
 				if(! this.checked) {
 					$(".shop").hide()
 					$(".dc > span").each(function( index ) {
-						if (this.text() == 0) {
-							this.hide()
+						if ($(this).text() == 0) {
+							$(this).hide()
 						}
 					})
 				} else {
@@ -65,8 +65,8 @@
 				if(! this.checked) {
 					$(".dc").hide()
 					$(".shop > span").each(function( index ) {
-						if (this.text() == 0) {
-							this.hide()
+						if ($(this).text() == 0) {
+							$(this).hide()
 						}
 					})
 				} else {

@@ -21,6 +21,12 @@
     </select>
     <br />
     <button type="submit">Submit</button>
+		<p>
+			<input type="checkbox" id="shop_stock" name="shop_stock" value="shop_stock" checked />
+			<label for="shop_stock">Show Shop Stock</label>
+			<input type="checkbox" id="dc_stock" name="dc_stock" value="dc_stock" checked />
+			<label for="dc_stock">Show Buffalo Stock</label>
+		</p>
 	</form>
   <hr class="no-print">
   <div>
@@ -30,12 +36,36 @@
 			{% for part in category["parts"] %}
 			<tr>
 	      <td class="part_title">{{ part.number }} - {{ part.description }}</td>
-	      <td class="part_description">Shop Qty: {{ part.shop_stock }}</td>
-				<td class="part_description">Buffalo Qty: {{ part.dc_stock }}</td>
+	      <td class="part_description shop">Shop Qty: <span class="quantity">{{ part.shop_stock }}</span></td>
+				<td class="part_description dc">Buffalo Qty: <span class="quantity">{{ part.dc_stock }}</span></td>
 			</tr>
 			{% endfor %}
 		</div>
     {% endfor %}
   </div>
+	<script>
+		$(document).ready(function() {
+			//set initial state.
+			$('#shop_stock').val(this.checked);
+			$('#dc_stock').val(this.checked);
+
+			$('#shop_stock').change(function() {
+				if(! this.checked) {
+					$(".shop").hide()
+					if ($(".dc > span").html() == 0) {this.hide()}
+				} else {
+					$(".shop").show()
+				}
+			});
+			$('#dc_stock').change(function() {
+				if(! this.checked) {
+					$(".dc").hide()
+					if ($(".shop > span").html() == 0) {this.hide()}
+				} else {
+					$(".dc").show()
+				}
+			});
+		});
+	</script>
 </body>
 {% endblock %}

@@ -53,7 +53,7 @@
 				if(! this.checked) {
 					$(".shop").hide()
 					$(".dc > span").each(function( index ) {
-						if (! $(this).text() > 0) {
+						if ($(this).text() == 0) {
 							$(this).parent().parent().hide()
 						}
 					});
@@ -63,7 +63,7 @@
 						$(".dc").hide()
 					}
 					$(".shop > span").each(function( index ) {
-						if (! $(this).text() > 0) {
+						if ($(this).text() == 0) {
 							$(this).parent().parent().hide()
 						}
 					});
@@ -73,7 +73,7 @@
 				if(! this.checked) {
 					$(".dc").hide()
 					$(".shop > span").each(function( index ) {
-						if (! $(this).text() > 0) {
+						if ($(this).text() == 0) {
 							$(this).parent().parent().hide()
 						}
 					});
@@ -83,7 +83,7 @@
 						$(".shop").hide()
 					}
 					$(".dc > span").each(function( index ) {
-						if (! $(this).text() > 0) {
+						if ($(this).text() == 0) {
 							$(this).parent().parent().hide()
 						}
 					});

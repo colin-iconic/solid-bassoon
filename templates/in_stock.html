@@ -52,7 +52,7 @@
 			$('#shop_stock').change(function() {
 				if(! this.checked) {
 					$(".shop").hide()
-					if ($(".dc > span").html() == 0) {$(".dc > span").hide()}
+					if ($(".dc > span").html() == '0') {$(".dc > span").hide()}
 				} else {
 					$(".shop").show()
 				}
@@ -60,7 +60,7 @@
 			$('#dc_stock').change(function() {
 				if(! this.checked) {
 					$(".dc").hide()
-					if ($(".shop > span").html() == 0) {$(".shop > span").hide()}
+					if ($(".shop > span").html() == '0') {$(".shop > span").hide()}
 				} else {
 					$(".dc").show()
 				}

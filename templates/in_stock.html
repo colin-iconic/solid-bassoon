@@ -54,11 +54,16 @@
 					$(".shop").hide()
 					$(".dc > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).parent().hide()
+							$(this).parent().parent.hide()
 						}
 					})
 				} else {
 					$(".shop").show()
+					$(".shop > span").each(function( index ) {
+						if ($(this).text() == 0) {
+							$(this).parent().parent().hide()
+						}
+					})
 				}
 			});
 			$('#dc_stock').change(function() {
@@ -66,11 +71,16 @@
 					$(".dc").hide()
 					$(".shop > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).parent().hide()
+							$(this).parent().parent().hide()
 						}
 					})
 				} else {
 					$(".dc").show()
+					$(".dc > span").each(function( index ) {
+						if ($(this).text() == 0) {
+							$(this).parent().parent.hide()
+						}
+					})
 				}
 			});
 		});

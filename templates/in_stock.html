@@ -54,7 +54,7 @@
 					$(".shop").hide()
 					$(".dc > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).hide()
+							$(this).parent().hide()
 						}
 					})
 				} else {
@@ -66,7 +66,7 @@
 					$(".dc").hide()
 					$(".shop > span").each(function( index ) {
 						if ($(this).text() == 0) {
-							$(this).hide()
+							$(this).parent().hide()
 						}
 					})
 				} else {

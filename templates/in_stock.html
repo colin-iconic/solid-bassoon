@@ -59,7 +59,7 @@
 					});
 				} else {
 					$("*").show()
-					if(! $('#dc_stock').val(this.checked)) {
+					if(! $('#dc_stock').is(":checked")) {
 						$(".dc").hide()
 					}/*
 					$(".shop > span").each(function( index ) {
@@ -79,7 +79,7 @@
 					});
 				} else {
 					$("*").show()
-					if(! $('#shop_stock').val(this.checked)) {
+					if(! $('#shop_stock').is(":checked")) {
 						$(".shop").hide()
 					}/*
 					$(".dc > span").each(function( index ) {

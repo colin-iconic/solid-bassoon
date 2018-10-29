@@ -333,7 +333,7 @@ def jobs(job):
 				jobs.append(a[1])
 
 		for a in jobs:
-			cursor.execute("select p, sequence, status from job_operation where job = '"+a+"'")
+			cursor.execute("select work_center, sequence, status from job_operation where job = '"+a+"'")
 			centers = cursor.fetchall()
 			centers = [list(x) for x in centers]
 
@@ -1458,8 +1458,8 @@ def in_stock(name=None):
 
 	return render_template('in_stock.html', parts = result, category = category.capitalize(), data = result)
 
-@app.route("/schedule")
-def schedule(name=None):
+@app.route("/schedule/<sched>", methods=['GET', 'POST'])
+def schedule(sched):
 
 	class job:
 		def __init__(self, job_number, part='', description='', quantity=0, order_date='', priority=5,	current_wc='', total_line_hours=0, po_number=''):
@@ -1486,23 +1486,24 @@ def schedule(name=None):
 	data = cursor.fetchall()
 	return render_template('generic_table.html', rows = data, head = '', title = 'job operation')
 
-#	for wc in sched:
-#		for j in wc:
-#			#initialize instances of job class with job numbers from form
-#			j = job(j)
-#			cursor.execute("select job, part_number, description, order_quantity, order_date, priority, customer_po from job where job.job = {}".format(j.job_number)
-#			data = [list(x) for x in cursor.fetchall()][0]
-#			j.part = data[1]
-#			j.description = data[2]
-#			j.quantity = data[3]
-#			j.order_date = data[4]
-#			j.priority = data[5]
-#			j.po_number = data[6]
+	for wc in sched:
+		for j in wc:
+			#initialize instances of job class with job numbers from form
+			j = job(j)
+			cursor.execute("select job, part_number, description, order_quantity, order_date, priority, customer_po from job where job.job = {}".format(j.job_number)
+			data = [list(x) for x in cursor.fetchall()][0]
+			j.part = data[1]
+			j.description = data[2]
+			j.quantity = data[3]
+			j.order_date = data[4]
+			j.priority = data[5]
+			j.po_number = data[6]
 
-#			cursor.execute("select work_center, sequence from job_operation where job = {} and job_operation.status = 'o'".format(j.job_number))
-#			data = [list(x) for x in cursor.fetchall()]
-#			data.sort(key=itemgetter(1))
-#			j.current_wc = data[0][0]
+			cursor.execute("select work_center, sequence, est_total_hrs from job_operation where job = {} and job_operation.status = 'o'".format(j.job_number))
+			data = [list(x) for x in cursor.fetchall()]
+			data.sort(key=itemgetter(1))
+			j.current_wc = data[0][0]
+			j.total_line_hours = data[0][2]
 
 		#job_operation - current_wc & total line hours
 

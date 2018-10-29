@@ -1458,8 +1458,8 @@ def in_stock(name=None):
 
 	return render_template('in_stock.html', parts = result, category = category.capitalize(), data = result)
 
-@app.route("/schedule/<sched>", methods=['GET', 'POST'])
-def schedule(sched=None):
+@app.route("/schedule")
+def schedule(name=None):
 
 	class job:
 		def __init__(self, job_number, part='', description='', quantity=0, order_date='', priority=5,	current_wc='', total_line_hours=0, po_number=''):

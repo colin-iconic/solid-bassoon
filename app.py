@@ -1482,24 +1482,24 @@ def schedule(name=None):
 	cursor.execute("select all from job_operation where job = 19708")
 	data = cursor.fetchall()
 	return render_template('generic_table.html', rows = data, head = '', title = 'job operation')
-	
-	for wc in sched:
-		for j in wc:
-			#initialize instances of job class with job numbers from form
-			j = job(j)
-			cursor.execute("select job, part_number, description, order_quantity, order_date, priority, customer_po from job where job.job = {}".format(j.job_number)
-			data = [list(x) for x in cursor.fetchall()][0]
-			j.part = data[1]
-			j.description = data[2]
-			j.quantity = data[3]
-			j.order_date = data[4]
-			j.priority = data[5]
-			j.po_number = data[6]
 
-			cursor.execute("select work_center, sequence from job_operation where job = {} and job_operation.status = 'o'".format(j.job_number))
-			data = [list(x) for x in cursor.fetchall()]
-			data.sort(key=itemgetter(1))
-			j.current_wc = data[0][0]
+#	for wc in sched:
+#		for j in wc:
+#			#initialize instances of job class with job numbers from form
+#			j = job(j)
+#			cursor.execute("select job, part_number, description, order_quantity, order_date, priority, customer_po from job where job.job = {}".format(j.job_number)
+#			data = [list(x) for x in cursor.fetchall()][0]
+#			j.part = data[1]
+#			j.description = data[2]
+#			j.quantity = data[3]
+#			j.order_date = data[4]
+#			j.priority = data[5]
+#			j.po_number = data[6]
+
+#			cursor.execute("select work_center, sequence from job_operation where job = {} and job_operation.status = 'o'".format(j.job_number))
+#			data = [list(x) for x in cursor.fetchall()]
+#			data.sort(key=itemgetter(1))
+#			j.current_wc = data[0][0]
 
 		#job_operation - current_wc & total line hours
 

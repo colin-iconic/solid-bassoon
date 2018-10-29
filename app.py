@@ -1490,7 +1490,7 @@ def schedule(sched):
 		for j in wc:
 			#initialize instances of job class with job numbers from form
 			j = job(j)
-			cursor.execute("select job, part_number, description, order_quantity, order_date, priority, customer_po from job where job.job = {}".format(j.job_number)
+			cursor.execute("select job, part_number, description, order_quantity, order_date, priority, customer_po from job where job.job = {}".format(j.job_number))
 			data = [list(x) for x in cursor.fetchall()][0]
 			j.part = data[1]
 			j.description = data[2]

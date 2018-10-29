@@ -1474,7 +1474,10 @@ def schedule(name=None):
 			self.po_number = po_number
 
 	#get job numbers and work centers from form
-	sched = request.get_json(force=True)
+	try:
+		sched = request.get_json(force=True)
+	except:
+		sched = ''
 	#get all job details
 		#customer, part, description, quantity, order date, priority, current wc, total line hours, po#
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')

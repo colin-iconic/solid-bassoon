@@ -1482,7 +1482,7 @@ def schedule(name=None):
 		#customer, part, description, quantity, order date, priority, current wc, total line hours, po#
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
-	cursor.execute("select * from job_operation where job = 19708")
+	cursor.execute("select * from job_operation where job = '19708'")
 	data = cursor.fetchall()
 	return render_template('generic_table.html', rows = data, head = '', title = 'job operation')
 

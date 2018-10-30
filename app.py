@@ -1341,6 +1341,11 @@ def analytics(name=None):
 	#get jobs shipped in last 12 months
 	cursor.execute("select job, cast(change_date as date) from change_history where wc_vendor = 'shipping' and change_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and change_type = 14")
 	job_list = [list(x) for x in cursor.fetchall()]
+
+	for job in job_list:
+		cursor.execute("select part, total_price from job where job ='{}'".format(job[0]))
+		job.extend([list(x) for x in cursor.fetchall()])
+
 	return render_template('generic_table.html', rows = job_list, head = '', title = 'job list')
 
 	#return render_template('analytics.html', data = data)

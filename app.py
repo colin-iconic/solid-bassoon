@@ -1344,7 +1344,7 @@ def analytics(name=None):
 
 	for job in job_list:
 		cursor.execute("select part_number, total_price from job where job ='{}'".format(job[0]))
-		job.extend([list(x) for x in cursor.fetchall()])
+		job.extend([list(x) for x in cursor.fetchall()][0])
 
 	return render_template('generic_table.html', rows = job_list, head = '', title = 'job list')
 

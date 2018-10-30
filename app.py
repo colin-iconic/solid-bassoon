@@ -1339,7 +1339,7 @@ def analytics(name=None):
 	#cursor.execute("SELECT CHANGE_HISTORY.CHANGED_BY, CHANGE_HISTORY.CHANGE_DATE, CHANGE_HISTORY.OLD_TEXT, CHANGE_HISTORY.NEW_TEXT, CHANGE_HISTORY.WC_VENDOR, CHANGE_HISTORY.JOB, JOB.CUSTOMER, JOB.DESCRIPTION, JOB.PART_NUMBER, JOB.ORDER_QUANTITY FROM (CHANGE_HISTORY INNER JOIN JOB ON CHANGE_HISTORY.JOB = JOB.JOB) WHERE CHANGE_HISTORY.CHANGE_DATE > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 30), 0) AND CHANGE_HISTORY.CHANGE_TYPE = 14")
 
 	#get jobs shipped in last 12 months
-	cursor.execute("select job, change_date from change_history where wc_vendor = 'shipping' and change_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and change_type = 14")
+	cursor.execute("select job, cast(change_date as date) from change_history where wc_vendor = 'shipping' and change_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and change_type = 14")
 	job_list = [list(x) for x in cursor.fetchall()]
 	return render_template('generic_table.html', rows = job_list, head = '', title = 'job list')
 

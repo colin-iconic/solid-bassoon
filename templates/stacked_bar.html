@@ -43,7 +43,7 @@
 
 
   // Transpose the data into layers
-  var dataset = d3.layout.stack()(["stepbox", "toolbox", "rack", "other"].map(function(fruit) {
+  var dataset = d3.layout.stack()(["stepbox", "toolbox", "rack", "other", "0202"].map(function(fruit) {
     return data.map(function(d) {
       return {x: parse(d.year+'-'+d.month), y: +d[fruit]};
     });
@@ -130,10 +130,11 @@
     .style("text-anchor", "start")
     .text(function(d, i) {
       switch (i) {
-        case 0: return "Other";
-        case 1: return "Headache Rack";
-        case 2: return "Toolbox";
-        case 3: return "Stepbox";
+        case 0: return "0202";
+        case 1: return "Other";
+        case 2: return "Headache Rack";
+        case 3: return "Toolbox";
+        case 4: return "Stepbox";
       }
     });
 

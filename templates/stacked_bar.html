@@ -1,7 +1,25 @@
 {% extends "layout.html" %}
 {% block body %}
-<div id="graphDiv"></div>
-<div class="tooltip"></div>
+<style type="text/css">
+  svg {
+    font: 10px sans-serif;
+    shape-rendering: crispEdges;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+  }
+
+  path.domain {
+    stroke: none;
+  }
+
+  .y .tick line {
+    stroke: #ddd;
+  }
+</style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
   var margin = {top: 20, right: 160, bottom: 35, left: 30};
@@ -9,7 +27,7 @@
   var width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
-  var svg = d3.select("graphDiv")
+  var svg = d3.select("body")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)

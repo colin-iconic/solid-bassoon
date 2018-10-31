@@ -59,14 +59,14 @@
     .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
     .range([height, 0]);
 
-  var colors = ["b33040", "#d25c4d", "#f2b447", "#d9d574"];
+  var colors = ["#a6f794", "#b33040", "#d25c4d", "#f2b447", "#d9d574"];
 
 
   // Define and draw axes
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .ticks(5)
+    .ticks(10)
     .tickSize(-width, 0, 0)
     .tickFormat( function(d) { return d } );
 

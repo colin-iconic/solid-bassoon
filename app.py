@@ -1364,7 +1364,7 @@ def analytics(name=None):
 			job.append('other')
 			data[job[1].strftime('%m')]['other'] += job[3]
 
-	return render_template('generic_table.html', rows = data, head = '', title = 'job list')
+	return render_template('generic_table.html', body = data, head = '', title = 'job list')
 
 
 	#return render_template('analytics.html', data = data)

@@ -1340,7 +1340,7 @@ def analytics(name=None):
 	#cursor.execute("SELECT CHANGE_HISTORY.CHANGED_BY, CHANGE_HISTORY.CHANGE_DATE, CHANGE_HISTORY.OLD_TEXT, CHANGE_HISTORY.NEW_TEXT, CHANGE_HISTORY.WC_VENDOR, CHANGE_HISTORY.JOB, JOB.CUSTOMER, JOB.DESCRIPTION, JOB.PART_NUMBER, JOB.ORDER_QUANTITY FROM (CHANGE_HISTORY INNER JOIN JOB ON CHANGE_HISTORY.JOB = JOB.JOB) WHERE CHANGE_HISTORY.CHANGE_DATE > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 30), 0) AND CHANGE_HISTORY.CHANGE_TYPE = 14")
 
 	#get jobs shipped in last 12 months
-	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-7, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14")
+	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-13, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14")
 
 	job_list = [list(x) for x in cursor.fetchall()]
 	job_list = sorted(job_list, key=itemgetter(1))
@@ -1348,15 +1348,15 @@ def analytics(name=None):
 	monthly_sales = [{'month': '01', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '02', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '03', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '04', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '05', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '06', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '07', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '08', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '09', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '10', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '11', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, {'month': '12', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}]
 
 	for job in job_list:
-		if job[2] in [1076,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1020,1021,1022,1023,1024,1075,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1070,1071,1072,1073,1074,1068,1100,1101,1102,1103,1122,1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1123,1171,1172,1150,1151,1152,1153,1154,1155,1156,1157,1158,1159,1160,1161,1162,1163,1164,1165,1166,1167,1168,1169,1170,1173,1174,1175]:
+		if job[2] in ['1076','1001','1002','1003','1004','1005','1006','1007','1008','1009','1010','1011','1012','1013','1014','1015','1016','1017','1018','1020','1021','1022','1023','1024','1075','1050','1051','1052','1053','1054','1055','1056','1057','1058','1059','1060','1061','1062','1063','1064','1065','1066','1067','1070','1071','1072','1073','1074','1068','1100','1101','1102','1103','1122','1104','1105','1106','1107','1108','1109','1110','1111','1112','1113','1114','1115','1116','1117','1118','1119','1120','1121','1123','1171','1172','1150','1151','1152','1153','1154','1155','1156','1157','1158','1159','1160','1161','1162','1163','1164','1165','1166','1167','1168','1169','1170','1173','1174','1175']:
 			job.append('toolbox')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['toolbox'] += job[3]
 
-		elif job[2] in [1300,1301,1302,1364,1365,1366,1319,1320,1321,1322,1323,1324,1328,1329,1330,1331,1332,1333,1351,1352,1353,1355,1356,1357,1359,1360,1361,1362,1303,1304,1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1317,1367,1368,1369,1370,1371,1372,1373,1318,1374]:
+		elif job[2] in ['1300','1301','1302','1364','1365','1366','1319','1320','1321','1322','1323','1324','1328','1329','1330','1331','1332','1333','1351','1352','1353','1355','1356','1357','1359','1360','1361','1362','1303','1304','1305','1306','1307','1308','1309','1310','1311','1312','1313','1314','1315','1317','1367','1368','1369','1370','1371','1372','1373','1318','1374']:
 			job.append('rack')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['rack'] += job[3]
 
-		elif job[2] in [1500,1501,1502,1503,1504,1505,1506,1507,1508,1509,1510,1511,1512,1513,1526,1527,1514,1515,1516,1517,1518,1525,1519,1520,1521,1522,1523,1524]:
+		elif job[2] in ['1500','1501','1502','1503','1504','1505','1506','1507','1508','1509','1510','1511','1512','1513','1526','1527','1514','1515','1516','1517','1518','1525','1519','1520','1521','1522','1523','1524']:
 			job.append('stepbox')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['stepbox'] += job[3]
 

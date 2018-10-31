@@ -1364,7 +1364,7 @@ def analytics(name=None):
 			job.append('other')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['other'] += job[3]
 
-	data = json.dumps(data, indent=2, default=str)
+	data = json.dumps(monthly_sales, indent=2, default=str)
 	data = {'data': data}
 
 	return render_template('generic_table.html', body = data['data'], head = '', title = 'job list')

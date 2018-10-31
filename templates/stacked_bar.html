@@ -22,9 +22,9 @@
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-  var margin = {top: 20, right: 160, bottom: 35, left: 30};
+  var margin = {top: 20, right: 160, bottom: 35, left: 130};
 
-  var width = 960 - margin.left - margin.right,
+  var width = 1060 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
   var svg = d3.select("body")
@@ -39,13 +39,13 @@
 
   var data = {{ data.data | safe }};
 
-  var parse = d3.time.format("%m").parse;
+  var parse = d3.time.format("%Y-%m").parse;
 
 
   // Transpose the data into layers
   var dataset = d3.layout.stack()(["stepbox", "toolbox", "rack", "other"].map(function(fruit) {
     return data.map(function(d) {
-      return {x: parse(d.month), y: +d[fruit]};
+      return {x: parse(d.year+'-'+d.month), y: +d[fruit]};
     });
   }));
 

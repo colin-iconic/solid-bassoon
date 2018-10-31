@@ -1366,6 +1366,7 @@ def analytics(name=None):
 
 	data = json.dumps(data, indent=2, default=str)
 	data = {'data': data}
+
 	return render_template('generic_table.html', body = data['data'], head = '', title = 'job list')
 
 

@@ -1343,7 +1343,7 @@ def analytics(name=None):
 	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-7, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14")
 
 	job_list = [list(x) for x in cursor.fetchall()]
-	job_list = sorted(job, key=itemgetter(1))
+	job_list = sorted(job_list, key=itemgetter(1))
 
 	data = {'01': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '02': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '03': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '04': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '05': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '06': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '07': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '08': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '09': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '10': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '11': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}, '12': {'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0}}
 

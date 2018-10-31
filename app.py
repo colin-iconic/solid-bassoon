@@ -1370,7 +1370,7 @@ def analytics(name=None):
 			job.append('stepbox')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['stepbox'] += job[3]
 
-		elif job[2].startswith('0202'):
+		elif job[2] == '0202':
 			job.append('0202')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['0202'] += job[3]
 

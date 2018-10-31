@@ -1367,10 +1367,7 @@ def analytics(name=None):
 	data = json.dumps(monthly_sales, indent=2, default=str)
 	data = {'data': data}
 
-	return render_template('generic_table.html', body = data['data'], head = '', title = 'job list')
-
-
-	#return render_template('analytics.html', data = data)
+	return render_template('stacked_bar.html', data = data)
 
 @app.route("/report/in_stock")
 def in_stock(name=None):

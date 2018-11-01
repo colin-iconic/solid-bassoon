@@ -1336,7 +1336,7 @@ def analytics(name=None):
 
 	osp_data = json.dumps(data, indent=2, default=str)
 	data = {'osp': osp_data}
-	
+
 	#get jobs shipped in last 12 months
 	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price, job.trade_currency from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-12, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14 and job.customer not like 'I-H%'")
 
@@ -1384,7 +1384,7 @@ def analytics(name=None):
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data
 
-	return render_template('stacked_bar.html', data = data)
+	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")
 def in_stock(name=None):

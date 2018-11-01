@@ -1318,27 +1318,25 @@ def analytics(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-#	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%' and order_date > '1/1/2014 12:00:00 AM' order by Order_Date")
-#	query = [list(x) for x in cursor.fetchall()]
-#	query = [{'date': x[0], 'price': x[1]} for x in query]
+	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%' and order_date > '1/1/2014 12:00:00 AM' order by Order_Date")
+	query = [list(x) for x in cursor.fetchall()]
+	query = [{'date': x[0], 'price': x[1]} for x in query]
 
-#	data = pd.DataFrame(query)
-#	data = data.set_index(['date'])
-#	data = data['price'].resample('W').sum()
-#	data['date'] = data.index
-#	data = data.reset_index()
-#	data = data.fillna(0)
-#	data = data.to_dict('records')
-#	data = data[0:-1]
-#	data = query
-#	for e in data:
-#		e['date'] = e['date'].strftime('%Y-%m-%d')
+	data = pd.DataFrame(query)
+	data = data.set_index(['date'])
+	data = data['price'].resample('W').sum()
+	data['date'] = data.index
+	data = data.reset_index()
+	data = data.fillna(0)
+	data = data.to_dict('records')
+	data = data[0:-1]
+	data = query
+	for e in data:
+		e['date'] = e['date'].strftime('%Y-%m-%d')
 
-#	data = json.dumps(data, indent=2, default=str)
-#	data = {'data': data}
-
-	#cursor.execute("SELECT CHANGE_HISTORY.CHANGED_BY, CHANGE_HISTORY.CHANGE_DATE, CHANGE_HISTORY.OLD_TEXT, CHANGE_HISTORY.NEW_TEXT, CHANGE_HISTORY.WC_VENDOR, CHANGE_HISTORY.JOB, JOB.CUSTOMER, JOB.DESCRIPTION, JOB.PART_NUMBER, JOB.ORDER_QUANTITY FROM (CHANGE_HISTORY INNER JOIN JOB ON CHANGE_HISTORY.JOB = JOB.JOB) WHERE CHANGE_HISTORY.CHANGE_DATE > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 30), 0) AND CHANGE_HISTORY.CHANGE_TYPE = 14")
-
+	osp_data = json.dumps(data, indent=2, default=str)
+	data = {'osp': osp_data}
+	
 	#get jobs shipped in last 12 months
 	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price, job.trade_currency from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-12, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14 and job.customer not like 'I-H%'")
 
@@ -1383,8 +1381,8 @@ def analytics(name=None):
 			job.append('other')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['other'] += job[3]
 
-	data = json.dumps(monthly_sales, indent=2, default=str)
-	data = {'data': data}
+	family_data = json.dumps(monthly_sales, indent=2, default=str)
+	data['family'] = family_data
 
 	return render_template('stacked_bar.html', data = data)
 

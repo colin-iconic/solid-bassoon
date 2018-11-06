@@ -40,7 +40,9 @@
       .attr("transform",
       "translate(" + margin.left + "," + margin.top + ")")
 
-  var formatMoney = function(d) { return "$" + formatDecimalComma(d); };
+  var formatDecimalComma = d3.format(",.2f"),
+      formatMoney = function(d) { return "$" + formatDecimalComma(d); };
+
 
   function drawGraph(data) {
     var ordersByMonth = d3.nest()

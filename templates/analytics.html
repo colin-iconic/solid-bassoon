@@ -7,7 +7,7 @@
 <script>
   var graphData = {{ data.osp | safe }};
 
-  var margin = {top: 30, right: 160, bottom: 30, left: 150};
+  var margin = {top: 30, right: 160, bottom: 100, left: 150};
   var svgWidth = 1500;
   var svgHeight = 750;
   var graphWidth = svgWidth - margin.left - margin.right;
@@ -94,7 +94,7 @@
       .attr("x",0 - (graphHeight / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Total Orders Entered");
+      .text("Total Value of Orders Entered");
 
     // title
     svg.append("text")

@@ -1156,7 +1156,7 @@ def daimler_reminder():
 		recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com", "shvl1340@hotmail.com", "shipping@iconicmetalgear.com"])
 
 	msg.html = render_template('mailer.html', po_list = po_list)
-	#mail.send(msg)
+	mail.send(msg)
 
 	return render_template('mailer.html', po_list = po_list)
 

@@ -14,7 +14,8 @@
   var graphHeight = svgHeight - margin.top - margin.bottom;
 
   var parseDate = d3.time.format("%Y-%m-%d").parse;
-
+  var formatTime = d3.time.format("%e %B");
+  
   var x = d3.time.scale().range([0, graphWidth]);
   var y = d3.scale.linear().range([graphHeight, 0]);
 
@@ -28,7 +29,7 @@
     .y(function(d) { return y(d.price); });
   // Define the div for the tooltip
   var div = d3.select("body").append("div")
-    .attr("class", "tooltip")				
+    .attr("class", "tooltip")
     .style("opacity", 0);
 
   var svg = d3.select("#osp")

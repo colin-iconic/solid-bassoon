@@ -7,8 +7,8 @@
 <script>
   var graphData = {{ data.osp | safe }};
 
-  var margin = {top: 30, right: 50, bottom: 30, left: 50};
-  var svgWidth = 1800;
+  var margin = {top: 30, right: 160, bottom: 30, left: 150};
+  var svgWidth = 1500;
   var svgHeight = 750;
   var graphWidth = svgWidth - margin.left - margin.right;
   var graphHeight = svgHeight - margin.top - margin.bottom;
@@ -101,10 +101,10 @@
   drawGraph(graphData);
 </script>
 <script>
-  var margin = {top: 20, right: 160, bottom: 35, left: 130};
+  var margin = {top: 20, right: 160, bottom: 35, left: 150};
 
-  var width = 1060 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+  var width = 1700 - margin.left - margin.right,
+      height = 750 - margin.top - margin.bottom;
 
   var svg = d3.select("#family")
     .append("svg")

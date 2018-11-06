@@ -1344,7 +1344,7 @@ def analytics(name=None):
 	data = {'osp': osp_data}
 
 	#get jobs shipped in last 12 months
-	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price, job.trade_currency from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-12, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14 and job.customer not like 'I-H%'")
+	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.part_number, job.total_price, job.trade_currency from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-12, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14 and job.customer not like 'I-H%' and job.job not like '%-%'")
 
 	job_list = [list(x) for x in cursor.fetchall()]
 	job_list = sorted(job_list, key=itemgetter(1))

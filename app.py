@@ -1318,8 +1318,14 @@ def analytics(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select order_date, total_price from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%' and order_date > '1/1/2014 12:00:00 AM' order by Order_Date")
+	cursor.execute("select order_date, total_price, trade_currency from job where total_price <> 0 and customer not like 'I-H%' and job not like '%-%' and order_date > '1/1/2014 12:00:00 AM' order by Order_Date")
 	query = [list(x) for x in cursor.fetchall()]
+	for job in query:
+		if job[2] == 2: #if currency is CAD do nothing
+			pass
+		elif job[2] == 1: #if currency is USD convert to CAD
+			job[1] = Decimal(job[1])*Decimal(1.27)
+
 	query = [{'date': x[0], 'price': x[1]} for x in query]
 
 	data = pd.DataFrame(query)

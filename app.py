@@ -1144,16 +1144,16 @@ def daimler_reminder():
 			else:
 				promised = promised[0][0]
 
-			cursor.execute("select order_quantity from job where job = '" + job[0] + "'")
+			cursor.execute("select order_quantity, description from job where job = '" + job[0] + "'")
 			quantity = [list(x) for x in cursor.fetchall()]
 
-			j.append([job[0], promised, centers[0][0], quantity[0][0]])
+			j.append([job[0], promised, centers[0][0], quantity[0][0], quantity[0][1]])
 
 		po_list.append([po[0], j])
 
 	msg = Message("Daimler - Daily Update",
 		sender="colin@iconicmetalgear.com",
-		recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com"])
+		recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com", "shvl1340@hotmail.com", "shipping@iconicmetalgear.com"])
 
 	msg.html = render_template('mailer.html', po_list = po_list)
 	mail.send(msg)

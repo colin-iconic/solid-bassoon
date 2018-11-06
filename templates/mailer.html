@@ -1,7 +1,7 @@
 {% for po in po_list %}
 	<h2>PO# {{ po[0] }}</h2>
 		{% for j in po[1] %}
-			|    <b>Job#:</b> {{ j[0] }}   -  <b>Quantity: </b> {{ j[3] }} - <b>Promised Date:</b> {{ j[1].strftime('%b-%d-%Y') }}   -   <b>Work Center:</b> {{ j[2] }}<br>
+			|    <b>Job#:</b> {{ j[0] }}   -  {{ j[4] }} | <b>Quantity: </b> {{ j[3] }} - <b>Promised Date:</b> {{ j[1].strftime('%b-%d-%Y') }}   -   <b>Work Center:</b> {{ j[2] }}<br>
 		{% endfor %}
 	<br><br>
 {% endfor %}

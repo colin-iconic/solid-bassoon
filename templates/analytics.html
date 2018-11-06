@@ -93,9 +93,9 @@
           div.transition()
             .duration(100)
             .style("opacity", .9);
-          div.html(formatTime(d.date) + "<br/>" + d.price)
+          div.html(formatTime(d.date) + "<br/>" + d.price.tofixed(2))
             .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY - 28) + "px");
+            .style("top", (d3.event.pageY - 42) + "px");
         })
         .on("mouseout", function(d) {
           div.transition()

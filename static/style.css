@@ -146,11 +146,11 @@
 	  position: absolute;
 	  text-align: center;
 	  width: 60px;
-	  height: 28px;
+	  height: 32px;
 	  padding: 2px;
 	  font: 12px sans-serif;
 	  background: white;
-	  border: 0px;
+	  border: 1px solid black;
 	  pointer-events: none;
 	}
 	#parts {

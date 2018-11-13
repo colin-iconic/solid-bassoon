@@ -90,7 +90,7 @@
     // text label for the y axis
     svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
+      .attr("y", 0 - (margin.left / 2))
       .attr("x",0 - (graphHeight / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
@@ -129,7 +129,7 @@
   drawGraph(graphData);
 </script>
 <script>
-  var margin = {top: 20, right: 160, bottom: 35, left: 150};
+  var margin = {top: 50, right: 160, bottom: 50, left: 150};
 
   var width = 1500 - margin.left - margin.right,
       height = 750 - margin.top - margin.bottom;
@@ -266,14 +266,14 @@
 
   // text label for the x axis
   svg.append("text")
-    .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + 20) + ")")
+    .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + ) + ")")
     .style("text-anchor", "middle")
     .text("Month");
 
   // text label for the y axis
   svg.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left)
+    .attr("y", 0 - (margin.left / 2))
     .attr("x",0 - (graphHeight / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")

@@ -1394,6 +1394,11 @@ def analytics(name=None):
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data
 
+	oct_list = []
+	for each in job_list:
+		if each[1].strftime('%m') == '10': oct_list.append(each)
+
+	return render_template('generic_table.html', rows = oct_list, title = 'Pull From')
 	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")

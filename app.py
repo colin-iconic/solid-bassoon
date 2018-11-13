@@ -1383,7 +1383,7 @@ def analytics(name=None):
 			job.append('0202')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['0202'] += job[3]
 
-		elif len(job[2]) == 3:
+		elif job[2] is not None and len(job[2]) == 3:
 			job.append('cabinets')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['cabinets'] += job[3]
 

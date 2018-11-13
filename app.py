@@ -1394,6 +1394,12 @@ def analytics(name=None):
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data
 
+	cab_jobs = []
+	for each in job_list:
+		if each[5] == 'cabinets':
+			cab_jobs.append(each)
+
+	return render_template('generic_table.html', rows = cab_jobs, title = 'cabinet jobs')
 	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")

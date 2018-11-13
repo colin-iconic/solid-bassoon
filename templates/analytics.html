@@ -263,5 +263,29 @@
     .style("text-anchor", "middle")
     .attr("font-size", "12px")
     .attr("font-weight", "bold");
+
+  // text label for the x axis
+  svg.append("text")
+    .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + 20) + ")")
+    .style("text-anchor", "middle")
+    .text("Month");
+
+  // text label for the y axis
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x",0 - (graphHeight / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Value of Orders Shipped");
+
+  // title
+  svg.append("text")
+    .attr("x", (graphWidth / 2))
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("text-decoration", "underline")
+    .text("Monthly Order Value vs Date Graph, Categorized");
 </script>
 {% endblock %}

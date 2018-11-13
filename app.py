@@ -1349,7 +1349,7 @@ def analytics(name=None):
 	job_list = [list(x) for x in cursor.fetchall()]
 	job_list = sorted(job_list, key=itemgetter(1))
 
-	monthly_sales = [{'month': '01', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '02', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '03', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '04', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '05', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '06', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '07', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '08', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '09', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '10', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '11', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}, {'month': '12', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'other': 0, '0202': 0}]
+	monthly_sales = [{'month': '01', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '02', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '03', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '04', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '05', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '06', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '07', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '08', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '09', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '10', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '11', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}, {'month': '12', 'year': '', 'toolbox': 0, 'rack': 0, 'stepbox': 0, 'cabinets': 0, 'other': 0, '0202': 0}]
 
 	for each in monthly_sales:
 		each['year'] = next(item for item in job_list if item[1].strftime('%m') == each['month'])[1].strftime('%Y')
@@ -1382,6 +1382,10 @@ def analytics(name=None):
 		elif job[2] is not None and job[2].startswith('0202'):
 			job.append('0202')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['0202'] += job[3]
+
+		elif len(job[2]) == 3:
+			job.append('cabinets')
+			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['cabinets'] += job[3]
 
 		else:
 			job.append('other')

@@ -1401,7 +1401,7 @@ def analytics(name=None):
 
 	oct_list = []
 	for each in job_list:
-		if each[1].strftime('%m') == '10' and each[4] == 1: oct_list.append(each)
+		if each[1].strftime('%m') == '10' and each[4] == 2: oct_list.append(each)
 
 
 	return render_template('generic_table.html', rows = oct_list, title = 'Pull From')

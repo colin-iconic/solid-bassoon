@@ -4,6 +4,7 @@
 <div id="family"></div>
 <div id="currency"></div>
 <div class="tooltip"></div>
+<div class="tooltip2"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
   var graphData = {{ data.osp | safe }};
@@ -371,13 +372,13 @@
     .attr("y", function(d) { return y(d.y0 + d.y); })
     .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
     .attr("width", x.rangeBand())
-    .on("mouseover", function() { tooltip.style("display", null); })
-    .on("mouseout", function() { tooltip.style("display", "none"); })
+    .on("mouseover", function() { tooltip2.style("display", null); })
+    .on("mouseout", function() { tooltip2.style("display", "none"); })
     .on("mousemove", function(d) {
       var xPosition = d3.mouse(this)[0] - 15;
       var yPosition = d3.mouse(this)[1] - 25;
-      tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-      tooltip.select("text").text(parseFloat(d.y).toFixed(2));
+      tooltip2.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+      tooltip2.select("text").text(parseFloat(d.y).toFixed(2));
     });
 
 
@@ -408,7 +409,7 @@
 
   // Prep the tooltip bits, initial display is hidden
   var tooltip = svg.append("g")
-    .attr("class", "tooltip")
+    .attr("class", "tooltip2")
     .style("display", "none");
 
   tooltip.append("rect")

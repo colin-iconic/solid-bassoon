@@ -2,6 +2,7 @@
 {% block body %}
 <div id="osp"></div>
 <div id="family"></div>
+<div id="currency"></div>
 <div class="tooltip"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
@@ -269,7 +270,7 @@
 
   // text label for the x axis
   svg.append("text")
-    .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + 20) + ")")
+    .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
     .style("text-anchor", "middle")
     .text("Month");
 
@@ -277,14 +278,14 @@
   svg.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
-    .attr("x",0 - (graphHeight / 2))
+    .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Value of Orders Shipped");
 
   // title
   svg.append("text")
-    .attr("x", (graphWidth / 2))
+    .attr("x", (width / 2))
     .attr("y", 0 - (margin.top / 2))
     .attr("text-anchor", "middle")
     .style("font-size", "16px")
@@ -297,7 +298,7 @@
   var width = 1500 - margin.left - margin.right,
       height = 750 - margin.top - margin.bottom;
 
-  var svg = d3.select("#family")
+  var svg = d3.select("#currency")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -425,7 +426,7 @@
 
   // text label for the x axis
   svg.append("text")
-    .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + 20) + ")")
+    .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
     .style("text-anchor", "middle")
     .text("Month");
 
@@ -433,14 +434,14 @@
   svg.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
-    .attr("x",0 - (graphHeight / 2))
+    .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Value of Orders Shipped");
 
   // title
   svg.append("text")
-    .attr("x", (graphWidth / 2))
+    .attr("x", (width / 2))
     .attr("y", 0 - (margin.top / 2))
     .attr("text-anchor", "middle")
     .style("font-size", "16px")

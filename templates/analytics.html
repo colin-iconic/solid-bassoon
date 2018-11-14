@@ -373,13 +373,13 @@
     .attr("y", function(d) { return y(d.y0 + d.y); })
     .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
     .attr("width", x.rangeBand())
-    .on("mouseover", function() { tooltip.style("display", null); })
-    .on("mouseout", function() { tooltip.style("display", "none"); })
+    .on("mouseover", function() { tooltip2.style("display", null); })
+    .on("mouseout", function() { tooltip2.style("display", "none"); })
     .on("mousemove", function(d) {
       var xPosition = d3.mouse(this)[0] - 15;
       var yPosition = d3.mouse(this)[1] - 25;
-      tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-      tooltip.select("text").text(parseFloat(d.y).toFixed(2));
+      tooltip2.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+      tooltip2.select("text").text(parseFloat(d.y).toFixed(2));
     });
 
 
@@ -409,17 +409,17 @@
     });
 
   // Prep the tooltip bits, initial display is hidden
-  var tooltip = svg.append("g")
+  var tooltip2 = svg.append("g")
     .attr("class", "tooltip2")
     .style("display", "none");
 
-  tooltip.append("rect")
+  tooltip2.append("rect")
     .attr("width", 60)
     .attr("height", 20)
     .attr("fill", "white")
     .style("opacity", 0.5);
 
-  tooltip.append("text")
+  tooltip2.append("text")
     .attr("x", 30)
     .attr("dy", "1.2em")
     .style("text-anchor", "middle")

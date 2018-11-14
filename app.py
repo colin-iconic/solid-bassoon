@@ -1394,6 +1394,34 @@ def analytics(name=None):
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data
 
+	#get jobs shipped in last 12 months
+	cursor.execute("select change_history.job, cast(change_history.change_date as date), job.total_price, job.trade_currency from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE())-12, '19000101') AND change_date <  DATEADD(MONTH, DATEDIFF(MONTH, '19000101', GETDATE()), '19000101') and change_type = 14 and job.customer not like 'I-H%' and job.job not like '%-%'")
+
+	job_list = [list(x) for x in cursor.fetchall()]
+	job_list = sorted(job_list, key=itemgetter(1))
+
+	monthly_sales = [{'month': '01', 'year': '', 'usd': 0, 'cad': 0}, {'month': '02', 'year': '', 'usd': 0, 'cad': 0}, {'month': '03', 'year': '', 'usd': 0, 'cad': 0}, {'month': '04', 'year': '', 'usd': 0, 'cad': 0}, {'month': '05', 'year': '', 'usd': 0, 'cad': 0}, {'month': '06', 'year': '', 'usd': 0, 'cad': 0}, {'month': '07', 'year': '', 'usd': 0, 'cad': 0}, {'month': '08', 'year': '', 'usd': 0, 'cad': 0}, {'month': '09', 'year': '', 'usd': 0, 'cad': 0}, {'month': '10', 'year': '', 'usd': 0, 'cad': 0}, {'month': '11', 'year': '', 'usd': 0, 'cad': 0}, {'month': '12', 'year': '', 'usd': 0, 'cad': 0}]
+
+	for each in monthly_sales:
+		each['year'] = next(item for item in job_list if item[1].strftime('%m') == each['month'])[1].strftime('%Y')
+
+	def makeDate(item):
+		d = item['year'] + '-' + item['month']
+		d = datetime.datetime.strptime(d, '%Y-%m')
+		return d
+
+	monthly_sales = sorted(monthly_sales, key=makeDate)
+
+	for job in job_list:
+		if job[3] == 2: #if currency is CAD do nothing
+			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['cad'] += job[2]
+		elif job[3] == 1: #if currency is USD convert to CAD
+			job[2] = Decimal(job[2])*Decimal(1.32)
+			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['usd'] += job[2]
+
+	currency_data = json.dumps(monthly_sales, indent=2, default=str)
+	data['currency'] = currency_data
+
 	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")

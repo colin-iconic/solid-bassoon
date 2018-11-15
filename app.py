@@ -317,7 +317,10 @@ def jobs(job):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	joblist = [x.strip() for x in job.split(',')]
+	if ',' in job:
+		joblist = [x.strip() for x in job.split(',')]
+	elif '-' not in job and job % 5 == 0:
+		joblist = [job[i:i+5] for i in range(0, len(job), 5)]
 
 	rows = []
 	for each in joblist:

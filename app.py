@@ -319,7 +319,7 @@ def jobs(job):
 
 	if ',' in job:
 		joblist = [x.strip() for x in job.split(',')]
-	elif '-' not in job and job % 5 == 0:
+	elif '-' not in job and len(job) % 5 == 0:
 		joblist = [job[i:i+5] for i in range(0, len(job), 5)]
 
 	rows = []

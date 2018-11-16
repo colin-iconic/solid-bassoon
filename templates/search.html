@@ -6,7 +6,7 @@
 	<button type="submit">Submit</button>
 </form>
 <h2>Jobs</h2>
-<table id="job-table" border=1 frame=void rules=rows>
+<table class="search_results" id="job-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
 	{% for header in rows["job_head"] %}
@@ -22,7 +22,7 @@
 {% endfor %}
 </table>
 <h2>Quotes</h2>
-<table id="quote-table" border=1 frame=void rules=rows>
+<table class="search_results" id="quote-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
 	{% for header in rows["quote_head"] %}
@@ -38,7 +38,7 @@
 {% endfor %}
 </table>
 <h2>POs</h2>
-<table id="po-table" border=1 frame=void rules=rows>
+<table class="search_results" id="po-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
 	{% for header in rows["po_head"] %}

@@ -169,7 +169,7 @@
 		width: 120px;
 		padding: 10px 0px 10px 10px;
 	}
-	#search_results {
+	.search_results {
 		width: 1200px;
 		overflow-x: scroll;
 	}

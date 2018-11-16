@@ -1610,7 +1610,7 @@ def search(name=None):
 		search = request.args.get('search')
 		search = search.replace("'", "''")
 	else:
-		return render_template('search.html', title = 'No Search Terms Entered')
+		return render_template('search.html', rows = '', title = 'No Search Terms Entered')
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
@@ -1633,7 +1633,6 @@ def search(name=None):
 	data['po'] = [list(x) for x in cursor.fetchall()]
 	data['po_head'] = ['PO Comment', 'Contact', 'Issued By', 'PO Note', 'PO', 'Ship To', 'PO Status', 'Tax Code', 'Terms', 'Vendor', 'Ext. Description', 'GL Account', 'Line', 'Item Note', 'Order Quantity', 'Status', 'Unit Cost', 'Vendor Reference']
 
-	return render_template('generic_table.html', rows = data['job'], head = '', title = 'job operation')
 	return render_template('search.html', rows = data, title = 'Job Detail Search')
 
 if __name__ == '__main__':

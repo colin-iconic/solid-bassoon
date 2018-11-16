@@ -1619,7 +1619,7 @@ def search(name=None):
 
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('generic_table.html', rows = data, head = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep', 'Contact', 'Ship To', 'Source'], title = 'Job Detail Search')
+	return render_template('search.html', rows = data, head = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep', 'Contact', 'Ship To', 'Source'], title = 'Job Detail Search')
 
 if __name__ == '__main__':
 	app.run()

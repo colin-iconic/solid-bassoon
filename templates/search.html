@@ -9,11 +9,11 @@
 <table id="job-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
-	{% for header in data["job_head"] %}
+	{% for header in rows["job_head"] %}
 			<th>{{header}}</th>
 	{% endfor %}
 	</thead>
-{% for row in data["job"] %}
+{% for row in rows["job"] %}
 	<tr>
 	{% for column in row %}
 		<td><div class="info">{{column}}</div></td>
@@ -25,11 +25,11 @@
 <table id="quote-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
-	{% for header in data["quote_head"] %}
+	{% for header in rows["quote_head"] %}
 			<th>{{header}}</th>
 	{% endfor %}
 	</thead>
-{% for row in data["quote"] %}
+{% for row in rows["quote"] %}
 	<tr>
 	{% for column in row %}
 		<td><div class="info">{{column}}</div></td>
@@ -41,11 +41,11 @@
 <table id="po-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
-	{% for header in data["po_head"] %}
+	{% for header in rows["po_head"] %}
 			<th>{{header}}</th>
 	{% endfor %}
 	</thead>
-{% for row in data["po"] %}
+{% for row in rows["po"] %}
 	<tr>
 	{% for column in row %}
 		<td><div class="info">{{column}}</div></td>

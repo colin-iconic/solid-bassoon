@@ -6,7 +6,7 @@
 	<button type="submit">Submit</button>
 </form>
 <h2>Jobs</h2>
-<table id="table-id" border=1 frame=void rules=rows>
+<table id="job-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
 	{% for header in data['job_head'] %}
@@ -22,7 +22,7 @@
 {% endfor %}
 </table>
 <h2>Quotes</h2>
-<table id="table-id" border=1 frame=void rules=rows>
+<table id="quote-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
 	{% for header in data['quote_head'] %}
@@ -38,7 +38,7 @@
 {% endfor %}
 </table>
 <h2>POs</h2>
-<table id="table-id" border=1 frame=void rules=rows>
+<table id="po-table" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
 	{% for header in data['po_head'] %}
@@ -57,6 +57,8 @@
 		{{body}}
 </div>
 <script>
-	new Tablesort(document.getElementById('table-id'));
+	new Tablesort(document.getElementById('job-table'));
+  new Tablesort(document.getElementById('quote-table'));
+  new Tablesort(document.getElementById('po-table'));
 </script>
 {% endblock %}

@@ -170,6 +170,10 @@
 		width: 120px;
 		padding: 10px 0px 10px 10px;
 	}
+	#search_results {
+		width: 1600px;
+		overflow-x: scroll;
+	}
 }
 @media print {
     .no-print, .no-print *

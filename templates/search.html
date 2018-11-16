@@ -5,14 +5,47 @@
 	Search: <input name="search">
 	<button type="submit">Submit</button>
 </form>
+<h2>Jobs</h2>
 <table id="table-id" border=1 frame=void rules=rows>
 	<thead>
 		<tr>
-	{% for header in head %}
+	{% for header in data['job_header'] %}
 			<th>{{header}}</th>
 	{% endfor %}
 	</thead>
-{% for row in rows %}
+{% for row in data['job'] %}
+	<tr>
+	{% for column in row %}
+		<td><div class="info">{{column}}</div></td>
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
+<h2>Quotes</h2>
+<table id="table-id" border=1 frame=void rules=rows>
+	<thead>
+		<tr>
+	{% for header in data['quote_header'] %}
+			<th>{{header}}</th>
+	{% endfor %}
+	</thead>
+{% for row in data['quote'] %}
+	<tr>
+	{% for column in row %}
+		<td><div class="info">{{column}}</div></td>
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
+<h2>POs</h2>
+<table id="table-id" border=1 frame=void rules=rows>
+	<thead>
+		<tr>
+	{% for header in data['po_header'] %}
+			<th>{{header}}</th>
+	{% endfor %}
+	</thead>
+{% for row in data['po'] %}
 	<tr>
 	{% for column in row %}
 		<td><div class="info">{{column}}</div></td>

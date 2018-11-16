@@ -1633,7 +1633,8 @@ def search(name=None):
 	data['po'] = [list(x) for x in cursor.fetchall()]
 	data['po_head'] = ['PO Comment', 'Contact', 'Issued By', 'PO Note', 'PO', 'Ship To', 'PO Status', 'Tax Code', 'Terms', 'Vendor', 'Ext. Description', 'GL Account', 'Line', 'Item Note', 'Order Quantity', 'Status', 'Unit Cost', 'Vendor Reference']
 
-	return render_template('search.html', rows = data, head = head, title = 'Job Detail Search')
+	return render_template('generic_table.html', rows = data['job'], head = '', title = 'job operation')
+	return render_template('search.html', rows = data, title = 'Job Detail Search')
 
 if __name__ == '__main__':
 	app.run()

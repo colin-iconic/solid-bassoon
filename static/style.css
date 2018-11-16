@@ -174,8 +174,10 @@
 		overflow-x: scroll;
 	}
 	.info {
-		height: 70px;
-		overflow: scroll;
+		max-height: 100px;
+		min-width: 100px;
+		overflow: auto;
+		font-size: .75em;
 	}
 }
 @media print {

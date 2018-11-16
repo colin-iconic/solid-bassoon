@@ -1608,6 +1608,7 @@ def schedule(sched):
 def search(name=None):
 	if request.args.get('search'):
 		search = request.args.get('search')
+		search = search.replace("'", "''")
 	else:
 		return render_template('search.html', title = 'No Search Terms Entered')
 

@@ -59,7 +59,6 @@
 	html {
 		background-color: #15194f;
 		height: 100%;
-		overflow-x: hidden;
 	}
 
 	body {
@@ -173,6 +172,10 @@
 	#search_results {
 		width: 1600px;
 		overflow-x: scroll;
+	}
+	.info {
+		height: 35px;
+		overflow: scroll;
 	}
 }
 @media print {

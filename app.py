@@ -1619,7 +1619,7 @@ def search(name=None):
 	cursor.execute("select job, customer, order_quantity, ext_description, customer_po, note_text, comment, cast(order_date as date), part_number, quote, sales_rep, contact, ship_to, source from job where job like '%{0}%' or customer like '%{0}%' or order_quantity like '%{0}%' or ext_description like '%{0}%' or customer_po like '%{0}%' or note_text like '%{0}%' or comment like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or sales_rep like '%{0}%' or contact like '%{0}%' or ship_to like '%{0}%'".format(search))
 
 	data = {'job': [list(x) for x in cursor.fetchall()]}
-	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep', 'Contact', 'Ship To']}
+	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep', 'Contact', 'Ship To']
 
 	#get data from quote
 	cursor.execute("select comment, description, ext_description, line, note_text, part_number, quote, quoted_by, reason, reference, type from quote where  comment like '%{0}%' or description like '%{0}%' or ext_description like '%{0}%' or line like '%{0}%' or note_text like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or quoted_by like '%{0}%' or reason like '%{0}%' or reference like '%{0}%' or type like '%{0}%'".format(search))

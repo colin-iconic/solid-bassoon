@@ -175,9 +175,8 @@
 	}
 	.info {
 		max-height: 100px;
-		min-width: 100px;
 		overflow: auto;
-		font-size: .75em;
+		font-size: .8em;
 	}
 }
 @media print {

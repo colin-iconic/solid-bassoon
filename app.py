@@ -1616,16 +1616,16 @@ def search(name=None):
 	cursor = connection.cursor()
 
 	#get data from job
-	cursor.execute("select job, customer, order_quantity, ext_description, customer_po, note_text, comment, cast(order_date as date), part_number, quote, sales_rep, contact, ship_to, source from job where job like '%{0}%' or customer like '%{0}%' or order_quantity like '%{0}%' or ext_description like '%{0}%' or customer_po like '%{0}%' or note_text like '%{0}%' or comment like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or sales_rep like '%{0}%' or contact like '%{0}%' or ship_to like '%{0}%'".format(search))
+	cursor.execute("select job, customer, order_quantity, ext_description, customer_po, note_text, comment, cast(order_date as date), part_number, quote, sales_rep from job where job like '%{0}%' or customer like '%{0}%' or order_quantity like '%{0}%' or ext_description like '%{0}%' or customer_po like '%{0}%' or note_text like '%{0}%' or comment like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or sales_rep like '%{0}%'".format(search))
 
 	data = {'job': [list(x) for x in cursor.fetchall()]}
-	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep', 'Contact', 'Ship To']
+	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep']
 
 	#get data from quote
-	cursor.execute("select comment, description, ext_description, line, note_text, part_number, quote, quoted_by, reason, reference, type from quote where  comment like '%{0}%' or description like '%{0}%' or ext_description like '%{0}%' or line like '%{0}%' or note_text like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or quoted_by like '%{0}%' or reason like '%{0}%' or reference like '%{0}%' or type like '%{0}%'".format(search))
+	cursor.execute("select comment, description, ext_description, line, note_text, part_number, quote, quoted_by from quote where  comment like '%{0}%' or description like '%{0}%' or ext_description like '%{0}%' or line like '%{0}%' or note_text like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or quoted_by like '%{0}%'".format(search))
 
 	data['quote'] = [list(x) for x in cursor.fetchall()]
-	data['quote_head'] = ['Comment', 'Description', 'Ext. Description', 'Line', 'Note Text', 'Part Number', 'Quote', 'Quoted By', 'Reason', 'Reference', 'Type']
+	data['quote_head'] = ['Comment', 'Description', 'Ext. Description', 'Line', 'Note Text', 'Part Number', 'Quote', 'Quoted By']
 
 	#get data from PO
 	cursor.execute("select po_header.comment, po_header.contact, po_header.issued_by, po_header.note_text, po_header.po, po_header.ship_to, po_header.status, po_header.tax_code, po_header.terms, po_header.vendor, po_detail.ext_description, po_detail.gl_account, po_detail.line, po_detail.note_text, po_detail.order_quantity, po_detail.status, po_detail.unit_cost, po_detail.vendor_reference from po_header inner join po_detail on po_header.po = po_detail.po where po_header.comment like '%{0}%' or po_header.contact like '%{0}%' or po_header.issued_by like '%{0}%' or po_header.note_text like '%{0}%' or po_header.po like '%{0}%' or po_header.ship_to like '%{0}%' or po_header.status like '%{0}%' or po_header.tax_code like '%{0}%' or po_header.terms like '%{0}%' or po_header.vendor like '%{0}%' or po_detail.ext_description like '%{0}%' or po_detail.gl_account like '%{0}%' or po_detail.line like '%{0}%' or po_detail.note_text like '%{0}%' or po_detail.order_quantity like '%{0}%' or po_detail.status like '%{0}%' or po_detail.unit_cost like '%{0}%' or po_detail.vendor_reference like '%{0}%'".format(search))

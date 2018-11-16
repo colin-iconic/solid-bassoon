@@ -1604,6 +1604,22 @@ def schedule(sched):
 
 	#function for filling work center with jobs from priority list
 
+@app.route('/search')
+def search(name=None):
+	if request.args.get('search'):
+		search = request.args.get('search')
+	else:
+		return render_template('search.html', title = 'No Search Terms Entered')
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	#get data from job
+	cursor.execute("select job, customer, quantity, ext_description, customer_po, note_text, comment, order_date, part_number, quote, sales_rep, contact, ship_to, source from job where job like '{0}' or customer like '{0}' or quantity like '{0}' or ext_description like '{0}' or customer_po like '{0}' or note_text like '{0}' or comment like '{0}' or order_date like '{0}' or part_number like '{0}' or quote like '{0}' or sales_rep like '{0}' or contact like '{0}' or shit_to like '{0}' or source like '{0}'".format(search))
+
+	data = [list(x) for x in cursor.fetchall()]
+
+	return render_template('generic_table.html', rows = data, head = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep', 'Contact', 'Ship To', 'Source'], title = 'Job Detail Search')
 
 if __name__ == '__main__':
 	app.run()

@@ -1615,7 +1615,7 @@ def search(name=None):
 	cursor = connection.cursor()
 
 	#get data from job
-	cursor.execute("select job, customer, order_quantity, ext_description, customer_po, note_text, comment, order_date, part_number, quote, sales_rep, contact, ship_to, source from job where job like '{0}' or customer like '{0}' or order_quantity like '{0}' or ext_description like '{0}' or customer_po like '{0}' or note_text like '{0}' or comment like '{0}' or order_date like '{0}' or part_number like '{0}' or quote like '{0}' or sales_rep like '{0}' or contact like '{0}' or shit_to like '{0}' or source like '{0}'".format(search))
+	cursor.execute("select job, customer, order_quantity, ext_description, customer_po, note_text, comment, order_date, part_number, quote, sales_rep, contact, ship_to, source from job where job like '{0}' or customer like '{0}' or order_quantity like '{0}' or ext_description like '{0}' or customer_po like '{0}' or note_text like '{0}' or comment like '{0}' or order_date like '{0}' or part_number like '{0}' or quote like '{0}' or sales_rep like '{0}' or contact like '{0}' or ship_to like '{0}' or source like '{0}'".format(search))
 
 	data = [list(x) for x in cursor.fetchall()]
 

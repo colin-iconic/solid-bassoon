@@ -28,7 +28,7 @@ app.config.update(dict(
 	MAIL_USE_TLS = True,
 	MAIL_USE_SSL = False,
 	MAIL_USERNAME = 'colin@iconicmetalgear.com',
-	MAIL_PASSWORD = 'CamLock1065',
+	MAIL_PASSWORD = '9142metalgear',
 ))
 
 mail = Mail(app)
@@ -1156,7 +1156,7 @@ def daimler_reminder():
 
 	msg = Message("Daimler - Daily Update",
 		sender="colin@iconicmetalgear.com",
-		recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com", "shvl1340@hotmail.com", "shipping@iconicmetalgear.com"])
+		recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com", "shipping@iconicmetalgear.com"])
 
 	msg.html = render_template('mailer.html', po_list = po_list)
 	mail.send(msg)

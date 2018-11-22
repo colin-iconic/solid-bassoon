@@ -2,10 +2,10 @@
 {% block body %}
 <h2 class="no-print">{{ title }}</h2>
 <form method="GET" class="no-print">
-	Search: <input name="search"><br />
+	Search: <input name="search" placeholder="{{ search }}"><br />
 	<div>
-		<input type="radio" id="all" name="status" value="all">
-		<label for="all" checked>All</label>
+		<input type="radio" id="all" name="status" value="all" checked>
+		<label for="all">All</label>
 	</div>
 	<div>
 		<input type="radio" id="active" name="status" value="active">

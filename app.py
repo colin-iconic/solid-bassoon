@@ -1612,6 +1612,7 @@ def search(name=None):
 	else:
 		return render_template('search.html', rows = '', title = 'No Search Terms Entered')
 
+	status = ''
 	if request.args.get('status'):
 		status = request.args.get('status')
 		if status == 'all':

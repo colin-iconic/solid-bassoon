@@ -2,8 +2,25 @@
 {% block body %}
 <h2 class="no-print">{{ title }}</h2>
 <form method="GET" class="no-print">
-	Search: <input name="search">
+	Search: <input name="search"><br />
+	<div>
+		<input type="radio" id="all" name="status" value="all">
+		<label for="all">All</label>
+	</div>
+	<div>
+		<input type="radio" id="active" name="status" value="active">
+		<label for="active">Active</label>
+	</div>
+	<div>
+		<input type="radio" id="complete" name="status" value="complete">
+		<label for="complete">Complete</label>
+	</div>
+	<div>
+		<input type="radio" id="closed" name="status" value="closed">
+		<label for="closed">Closed</label>
+	</div>
 	<button type="submit">Submit</button>
+
 </form>
 <h2>Jobs</h2>
 <table class="search_results" id="job-table" border=1 frame=void rules=rows>

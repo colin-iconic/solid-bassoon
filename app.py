@@ -1628,7 +1628,7 @@ def search(name=None):
 	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep']
 
 	#get data from quote
-	cursor.execute("select comment, description, ext_description, line, note_text, part_number, quote, quoted_by from quote where (comment like '%{0}%' or description like '%{0}%' or ext_description like '%{0}%' or line like '%{0}%' or note_text like '%{0}%' or part_number like '%{0}%' or rfq like '%{0}%' or quoted_by like '%{0}%') and status like '%{1}%'".format(search, status))
+	cursor.execute("select comment, description, ext_description, line, note_text, part_number, rfq, quoted_by from quote where (comment like '%{0}%' or description like '%{0}%' or ext_description like '%{0}%' or line like '%{0}%' or note_text like '%{0}%' or part_number like '%{0}%' or rfq like '%{0}%' or quoted_by like '%{0}%') and status like '%{1}%'".format(search, status))
 
 	data['quote'] = [list(x) for x in cursor.fetchall()]
 	data['quote_head'] = ['Comment', 'Description', 'Ext. Description', 'Line', 'Note Text', 'Part Number', 'RFQ', 'Quoted By']

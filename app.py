@@ -1646,7 +1646,7 @@ def sql_entry(name=None):
 	if request.args.get('sql'):
 		query = request.args.get('sql')
 	else:
-		return render_template('generic_table.html', rows = '', title = 'No Search Terms Entered')
+		return render_template('sql.html', rows = '', title = 'No Search Terms Entered')
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()

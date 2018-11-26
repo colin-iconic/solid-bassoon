@@ -1641,5 +1641,21 @@ def search(name=None):
 
 	return render_template('search.html', rows = data, title = 'Job Detail Search', search = search)
 
+@app.route('/sql')
+def sql_entry(name=None):
+	if request.args.get('sql'):
+		query = request.args.get('sql')
+	else:
+		return render_template('generic_table.html', rows = '', title = 'No Search Terms Entered')
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	#get data from job
+	cursor.execute(query)
+	data = [list(x) for x in cursor.fetchall()]
+
+	return render_template('sql.html', rows=data, title='SQL Query')
+
 if __name__ == '__main__':
 	app.run()

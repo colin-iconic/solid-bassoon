@@ -2,7 +2,8 @@
 {% block body %}
 <h2>{{title}}</h2>
 <form method="GET" class="no-print">
-	Search: <input name="sql"><br />
+	Search: <textarea id="textarea" name="sql" rows="5" cols="33"></textarea>
+	<br />
 	<button type="submit">Submit</button>
 </form>
 <table id="table-id" border=1 frame=void rules=rows>

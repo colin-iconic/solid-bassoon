@@ -1656,7 +1656,7 @@ def sql_entry(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 
 	cursor.execute("select name from sys.dm_exec_describe_first_result_set('{0}', null, 0) ;".format(query))
-	head = [str(x) for x in cursor.fetchall()]
+	head = [list(str(x))[0] for x in cursor.fetchall()]
 
 	return render_template('sql.html', rows=data, head=head, title='SQL Query')
 

@@ -1655,7 +1655,10 @@ def sql_entry(name=None):
 	cursor.execute(query)
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('sql.html', rows=data, title='SQL Query')
+	cursor.execute("select name from sys.dm_exec_describe_first_result_set ({0}, null, 0) ;".format(query))
+	head = [list(x) for x in cursor.fetchall()]
+
+	return render_template('sql.html', rows=data, head=head, title='SQL Query')
 
 if __name__ == '__main__':
 	app.run()

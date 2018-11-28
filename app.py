@@ -1660,5 +1660,22 @@ def sql_entry(name=None):
 
 	return render_template('sql.html', rows=data, head=head, title='SQL Query')
 
+@app.route('/reports/pm_shipped')
+def pm_shipped(name=None):
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select job.job, job.total_price, job.customer, change_history.change_date from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= '2018-04-01 00:00:00' AND change_date <  '2018-11-01 00:00:00' and change_type = 14 and job.customer not like 'I-H%' and job.job not like '%-%' and sales_rep = 'PMSALE'")
+
+	job_list = [list(x) for x in cursor.fetchall()]
+	job_list = sorted(job_list, key=itemgetter(3))
+
+	total_sales = 0
+
+	for job in job_list:
+		total_sales += job[1]
+
+	return render_template('generic_table.html', rows = job_list, head = 'PM Sales Jobs Shipped April 1 2018 - Oct 31 2018', title = 'Sales', body = 'Total Sales: {0}'.format(total_sales))
+
 if __name__ == '__main__':
 	app.run()

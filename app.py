@@ -1675,7 +1675,7 @@ def pm_shipped(name=None):
 	for job in job_list:
 		total_sales += job[1]
 
-	return render_template('generic_table.html', rows = job_list, head = 'PM Sales Jobs Shipped April 1 2018 - Oct 31 2018', title = 'Sales', body = 'Total Sales: {0}'.format(total_sales))
+	return render_template('generic_table.html', rows = job_list, head = ['Job', 'Total Price', 'Customer', 'Shipped Date'], title = 'PM Sales Jobs Shipped April 1 2018 - Oct 31 2018', body = 'Total Sales: {0}'.format(total_sales))
 
 if __name__ == '__main__':
 	app.run()

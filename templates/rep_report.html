@@ -4,6 +4,7 @@
 <form method="GET" class="no-print">
   Choose a Sales Rep:
 	<select name="rep">
+    <option value="">-Sales Rep-</option>
   {% for rep in rep_list %}
     <option value="{{ rep }}">{{ rep }}</option>
   {% endfor %}

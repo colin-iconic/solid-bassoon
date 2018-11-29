@@ -1701,7 +1701,7 @@ def rep_report(name=None):
 	else:
 		return render_template('rep_report.html', rows = '', title = 'No To Date Entered', rep_list = rep_list)
 
-	cursor.execute("select job.job, job.total_price, job.customer, cast(change_history.change_date as date) from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= '{0} 00:00:00' AND change_date <  '{1} 00:00:00' and change_type = 14 and job.customer not like 'I-H%' and job.job not like '%-%' and sales_rep = '{3}'".format(from_date, to_date, rep))
+	cursor.execute("select job.job, job.total_price, job.customer, cast(change_history.change_date as date) from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= '{0} 00:00:00' AND change_date <  '{1} 00:00:00' and change_type = 14 and job.customer not like 'I-H%' and job.job not like '%-%' and sales_rep = '{2}'".format(from_date, to_date, rep))
 
 	job_list = [list(x) for x in cursor.fetchall()]
 	job_list = sorted(job_list, key=itemgetter(3))

@@ -1677,5 +1677,42 @@ def pm_shipped(name=None):
 
 	return render_template('generic_table.html', rows = job_list, head = ['Job', 'Total Price', 'Customer', 'Shipped Date'], title = 'PM Sales Jobs Shipped April 1 2018 - Oct 31 2018', body = 'Total Sales: {0}'.format(total_sales))
 
+@app.route('/rep_report')
+def rep_report(name=None):
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select distinct sales_rep from job")
+	rep_list = [list(x)[0] for x in cursor.fetchall()]
+
+	if request.args.get('rep'):
+		rep = request.args.get('rep')
+	else:
+		return render_template('rep_report.html', rows = '', title = 'No Rep Selected', rep_list = rep_list)
+
+	if request.args.get('from_date'):
+		from_date = request.args.get('from_date')
+	else:
+		return render_template('rep_report.html', rows = '', title = 'No From Date Entered', rep_list = rep_list)
+
+	if request.args.get('to_date'):
+		to_date = request.args.get('to_date')
+	else:
+		return render_template('rep_report.html', rows = '', title = 'No To Date Entered', rep_list = rep_list)
+
+	cursor.execute("select job.job, job.total_price, job.customer, cast(change_history.change_date as date) from job inner join change_history on job.job = change_history.job where wc_vendor = 'shipping' and change_date >= '{0} 00:00:00' AND change_date <  '{1} 00:00:00' and change_type = 14 and job.customer not like 'I-H%' and job.job not like '%-%' and sales_rep = '{3}'".format(from_date, to_date, rep))
+
+	job_list = [list(x) for x in cursor.fetchall()]
+	job_list = sorted(job_list, key=itemgetter(3))
+
+	total_sales = 0
+
+	for job in job_list:
+		total_sales += job[1]
+
+	return render_template('generic_table.html', rows = job_list, head = ['Job', 'Total Price', 'Customer', 'Shipped Date'], title = 'PM Sales Jobs Shipped April 1 2018 - Oct 31 2018', body = 'Total Sales: {0}'.format(total_sales), rep_list = rep_list)
+
+
 if __name__ == '__main__':
 	app.run()

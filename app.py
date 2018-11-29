@@ -1711,7 +1711,7 @@ def rep_report(name=None):
 	for job in job_list:
 		total_sales += job[1]
 
-	return render_template('generic_table.html', rows = job_list, head = ['Job', 'Total Price', 'Customer', 'Shipped Date'], title = '{0} Jobs Shipped {1} - {2}'.format(rep, from_date, to_date), body = 'Total Sales: {0}'.format(total_sales), rep_list = rep_list)
+	return render_template('rep_report.html', rows = job_list, head = ['Job', 'Total Price', 'Customer', 'Shipped Date'], title = '{0} Jobs Shipped {1} - {2}'.format(rep, from_date, to_date), body = 'Total Sales: {0}'.format(total_sales), rep_list = rep_list)
 
 
 if __name__ == '__main__':

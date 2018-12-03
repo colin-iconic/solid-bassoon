@@ -1397,7 +1397,7 @@ def analytics(name=None):
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['other'] += job[3]
 			other_list.append(job)
 
-	return render_template('generic_table.html', rows = other_list, head = '', title = 'Other Items')
+	return render_template('generic_table.html', rows = other_list, head = ['job', 'date', 'part', 'price', 'qty', 'category'], title = 'Other Items')
 
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data

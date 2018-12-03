@@ -1364,6 +1364,8 @@ def analytics(name=None):
 
 	monthly_sales = sorted(monthly_sales, key=makeDate)
 
+	other_list = []
+
 	for job in job_list:
 		if job[4] == 2: #if currency is CAD do nothing
 			pass
@@ -1393,6 +1395,9 @@ def analytics(name=None):
 		else:
 			job.append('other')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['other'] += job[3]
+			other_list.append(job)
+
+	return render_template('generic_table.html', rows = other_list, head = '', title = 'Other Items')
 
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data

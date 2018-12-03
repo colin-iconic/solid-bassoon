@@ -1376,7 +1376,7 @@ def analytics(name=None):
 			job.append('toolbox')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['toolbox'] += job[3]
 
-		elif job[2] in ['1300','1301','1302','1364','1365','1366','1319','1320','1321','1322','1323','1324','1328','1329','1330','1331','1332','1333','1351','1352','1353','1355','1356','1357','1359','1360','1361','1362','1303','1304','1305','1306','1307','1308','1309','1310','1311','1312','1313','1314','1315','1317','1367','1368','1369','1370','1371','1372','1373','1318','1374','6926','6925','6910','6900','6583',]:
+		elif job[2] in ['1300','1301','1302','1364','1365','1366','1319','1320','1321','1322','1323','1324','1328','1329','1330','1331','1332','1333','1351','1352','1353','1355','1356','1357','1359','1360','1361','1362','1303','1304','1305','1306','1307','1308','1309','1310','1311','1312','1313','1314','1315','1317','1367','1368','1369','1370','1371','1372','1373','1318','1374','6926','6925','6910','6900','6583']:
 			job.append('rack')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['rack'] += job[3]
 
@@ -1395,9 +1395,7 @@ def analytics(name=None):
 		else:
 			job.append('other')
 			next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['other'] += job[3]
-			other_list.append(job)
 
-	return render_template('generic_table.html', rows = other_list, head = ['job', 'date', 'part', 'price', 'qty', 'category'], title = 'Other Items')
 
 	family_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['family'] = family_data

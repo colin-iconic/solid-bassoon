@@ -1716,6 +1716,21 @@ def rep_report(name=None):
 
 	return render_template('rep_report.html', rows = job_list, head = ['Job', 'Total Price', 'Customer', 'Shipped Date'], title = '{0} Jobs Shipped {1} - {2}'.format(rep, from_date, to_date), body = 'Total Sales: {0}'.format(total_sales), rep_list = rep_list)
 
+@app.route("/mobile_traveler")
+def mobile_traveler(name=None):
+	if request.args.get('job'):
+		job = request.args.get('job')
+	else:
+		job = ''
+		render_template('generic_table.html', rows = '', head = '', title = "No Job Entered")
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select status, part_number, order_quantity, customer_po, customer, ship_to, note_text from job where job = '{0}'".format(job))
+	job_details = [list(x)[0] for x in cursor.fetchall()]
+
+	render_template('generic_table.html', rows = job_details, head = ['Status', 'Part Number', 'Order Quantity', 'Customer PO', 'Customer', 'Ship To', 'Note Text'], title = Job)
 
 if __name__ == '__main__':
 	app.run()

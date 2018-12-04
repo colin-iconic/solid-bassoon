@@ -1755,10 +1755,16 @@ def part_viewer(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, description, cast(order_date as date), order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
+	cursor.execute("select job, customer, customer_po, description, cast(order_date as date), order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer - {0}'.format(part))
+	for job in data:
+		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+		job_data = [list(x) for x in cursor.fetchall()]
+		job_data.sort(key=itemgetter(1))
+		job.append(data[0][0])
+
+	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Part Viewer - {0}'.format(part))
 
 @app.route("/po_viewer")
 def po_viewer(name=None):
@@ -1773,7 +1779,13 @@ def po_viewer(name=None):
 	cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}' and status = 'Active'".format(po))
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('po_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'PO Viewer')
+	for job in data:
+		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+		job_data = [list(x) for x in cursor.fetchall()]
+		job_data.sort(key=itemgetter(1))
+		job.append(data[0][0])
+
+	return render_template('po_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'PO Viewer')
 
 @app.route("/customer_jobs")
 def customer_jobs(name=None):
@@ -1788,7 +1800,13 @@ def customer_jobs(name=None):
 	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity from job where customer = '{0}' and status = 'Active'".format(customer))
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'Customer Jobs')
+	for job in data:
+		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+		job_data = [list(x) for x in cursor.fetchall()]
+		job_data.sort(key=itemgetter(1))
+		job.append(data[0][0])
+
+	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 
 if __name__ == '__main__':
 	app.run()

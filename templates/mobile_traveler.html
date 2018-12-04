@@ -8,16 +8,28 @@
 <br />
 <table>
   <tr>
-    <td>Status: {{ job_details['status'] }}></td>
-    <td>Part: <a href="/part_viewer?po={{ job_details['part number'] }}">{{ job_details['part number'] }}</a></td>
+    <td>Status: </td>
+    <td>{{ job_details['status'] }}</td>
   </tr>
   <tr>
-    <td>Quantity: {{ job_details['quantity'] }}</td>
-    <td>Customer PO: <a href="/po_viewer?po={{ job_details['customer po'] }}">{{ job_details['customer po'] }}</a></td>
+    <td>Part: </td>
+    <td><a href="/part_viewer?po={{ job_details['part number'] }}">{{ job_details['part number'] }}</a></td>
   </tr>
   <tr>
-    <td>Promised Date: {{ job_details['promised date'] }}</td>
-    <td>Current Work Center: {{ job_details['current wc'] }}</td>
+    <td>Quantity: </td>
+    <td>{{ job_details['quantity'] }}</td>
+  </tr>
+  <tr>
+    <td>Customer PO: </td>
+    <td><a href="/po_viewer?po={{ job_details['customer po'] }}">{{ job_details['customer po'] }}</a></td>
+  </tr>
+  <tr>
+    <td>Promised Date: </td>
+    <td>{{ job_details['promised date'] }}</td>
+  </tr>
+  <tr>
+    <td>Current Work Center: </td>
+    <td>{{ job_details['current wc'] }}</td>
   </tr>
 </table>
 <br />

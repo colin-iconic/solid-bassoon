@@ -1743,8 +1743,22 @@ def mobile_traveler(name=None):
 	data.sort(key=itemgetter(1))
 	job_details['current wc'] = data[0][0]
 
-
 	return render_template('mobile_traveler.html', job_details = job_details)
+
+@app.route("/part_viewer")
+def part_viewer(name=None):
+	if request.args.get('part'):
+		part = request.args.get('part')
+	else:
+		return render_template('part_viewer.html', part_details = ['Enter Part Number'])
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select job, customer, description, order_date, order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
+	data = [list(x) for x in cursor.fetchall()]
+
+	return render_template('part_viewer.html', part_details = data, title = 'Part Viewer')
 
 if __name__ == '__main__':
 	app.run()

@@ -1729,7 +1729,7 @@ def mobile_traveler(name=None):
 
 	cursor.execute("select status, part_number, order_quantity, customer_po, customer, ship_to, note_text from job where job = '{0}'".format(job))
 	data = [x for x in cursor.fetchall()]
-	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6]}
+	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[5]}
 
 	cursor.execute("select name, line1, line2, city, state, zip from address where address = '{0}'".format(job_details['ship to']))
 	job_details['address'] = [x for x in cursor.fetchall()]

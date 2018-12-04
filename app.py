@@ -1758,7 +1758,7 @@ def part_viewer(name=None):
 	cursor.execute("select job, customer, description, cast(order_date as date), order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer')
+	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer - {0}'.format())
 
 @app.route("/po_viewer")
 def po_viewer(name=None):
@@ -1773,7 +1773,7 @@ def po_viewer(name=None):
 	cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}' and status = 'Active'".format(po))
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer')
+	return render_template('po_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'PO Viewer')
 
 @app.route("/customer_jobs")
 def customer_jobs(name=None):

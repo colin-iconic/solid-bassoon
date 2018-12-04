@@ -1728,6 +1728,7 @@ def mobile_traveler(name=None):
 
 	cursor.execute("select status, part_number, order_quantity, customer_po, customer, ship_to, note_text from job where job = '{0}'".format(job))
 	data = [x for x in cursor.fetchall()]
+	return render_template('generic_table.html', rows = data, body = data)
 	#job_details = {'job': job, 'status': 1, 'part number': 2, 'quantity': 3, 'customer po': 4, 'customer': 5, 'ship to': 6, 'note text': 7}
 
 	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6]}

@@ -1,13 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
 	<ul>
-		<li><a href="{{ url_for('wsop') }}">Weekly Shipments and Orders and POs</a></li>
 		<li><a href="{{ url_for('configurator') }}">Headache Rack Configurator</a></li>
+		<br />
+		<li><a href="{{ url_for('search') }}">Search</a></li>
+		<li><a href="{{ url_for('mobile_traveler') }}">Mobile Traveler</a></li>
+		<br />
+		<li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+		<br />
+		<li><a href="{{ url_for('wsop') }}">Weekly Shipments and Orders and POs</a></li>
 		<li><a href="{{ url_for('parts_charts') }}">Weekly Part Orders</a></li>
 		<li><a href="{{ url_for('rep_report') }}">Sales Rep Report</a></li>
-		<li><a href="{{ url_for('analytics') }}">Analytics</a></li>
-		<li><a href="{{ url_for('search') }}">Search</a></li>
-		<br />
 		<li><a href="{{ url_for('wip') }}">Work In Progress - In Production</a></li>
 		<li><a href="{{ url_for('active_orders') }}">Work In Progress - All Entered Orders</a></li>
 	</ul>

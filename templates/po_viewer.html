@@ -12,13 +12,21 @@
 			<th>{{header}}</th>
 	{% endfor %}
 	</thead>
-{% for row in rows %}
-	<tr>
-	{% for column in row %}
-		<td>{{column}}</td>
+	{% for row in rows %}
+		<tr>
+		{% for i in range(0, columns|length) %}
+	    {% if i is 0 %}
+	    <td><a href="/mobile_traveler?job={{ column }}">{{ column }}</a></td>
+	    {% elif i is 1 %}
+	    <td><a href="/customer_jobs?customer={{ column }}">{{ column }}</a></td>
+			{% elif i is 2 %}
+	    <td><a href="/part_viewer?part={{ column }}">{{ column }}</a></td>
+	    {% else %}
+			<td>{{column}}</td>
+	    {% endif %}
+		{% endfor %}
+		</tr>
 	{% endfor %}
-	</tr>
-{% endfor %}
 </table>
 <div>
 		{{body}}

@@ -1775,5 +1775,20 @@ def po_viewer(name=None):
 
 	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer')
 
+@app.route("/customer_jobs")
+def customer_jobs(name=None):
+	if request.args.get('customer'):
+		customer = request.args.get('customer')
+	else:
+		return render_template('customer_jobs.html', rows = '', head = '', title = 'Customer Jobs')
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity from job where customer = '{0}' and status = 'Active'".format(customer))
+	data = [list(x) for x in cursor.fetchall()]
+
+	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'Customer Jobs')
+
 if __name__ == '__main__':
 	app.run()

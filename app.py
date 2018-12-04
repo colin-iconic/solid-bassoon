@@ -1732,7 +1732,7 @@ def mobile_traveler(name=None):
 
 	if data == []:
 		return render_template('mobile_traveler.html', job_details = {'job': 'Invalid Job - Try Again'})
-		
+
 	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6], 'order date': data[7]}
 
 	cursor.execute("select name, line1, line2, city, state, zip from address where address = '{0}'".format(job_details['ship to']))
@@ -1742,9 +1742,12 @@ def mobile_traveler(name=None):
 	job_details['promised date'] = [list(x) for x in cursor.fetchall()][0][0]
 
 	cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job))
-	data = [list(x) for x in cursor.fetchall()]
-	data.sort(key=itemgetter(1))
-	job_details['current wc'] = data[0][0]
+	data = [list(x) for x in cursor.fetchall()
+	if data == []:
+		job_details['current wc'] = 'COMPLETE'
+	else:
+		data.sort(key=itemgetter(1))
+		job_details['current wc'] = data[0][0]
 
 	return render_template('mobile_traveler.html', job_details = job_details)
 

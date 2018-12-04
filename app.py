@@ -1721,7 +1721,7 @@ def mobile_traveler(name=None):
 	if request.args.get('job'):
 		job = request.args.get('job')
 	else:
-		render_template('mobile_traveler.html', job_details = {'job': 'Enter Job'})
+		return render_template('mobile_traveler.html', job_details = {'job': 'Enter Job'})
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()

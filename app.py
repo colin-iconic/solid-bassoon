@@ -1730,7 +1730,7 @@ def mobile_traveler(name=None):
 	cursor.execute("select status, part_number, order_quantity, customer_po, customer, ship_to, note_text from job where job = '{0}'".format(job))
 	job_details = [list(x)[0] for x in cursor.fetchall()]
 
-	render_template('generic_table.html', rows = job_details, head = ['Status', 'Part Number', 'Order Quantity', 'Customer PO', 'Customer', 'Ship To', 'Note Text'], title = job)
+	return render_template('generic_table.html', rows = job_details, head = ['Status', 'Part Number', 'Order Quantity', 'Customer PO', 'Customer', 'Ship To', 'Note Text'], title = job)
 
 if __name__ == '__main__':
 	app.run()

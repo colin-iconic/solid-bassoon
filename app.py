@@ -1755,10 +1755,25 @@ def part_viewer(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, description, order_date, order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
+	cursor.execute("select job, customer, description, cast(order_date as date), order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
 	data = [list(x) for x in cursor.fetchall()]
 
 	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer')
 
+@app.route("/po_viewer")
+def po_viewer(name=None):
+	if request.args.get('po'):
+		part = request.args.get('po')
+	else:
+		return render_template('po_viewer.html', rows = '', head = '', title = 'PO Viewer')
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}' and status = 'Active'".format(po))
+	data = [list(x) for x in cursor.fetchall()]
+
+	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer')
+	
 if __name__ == '__main__':
 	app.run()

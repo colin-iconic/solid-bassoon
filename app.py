@@ -1722,15 +1722,28 @@ def mobile_traveler(name=None):
 		job = request.args.get('job')
 	else:
 		job = ''
-		render_template('generic_table.html', rows = '', head = '', title = "No Job Entered")
+		render_template('mobile_traveler.html', job_details{'job': 'Enter Job'})
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
 	cursor.execute("select status, part_number, order_quantity, customer_po, customer, ship_to, note_text from job where job = '{0}'".format(job))
-	job_details = [x for x in cursor.fetchall()]
+	data = [x for x in cursor.fetchall()]
+	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6]}
 
-	return render_template('generic_table.html', rows = job_details, head = ['Status', 'Part Number', 'Order Quantity', 'Customer PO', 'Customer', 'Ship To', 'Note Text'], title = job)
+	cursor.execute("select name, line1, line2, city, state, zip from address where address = '{0}'".format(job_details['ship to']))
+	job_details['address'] = [x for x in cursor.fetchall()]
+
+	cursor.execute("select promised_date from delivery where job = '{0}'".format(job))
+	job_details['promised date'] = [x for x in cursor.fetchall()][0]
+
+	cursor.execute("select work_center, sequence from job_operation where job = {0} and job_operation.status = 'o'".format(job))
+	data = [list(x) for x in cursor.fetchall()]
+	data.sort(key=itemgetter(1))
+	job_details['current wc'] = data[0][0]
+
+
+	return render_template('mobile_traveler.html', job_details = job_details)
 
 if __name__ == '__main__':
 	app.run()

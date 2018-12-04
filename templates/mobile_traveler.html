@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2 class="no-print">Mobile Traveler</h2>
+<form method="GET" class="no-print">
+	Search: <input name="job" value="{{ job_details['job'] }}"><br />
+	<button type="submit">Submit</button>
+</form>
+<br />
+Status: {{ job_details['status'] }}<br />
+Part: <a href="/part_viewer?po={{ job_details['part number'] }}">{{ job_details['part number'] }}</a><br />
+Quantity: {{ job_details['quantity'] }}<br />
+Customer PO: <a href="/po_viewer?po={{ job_details['customer po'] }}">{{ job_details['customer po'] }}</a><br />
+Promised Date: {{ job_details['promised date'] }}<br />
+Current Work Center: {{ job_details['current wc'] }}<br />
+
+Job Notes:<br />
+<p>{{ job_details['note text'] }}</p>
+<br />
+{% endblock %}

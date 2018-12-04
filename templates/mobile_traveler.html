@@ -8,6 +8,9 @@
 <br />
 <table>
   <tr>
+    <td>Customer: </td>
+    <td>{{ job_details['customer'] }}</td>
+  <tr>
     <td>Status: </td>
     <td>{{ job_details['status'] }}</td>
   </tr>
@@ -36,4 +39,6 @@
 Job Notes:<br />
 <p>{{ job_details['note text'] }}</p>
 <br />
+Ship To:<br />
+{{ job_details['address'] }}
 {% endblock %}

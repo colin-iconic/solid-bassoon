@@ -6,9 +6,9 @@
 	<button type="submit">Submit</button>
 </form>
 <br />
-<div style="padding: 10px;">
+<div style="padding: 10px; background: white;">
   <h3>{{ job_details['job'] }}</h3>
-  <table>
+  <table style="width: 400px;">
     <tr>
       <td>Customer: </td>
       <td><a href="/customer_jobs?customer={{ job_details['customer'] }}">{{ job_details['customer'] }}</a></td>
@@ -43,7 +43,7 @@
   </table>
   <br />
   Job Notes:<br />
-  <p style="width: 600px;">{{ job_details['note text'] }}</p>
+  <p style="width: 400px;">{{ job_details['note text'] }}</p>
   <br />
   Ship To:<br />
   {% for line in job_details['address'] %}

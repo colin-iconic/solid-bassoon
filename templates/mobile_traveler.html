@@ -40,5 +40,7 @@ Job Notes:<br />
 <p>{{ job_details['note text'] }}</p>
 <br />
 Ship To:<br />
-{{ job_details['address'] }}
+{% for line in job_details['address'] %}
+  {{ line }}<br />
+{% endfor %}
 {% endblock %}

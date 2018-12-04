@@ -1763,7 +1763,7 @@ def part_viewer(name=None):
 @app.route("/po_viewer")
 def po_viewer(name=None):
 	if request.args.get('po'):
-		part = request.args.get('po')
+		po = request.args.get('po')
 	else:
 		return render_template('po_viewer.html', rows = '', head = '', title = 'PO Viewer')
 
@@ -1774,6 +1774,6 @@ def po_viewer(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 
 	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity'], title = 'Part Viewer')
-	
+
 if __name__ == '__main__':
 	app.run()

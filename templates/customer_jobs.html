@@ -14,17 +14,17 @@
 	</thead>
 {% for row in rows %}
 	<tr>
-	{% for i in range(0, columns|length) %}
+	{% for i in range(0, row|length) %}
     {% if i == 0 %}
-    <td><a href="/mobile_traveler?job={{ columns[i] }}">{{ columns[i] }}</a></td>
+    <td><a href="/mobile_traveler?job={{ row[i] }}">{{ row[i] }}</a></td>
     {% elif i == 1 %}
-    <td><a href="/customer_jobs?customer={{ columns[i] }}">{{ columns[i] }}</a></td>
+    <td><a href="/customer_jobs?customer={{ row[i] }}">{{ row[i] }}</a></td>
     {% elif i == 2 %}
-    <td><a href="/po_viewer?po={{ columns[i] }}">{{ columns[i] }}</a></td>
+    <td><a href="/po_viewer?po={{ row[i] }}">{{ row[i] }}</a></td>
     {% elif i == 3 %}
-    <td><a href="/part_viewer?part={{ columns[i] }}">{{ columns[i] }}</a></td>
+    <td><a href="/part_viewer?part={{ row[i] }}">{{ row[i] }}</a></td>
     {% else %}
-		<td>{{columns[i]}}</td>
+		<td>{{row[i]}}</td>
     {% endif %}
 	{% endfor %}
 	</tr>

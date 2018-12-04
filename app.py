@@ -1750,7 +1750,7 @@ def part_viewer(name=None):
 	if request.args.get('part'):
 		part = request.args.get('part')
 	else:
-		return render_template('part_viewer.html', part_details = ['Enter Part Number'])
+		return render_template('part_viewer.html', rows = '', head = '', title = 'Part Viewer')
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()

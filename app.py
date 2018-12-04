@@ -1762,7 +1762,7 @@ def part_viewer(name=None):
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 		job_data = [list(x) for x in cursor.fetchall()]
 		job_data.sort(key=itemgetter(1))
-		job.append(data[0][0])
+		job.append(job_data[0][0])
 
 	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Part Viewer - {0}'.format(part))
 
@@ -1783,7 +1783,7 @@ def po_viewer(name=None):
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 		job_data = [list(x) for x in cursor.fetchall()]
 		job_data.sort(key=itemgetter(1))
-		job.append(data[0][0])
+		job.append(job_data[0][0])
 
 	return render_template('po_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'PO Viewer')
 
@@ -1804,7 +1804,7 @@ def customer_jobs(name=None):
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 		job_data = [list(x) for x in cursor.fetchall()]
 		job_data.sort(key=itemgetter(1))
-		job.append(data[0][0])
+		job.append(job_data[0][0])
 
 	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 

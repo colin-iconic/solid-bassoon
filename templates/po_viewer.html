@@ -16,13 +16,13 @@
 		<tr>
 		{% for i in range(0, columns|length) %}
 	    {% if i == 0 %}
-	    <td><a href="/mobile_traveler?job={{ column }}">{{ column }}</a></td>
+	    <td><a href="/mobile_traveler?job={{ columns[i] }}">{{ columns[i] }}</a></td>
 	    {% elif i == 1 %}
-	    <td><a href="/customer_jobs?customer={{ column }}">{{ column }}</a></td>
+	    <td><a href="/customer_jobs?customer={{ columns[i] }}">{{ columns[i] }}</a></td>
 			{% elif i == 2 %}
-	    <td><a href="/part_viewer?part={{ column }}">{{ column }}</a></td>
+	    <td><a href="/part_viewer?part={{ columns[i] }}">{{ columns[i] }}</a></td>
 	    {% else %}
-			<td>{{column}}</td>
+			<td>{{columns[i]}}</td>
 	    {% endif %}
 		{% endfor %}
 		</tr>

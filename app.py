@@ -1731,7 +1731,7 @@ def mobile_traveler(name=None):
 	if not data:
 		return render_template('mobile_traveler.html', job_details = {'job': 'Invalid Job - Try Again'})
 
-	data = [list(x) for x in cursor.fetchall()][0]
+	data = [list(x) for x in data][0]
 
 	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6], 'order date': data[7]}
 

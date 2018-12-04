@@ -1738,7 +1738,7 @@ def mobile_traveler(name=None):
 	cursor.execute("select promised_date from delivery where job = '{0}'".format(job))
 	job_details['promised date'] = [x for x in cursor.fetchall()][0]
 
-	cursor.execute("select work_center, sequence from job_operation where job = {0} and job_operation.status = 'o'".format(job))
+	cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job))
 	data = [list(x) for x in cursor.fetchall()]
 	data.sort(key=itemgetter(1))
 	job_details['current wc'] = data[0][0]

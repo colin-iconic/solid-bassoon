@@ -2,49 +2,52 @@
 {% block body %}
 <h2 class="no-print">Mobile Traveler</h2>
 <form method="GET" class="no-print">
-	Search: <input name="job" placeholder="{{ job_details['job'] }}"><br />
+	Search: <input name="job" placeholder="{{ job_details['job'] }}">
 	<button type="submit">Submit</button>
 </form>
 <br />
-<table>
-  <tr>
-    <td>Customer: </td>
-    <td><a href="/customer_jobs?customer={{ job_details['customer'] }}">{{ job_details['customer'] }}</a></td>
-  <tr>
-    <td>Status: </td>
-    <td>{{ job_details['status'] }}</td>
-  </tr>
-  <tr>
-    <td>Part: </td>
-    <td><a href="/part_viewer?part={{ job_details['part number'] }}">{{ job_details['part number'] }}</a></td>
-  </tr>
-  <tr>
-    <td>Quantity: </td>
-    <td>{{ job_details['quantity'] }}</td>
-  </tr>
-  <tr>
-    <td>Customer PO: </td>
-    <td><a href="/po_viewer?po={{ job_details['customer po'] }}">{{ job_details['customer po'] }}</a></td>
-  </tr>
-  <tr>
-    <td>Order Date: </td>
-    <td>{{ job_details['order date'] }}</td>
-  </tr>
-  <tr>
-    <td>Promised Date: </td>
-    <td>{{ job_details['promised date'] }}</td>
-  </tr>
-  <tr>
-    <td>Current Work Center: </td>
-    <td>{{ job_details['current wc'] }}</td>
-  </tr>
-</table>
-<br />
-Job Notes:<br />
-<p>{{ job_details['note text'] }}</p>
-<br />
-Ship To:<br />
-{% for line in job_details['address'] %}
-  {{ line }}<br />
-{% endfor %}
+<div style="padding: 10px;">
+  <h3>{{ job_details['job'] }}
+  <table>
+    <tr>
+      <td>Customer: </td>
+      <td><a href="/customer_jobs?customer={{ job_details['customer'] }}">{{ job_details['customer'] }}</a></td>
+    <tr>
+      <td>Status: </td>
+      <td>{{ job_details['status'] }}</td>
+    </tr>
+    <tr>
+      <td>Part: </td>
+      <td><a href="/part_viewer?part={{ job_details['part number'] }}">{{ job_details['part number'] }}</a></td>
+    </tr>
+    <tr>
+      <td>Quantity: </td>
+      <td>{{ job_details['quantity'] }}</td>
+    </tr>
+    <tr>
+      <td>Customer PO: </td>
+      <td><a href="/po_viewer?po={{ job_details['customer po'] }}">{{ job_details['customer po'] }}</a></td>
+    </tr>
+    <tr>
+      <td>Order Date: </td>
+      <td>{{ job_details['order date'] }}</td>
+    </tr>
+    <tr>
+      <td>Promised Date: </td>
+      <td>{{ job_details['promised date'] }}</td>
+    </tr>
+    <tr>
+      <td>Current Work Center: </td>
+      <td>{{ job_details['current wc'] }}</td>
+    </tr>
+  </table>
+  <br />
+  Job Notes:<br />
+  <p style="width: 600px;">{{ job_details['note text'] }}</p>
+  <br />
+  Ship To:<br />
+  {% for line in job_details['address'] %}
+    {{ line }}<br />
+  {% endfor %}
+</div>
 {% endblock %}

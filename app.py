@@ -1625,10 +1625,10 @@ def search(name=None):
 	cursor = connection.cursor()
 
 	#get data from job
-	cursor.execute("select job, customer, order_quantity, ext_description, customer_po, note_text, comment, cast(order_date as date), part_number, quote, sales_rep from job where (job like '%{0}%' or customer like '%{0}%' or order_quantity like '%{0}%' or ext_description like '%{0}%' or customer_po like '%{0}%' or note_text like '%{0}%' or comment like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or sales_rep like '%{0}%') and status like '%{1}%'".format(search, status))
+	cursor.execute("select job, customer, order_quantity, description, ext_description, customer_po, note_text, comment, cast(order_date as date), part_number, quote, sales_rep from job where (job like '%{0}%' or customer like '%{0}%' or order_quantity like '%{0}%' or description like '%{0}%' or ext_description like '%{0}%' or customer_po like '%{0}%' or note_text like '%{0}%' or comment like '%{0}%' or part_number like '%{0}%' or quote like '%{0}%' or sales_rep like '%{0}%') and status like '%{1}%'".format(search, status))
 
 	data = {'job': [list(x) for x in cursor.fetchall()]}
-	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep']
+	data['job_head'] = ['Job', 'Customer', 'Quantity', 'Description', 'Ext. Description', 'Customer PO', 'Note Text', 'Comment', 'Order Date', 'Part Number', 'Quote', 'Sales Rep']
 
 	#get data from quote
 	cursor.execute("select rfq.comments, rfq.contact, rfq.customer, rfq.reference, quote.description, quote.ext_description, quote.line, quote.part_number, quote.rfq, quote.quoted_by from quote inner join rfq on quote.rfq = rfq.rfq where (rfq.comments like '%{0}%' or rfq.contact like '%{0}%' or rfq.customer like '%{0}%' or rfq.reference like '%{0}%' or quote.description like '%{0}%' or quote.ext_description like '%{0}%' or quote.line like '%{0}%' or quote.part_number like '%{0}%' or quote.rfq like '%{0}%' or quote.quoted_by like '%{0}%') and quote.status like '%{1}%'".format(search, status))

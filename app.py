@@ -1428,7 +1428,7 @@ def analytics(name=None):
 	currency_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['currency'] = currency_data
 
-	cursor.execute("select cast(order_date as date) from job where status like 'Active' and job not like '%-%' and customer not like '%I-H%'")
+	cursor.execute("select cast(order_date as date) from job where status like 'Active' and job not like '%-%' and customer not like '%I-H%' and order_date > '2018-02-01'")
 
 	active_orders = [list(x)[0] for x in cursor.fetchall()]
 

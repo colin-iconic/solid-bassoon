@@ -483,6 +483,10 @@
     .append("g")
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
+  svg.append("rect")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("fill", "white");
 
   var data = {{ data.counts | safe }};
 

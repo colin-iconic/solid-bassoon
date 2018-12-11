@@ -1445,8 +1445,6 @@ def analytics(name=None):
 		count = sum(1 for d in active_orders if d == single_date)
 		order_count.append({'date': single_date, 'count': count})
 
-	return render_template('generic_table.html', rows = [x['date'], x['count'] for x in order_count])
-
 	order_count_data = json.dumps(order_count, indent=2, default=str)
 	data['counts'] = order_count_data
 

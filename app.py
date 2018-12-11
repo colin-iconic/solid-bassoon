@@ -1428,6 +1428,28 @@ def analytics(name=None):
 	currency_data = json.dumps(monthly_sales, indent=2, default=str)
 	data['currency'] = currency_data
 
+	cursor.execute("select cast(order_date as date) from job where status like 'Active' and job not like '%-%' and customer not '%I-H%'")
+
+	active_orders = [list(x)[0] for x in cursor.fetchall()]
+
+	order_count = []
+
+	def daterange(start_date, end_date):
+		for n in range(int ((end_date - start_date).days)):
+			yield start_date + timedelta(n)
+
+	start_date = min(active_orders)
+	end_date = max(active_orders)
+
+	for single_date in daterange(start_date, end_date):
+		count = sum(1 for d in active_orders if d == single_date)
+		order_count.append({'date': single_date, 'count': count})
+
+	return render_template('generic_table.html', rows = order_count)
+	
+	order_count_data = json.dumps(order_count, indent=2, default=str)
+	data['counts'] = order_count_data
+
 	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")

@@ -1908,7 +1908,7 @@ def ncr_report(name=None):
 			totals['730'] += each[4]
 
 
-	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number', 'Work Center'], title = '', body = totals)
+	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number', 'Work Center'], title = 'NCR Report', totals = totals)
 
 
 

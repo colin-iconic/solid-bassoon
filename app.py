@@ -1862,8 +1862,8 @@ def ncr_report(name=None):
 
 	for each in data:
 		try:
-			each[3].split('=')
-			each[3] = each[3][-1]
+			ncr_note = each[3].split('=')
+			each[3] = ncr_note[-1]
 		except:
 			each[3] = 'None'
 

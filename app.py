@@ -1834,5 +1834,33 @@ def customer_jobs(name=None):
 
 	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 
+@app.route("/saw_packages")
+def saw_packages(name=None):
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0")
+	data = [list(x) for x in cursor.fetchall()]
+
+	saw_jobs = []
+
+	for job in data:
+		if job[1] in ['3023','3021','3009','3027','3028','3011','3024','3022','3017','3026','3018','3020','3004','3006','3013','3007','3010','3003','3005','1800','1809','1810','1801','1802','1814','1807','1374','1500','1501','1502','1503','1504','1505','1506','1507','1508','1509','1510','1511','1512','1513','1526','1527','1514','1515','1516','1517','1518','1525','1519','1520','1521','1522','1523','1524','1367','1368','1369','1370','1371','1372','1373','1318','1303','1304','1305','1306','1307','1308','1309','1310','1311','1312','1313','1314','1315','1316','1317','1300','1301','1302','1364','1365','1366']:
+			saw_jobs.append(job)
+
+	#######Incomplete#########
+
+@app.route("/ncr_report")
+def ncr_report(name=None):
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select order_date, customer_po, customer, note_text, total_price, job, part_number from job where job like '%-NCR%'")
+	data = [list(x) for x in cursor.fetchall()]
+
+	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number'], title = '')
+
 if __name__ == '__main__':
 	app.run()

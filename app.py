@@ -1876,10 +1876,10 @@ def ncr_report(name=None):
 			each.append('None')
 
 		if each[7] == 'None' or each[7] == 'DESIGN':
-			each[4] == 0
+			each[4] = 0
 
 		else:
-			each[4] == 200
+			each[4] = 200
 
 		now = datetime.datetime.now().date()
 

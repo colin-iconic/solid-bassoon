@@ -1857,10 +1857,16 @@ def ncr_report(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select order_date, customer_po, customer, note_text, total_price, job, part_number from job where job like '%-NCR%'")
+	cursor.execute("select cast(order_date as date), customer_po, customer, note_text, total_price, job, part_number from job where job like '%-NCR%'")
 	data = [list(x) for x in cursor.fetchall()]
 
+	for each in data:
+		each[3].split('=')
+		each[3] = each[3][-1]
+
 	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number'], title = '')
+
+
 
 if __name__ == '__main__':
 	app.run()

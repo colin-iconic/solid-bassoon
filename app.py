@@ -1860,6 +1860,7 @@ def ncr_report(name=None):
 	cursor.execute("select cast(order_date as date), customer_po, customer, note_text, total_price, job, part_number from job where job like '%-NCR%'")
 	data = [list(x) for x in cursor.fetchall()]
 
+	totals = {'7': 0, '30': 0, '60': 0, '90': 0, '120': 0, '240': 0, '365': 0, '730': 0}
 	for each in data:
 		try:
 			ncr_note = each[3].split('=')
@@ -1874,9 +1875,38 @@ def ncr_report(name=None):
 		except:
 			each.append('None')
 
-		if
+		if each[7] == 'None' or each[7] == 'DESIGN':
+			each[4] == 0
 
-	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number', 'Work Center'], title = '')
+		else:
+			each[4] == 200
+
+		if now-datetime.timedelta(days=7) <= each[0] <= now:
+			totals['7'] += each[4]
+
+		if now-datetime.timedelta(days=30) <= each[0] <= now:
+			totals['30'] += each[4]
+
+		if now-datetime.timedelta(days=60) <= each[0] <= now:
+			totals['60'] += each[4]
+
+		if now-datetime.timedelta(days=90) <= each[0] <= now:
+			totals['90'] += each[4]
+
+		if now-datetime.timedelta(days=120) <= each[0] <= now:
+			totals['120'] += each[4]
+
+		if now-datetime.timedelta(days=240) <= each[0] <= now:
+			totals['240'] += each[4]
+
+		if now-datetime.timedelta(days=365) <= each[0] <= now:
+			totals['365'] += each[4]
+
+		if now-datetime.timedelta(days=730) <= each[0] <= now:
+			totals['730'] += each[4]
+
+
+	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number', 'Work Center'], title = '', body = totals)
 
 
 

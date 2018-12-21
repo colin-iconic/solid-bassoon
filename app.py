@@ -1861,8 +1861,11 @@ def ncr_report(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 
 	for each in data:
-		each[3].split('=')
-		each[3] = each[3][-1]
+		try:
+			each[3].split('=')
+			each[3] = each[3][-1]
+		except:
+			each[3] = 'None'
 
 	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number'], title = '')
 

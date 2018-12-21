@@ -1881,8 +1881,8 @@ def ncr_report(name=None):
 		else:
 			each[4] == 200
 
-		now = datetime.datetime.now()
-		
+		now = datetime.date(datetime.datetime.now())
+
 		if now-datetime.timedelta(days=7) <= each[0] <= now:
 			totals['7'] += each[4]
 

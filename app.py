@@ -1867,7 +1867,11 @@ def ncr_report(name=None):
 		except:
 			each[3] = 'None'
 
-	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number'], title = '')
+		cursor.execute("select work_center from job_operation where job = '{0}' order by sequence")
+		wc = [x for x in cursor.fetchall()][-1]
+		each.append(wc)
+
+	return render_template('generic_table.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number', 'Work Center'], title = '')
 
 
 

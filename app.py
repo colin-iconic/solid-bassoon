@@ -1867,7 +1867,7 @@ def ncr_report(name=None):
 		except:
 			each[3] = 'None'
 
-		cursor.execute("select work_center from job_operation where job = '{0}' order by sequence")
+		cursor.execute("select work_center from job_operation where job = '{0}' order by sequence".format(each[5]))
 		wc = [x for x in cursor.fetchall()][-1]
 		each.append(wc)
 

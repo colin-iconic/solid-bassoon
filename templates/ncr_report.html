@@ -2,6 +2,7 @@
 {% block body %}
 <h2>{{title}}</h2>
 <div>
+  <h3>Totals</h3>
   7 Day Total: ${{ totals['7'] }} <br />
   30 Day Total: ${{ totals['30'] }} <br />
   60 Day Total: ${{ totals['60'] }} <br />
@@ -11,6 +12,7 @@
   365 Day Total: ${{ totals['365'] }} <br />
   730 Day Total: ${{ totals['730'] }} <br />
 </div>
+<br />
 <table id="table-id" border=1 frame=void rules=rows style='width: 1200px;'>
 	<thead>
 		<tr>
@@ -21,7 +23,7 @@
 {% for row in rows %}
 	<tr>
 	{% for column in row %}
-		<td style="min-width:150px">{{column}}</td>
+		<td style="min-width:100px">{{column}}</td>
 	{% endfor %}
 	</tr>
 {% endfor %}

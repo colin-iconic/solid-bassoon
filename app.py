@@ -138,7 +138,7 @@ def racklist(name=None):
 	flat70.shipped = shipped[0][0] or 0
 
 	#Jailbar 70"
-	jb70 = make_stockitem('1364', ['1351', '1352', '1352', '1322'], '70" Jailbar Headache Rack')
+	jb70 = make_stockitem('1364', ['1329', '1351', '1352', '1352', '1322'], '70" Jailbar Headache Rack')
 	cursor.execute("select job.job as job from job where job.job not like '%-%' and job.customer like 'I-H PROD' and job.part_number = '{0}' and job.status = 'active'".format(jb70.part))
 	pjobs = cursor.fetchall()
 	jb70.productionjobs = [x.job for x in pjobs]
@@ -160,7 +160,7 @@ def racklist(name=None):
 	jb70.shipped = shipped[0][0] or 0
 
 	#Flat 76"
-	flat76 = make_stockitem('1301', ['1320', '1353', '1362'], '76" Flat Headache Rack')
+	flat76 = make_stockitem('1301', ['1320', '1330', '1353', '1362'], '76" Flat Headache Rack')
 	cursor.execute("select job.job as job from job where job.job not like '%-%' and job.customer like 'I-H PROD' and job.part_number = '{0}' and job.status = 'active'".format(flat76.part))
 	pjobs = cursor.fetchall()
 	flat76.productionjobs = [x.job for x in pjobs]

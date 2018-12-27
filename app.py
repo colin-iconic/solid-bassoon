@@ -1931,7 +1931,7 @@ def jobs_price(job):
 
 	for job in rows:
 		if job[2] == 1:
-			job[1] = job[1]*1.3
+			job[1] = job[1]*dec(1.3)
 			job[2] = 'USD'
 		elif job[2] == 2:
 			job[2] = 'CAD'

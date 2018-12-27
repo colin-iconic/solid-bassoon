@@ -1928,8 +1928,9 @@ def jobs_price(job):
 			continue
 		data = cursor.fetchall()
 		data = [list(x) for x in data]
+		rows.append(data[0])
 
-	for job in data:
+	for job in rows:
 		if job[2] == 1:
 			job[1] = job[1]*1.3
 			job[2] = 'USD'

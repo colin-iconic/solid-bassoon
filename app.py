@@ -1938,7 +1938,7 @@ def jobs_price(job):
 			job[2] = 'CAD'
 
 	head = ['Job', 'Order Total', 'Currency']
-	return render_template('jobs_list.html', rows = rows, head = head, title = 'Job List')
+	return render_template('generic_table.html', rows = rows, head = head, title = 'Job List')
 
 
 if __name__ == '__main__':

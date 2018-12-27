@@ -1910,6 +1910,34 @@ def ncr_report(name=None):
 
 	return render_template('ncr_report.html', rows = data, head = ['Order Date', 'Customer PO', 'Customer', 'Note Text', 'Total Price', 'Job', 'Part Number', 'Work Center'], title = 'NCR Report', totals = totals)
 
+@app.route('/job_price/<job>')
+def jobs_price(job):
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	if ',' in job:
+		joblist = [x.strip() for x in job.split(',')]
+	elif '-' not in job and len(job) % 5 == 0:
+		joblist = [job[i:i+5] for i in range(0, len(job), 5)]
+
+	rows = []
+	for each in joblist:
+		try:
+			cursor.execute("select job, order_total, trade_currency from job where job = '"+ each +"'")
+		except:
+			continue
+		data = cursor.fetchall()
+		data = [list(x) for x in data]
+
+	for job in data:
+		if job[2] == 1:
+			job[1] = job[1]*1.3
+			job[2] = 'USD'
+		elif job[2] == 2:
+			job[2] = 'CAD'
+
+	head = ['Job', 'Order Total', 'Currency']
+	return render_template('jobs_list.html', rows = rows, head = head, title = 'Job List')
 
 
 if __name__ == '__main__':

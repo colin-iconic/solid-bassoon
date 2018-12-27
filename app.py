@@ -1923,11 +1923,10 @@ def jobs_price(job):
 	rows = []
 	for each in joblist:
 		try:
-			cursor.execute("select job, order_total, trade_currency from job where job = '"+ each +"'")
+			cursor.execute("select job, total_price, trade_currency from job where job = '"+ each +"'")
 		except:
 			continue
-		data = cursor.fetchall()
-		data = [list(x) for x in data]
+		data = [list(x) for x in cursor.fetchall()]
 		rows.append(data[0])
 
 	for job in rows:

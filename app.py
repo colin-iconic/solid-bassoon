@@ -81,6 +81,8 @@ def hotlist(name=None):
 		centers.sort(key=itemgetter(8))
 		rows.append(centers[0])
 
+	rows.sort(key=itemgetter(0))
+	
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Sequence']
 	return render_template('hot.html', rows = rows, head = head, title = 'Hot List')
 

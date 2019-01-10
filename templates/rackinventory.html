@@ -42,19 +42,24 @@
 		<table id="sold-table" border=1 frame=void rules=rows>
 			<caption> Sold Headache Racks </caption>
 			<thead>
-			{% for header in ['Description','Part Number','Job', 'Customer', 'Quantity', 'Order Date', 'Promised Date', 'Notes'] %}
+			{% for header in ['Description','Part Number','Job', 'Customer', 'Quantity', 'Order Date', 'Promised Date', 'Notes', 'Customer PO'] %}
 				<th>{{header}}</th>
 			{% endfor %}
 			</thead>
 			{% for row in sold %}
 			<tr>
-			{% for column in row[:-1] %}
-				<td>{{column}}</td>
-			{% endfor %}
-				<td><span title="{{row[-1]}}">Hover For Notes</span></td>
+				<td>{{ row[0] }}</td>
+				<td><a href="/part_viewer?part={{ row[1] }}">{{row[1]}}</a></td>
+				<td><a href="/mobile_traveler?job={{ row[2] }}">{{row[2]}}</a></td>
+				<td><a href="/customer_jobs?customer={{ row[3] }}">{{row[3]}}</a></td>
+				<td><a href="/po_viewer?po={{ row[8] }}">{{row[8]}}</a></td>
+				<td>{{ row[4] }}</td>
+				<td>{{ row[5] }}</td>
+				<td>{{ row[6] }}</td>
+				<td><span title="{{row[7]}}">Hover For Notes</span></td>
 			</tr>
 		{% endfor %}
-		</table>	
+		</table>
 	</div>
 	<div id="rackstock" style="margin: 50px;">
 			<table id="stock-table" border=1 frame=void rules=rows>
@@ -69,7 +74,7 @@
 					{% for column in row %}
 						<td>{{column}}</td>
 					{% endfor %}
-					</tr>	
+					</tr>
 				{% endfor %}
 			</table>
 	</div>

@@ -254,7 +254,7 @@ def racklist(name=None):
 	custom_racks = [list(x) for x in custom_racks]
 
 	rackssold = [flat70.soldjobs, jb70.soldjobs, flat76.soldjobs, jb76.soldjobs, flat86.soldjobs, jb86.soldjobs] + custom_racks
-	cursor.execute("select job.description as description, job.part_number as partnumber, job.job as job, job.customer as customer, job.order_quantity as orderquantity, cast(job.order_date as date) as orderdate, cast(delivery.promised_date as date) as promiseddate, job.note_text from (job inner join delivery on job.job = delivery.job)  where job.job in ('{0}')".format("', '".join(list(itertools.chain.from_iterable(rackssold)))))
+	cursor.execute("select job.description as description, job.part_number as partnumber, job.job as job, job.customer as customer, job.order_quantity as orderquantity, cast(job.order_date as date) as orderdate, cast(delivery.promised_date as date) as promiseddate, job.note_text, job.customer_po from (job inner join delivery on job.job = delivery.job)  where job.job in ('{0}')".format("', '".join(list(itertools.chain.from_iterable(rackssold)))))
 	sold = cursor.fetchall()
 
 	racksstock = [flat70.productionjobs, jb70.productionjobs, flat76.productionjobs, jb76.productionjobs, flat86.productionjobs, jb86.productionjobs]

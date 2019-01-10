@@ -61,7 +61,7 @@
 		{% endfor %}
 		</table>
 	</div>
-	<!-- <div id="rackstock" style="margin: 50px;">
+	<div id="rackstock" style="margin: 50px;">
 			<table id="stock-table" border=1 frame=void rules=rows>
 				<caption> In Production Stock Orders</caption>
 				<thead>
@@ -77,11 +77,11 @@
 					</tr>
 				{% endfor %}
 			</table>
-	</div> -->
+	</div>
 </div>
 <script>
 	//new Tablesort(document.getElementById('summary-table'));
 	new Tablesort(document.getElementById('sold-table'));
-	//new Tablesort(document.getElementById('stock-table'));
+	new Tablesort(document.getElementById('stock-table'));
 </script>
 {% endblock %}

@@ -13,27 +13,27 @@
 		<b>Total Pull From Quantity: </b> {{ total_pull_from }} <br />
 		<b>Available: </b> {{ available }}
 		<h3>Customer Make Jobs</h3>
-		{% if make_list is defined and make_list|length > 0 %} 
+		{% if make_list is defined and make_list|length > 0 %}
 			{% for each in make_list %}
-				<b>Job: </b>{{ each[0] }} - <b>Customer: </b>{{ each[2] }} - <b>Quantity: </b>{{ each[1] }} - <b>Due Date: </b>{{ each[3].strftime('%Y-%m-%d') }}
+				<b>Job: </b><a href="/mobile_traveler?job={{ each[0] }}">{{ each[0] }}</a> - <b>Customer: </b><a href="/customer_jobs?customer={{ each[2] }}">{{ each[2] }}</a> - <b>Quantity: </b>{{ each[1] }} - <b>Due Date: </b>{{ each[3].strftime('%Y-%m-%d') }}
 				<br />
 			{% endfor %}
 		{% else %}
 			<b>None</b>
 		{% endif %}
 		<h3>Pull Froms</h3>
-		{% if pull_from_list is defined and pull_from_list|length > 0 %} 
+		{% if pull_from_list is defined and pull_from_list|length > 0 %}
 			{% for each in pull_from_list %}
-				<b>Job: </b>{{ each[0] }} - <b>Customer: </b>{{ each[2] }} - <b>Quantity: </b>{{ each[1] }} - <b>Due Date: </b>{{ each[3].strftime('%Y-%m-%d') }}
+				<b>Job: </b><a href="/mobile_traveler?job={{ each[0] }}">{{ each[0] }}</a> - <b>Customer: </b><a href="/customer_jobs?customer={{ each[2] }}">{{ each[2] }}</a> - <b>Quantity: </b>{{ each[1] }} - <b>Due Date: </b>{{ each[3].strftime('%Y-%m-%d') }}
 				<br />
 			{% endfor %}
 		{% else %}
 			<b>None</b>
 		{% endif %}
 		<h3>Ship Jobs</h3>
-		{% if ship_list is defined and ship_list|length > 0 %} 
+		{% if ship_list is defined and ship_list|length > 0 %}
 			{% for each in ship_list %}
-				<b>Job: </b>{{ each[0] }} - <b>Customer: </b>{{ each[2] }} - <b>Quantity: </b>{{ each[1] }} - <b>Due Date: </b>{{ each[3].strftime('%Y-%m-%d') }}
+				<b>Job: </b><a href="/mobile_traveler?job={{ each[0] }}">{{ each[0] }}</a> - <b>Customer: </b><a href="/customer_jobs?customer={{ each[2] }}">{{ each[2] }}</a> - <b>Quantity: </b>{{ each[1] }} - <b>Due Date: </b>{{ each[3].strftime('%Y-%m-%d') }}
 				<br />
 			{% endfor %}
 		{% else %}
@@ -42,7 +42,7 @@
 		<h3>Stock Jobs</h3>
 		{% if stock_jobs is defined and stock_jobs|length > 0 %}
 			{% for each in stock_jobs %}
-				<b>Job: </b>{{ each[0] }} - <b>Work Center: </b>{{ each[2] }} - <b>Quantity: </b>{{ each[1] }}
+				<b>Job: </b><a href="/mobile_traveler?job={{ each[0] }}">{{ each[0] }}</a> - <b>Work Center: </b><a href="/customer_jobs?customer={{ each[2] }}">{{ each[2] }}</a> - <b>Quantity: </b>{{ each[1] }}
 				<br />
 			{% endfor %}
 		{% else %}

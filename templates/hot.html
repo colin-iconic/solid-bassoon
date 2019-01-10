@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>{{title}}</h2>
+<div style="text-align: center;">
+	<div style="margin: 50px;">
+		<table id="hot" border=1 frame=void rules=rows>
+			<caption>Hot Jobs</caption>
+			<thead>
+			{% for header in head %}
+				<th>{{header}}</th>
+			{% endfor %}
+			</thead>
+			{% for row in rows %}
+			<tr>
+        <td>{{ row[0] }}</td>
+        <td><a href="/mobile_traveler?job={{ row[1] }}">{{row[1]}}</a></td>
+				<td><a href="/customer_jobs?customer={{ row[2] }}">{{row[2]}}</a></td>
+        <td><a href="/po_viewer?po={{ row[3] }}">{{row[3]}}</a></td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+				<td><a href="/part_viewer?part={{ row[6] }}">{{row[6]}}</a></td>
+				<td>{{ row[7] }}</td>
+				<td>{{ row[8] }}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+</div>
+<script>
+	new Tablesort(document.getElementById('hot'));
+</script>
+{% endblock %}

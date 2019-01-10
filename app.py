@@ -61,7 +61,7 @@ def hotlist(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job.priority, job.job, job.customer, job.description, cast(job.order_date as date), job.order_quantity, job.part_number, job_operation.work_center, job_operation.sequence from job inner join job_operation on job.job = job_operation.job where job.status = 'active' and job.priority < 5 and job_operation.status = 'o'")
+	cursor.execute("select job.priority, job.job, job.customer, job.customer_po, job.description, cast(job.order_date as date), job.order_quantity, job.part_number, job_operation.work_center, job_operation.sequence from job inner join job_operation on job.job = job_operation.job where job.status = 'active' and job.priority < 5 and job_operation.status = 'o'")
 
 	data = cursor.fetchall()
 	jobs = []
@@ -81,8 +81,8 @@ def hotlist(name=None):
 		centers.sort(key=itemgetter(8))
 		rows.append(centers[0])
 
-	head = ['Priority', 'Job Number', 'Customer', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Sequence']
-	return render_template('generic_table.html', rows = rows, head = head, title = 'Hot List')
+	head = ['Priority', 'Job Number', 'Customer', 'Customer PO' 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Sequence']
+	return render_template('hot.html', rows = rows, head = head, title = 'Hot List')
 
 @app.route('/racks')
 def racklist(name=None):

@@ -27,27 +27,6 @@
 		{% endfor %}
 		</table>
 	</div>
-	<div id="rackstock" style="margin: 50px;">
-			<table id="stock-table" border=1 frame=void rules=rows>
-				<caption>In Production Stock Orders</caption>
-				<thead>
-				{% for header in head %}
-					<th>{{header}}</th>
-				{% endfor %}
-				</thead>
-				{% for row in stock %}
-					<tr>
-						<td>{{ row[0] }}</td>
-						<td><a href="/part_viewer?part={{ row[1] }}">{{row[1]}}</a></td>
-						<td><a href="/mobile_traveler?job={{ row[2] }}">{{row[2]}}</a></td>
-						<td><a href="/customer_jobs?customer={{ row[3] }}">{{row[3]}}</a></td>
-						<td>{{ row[4] }}</td>
-						<td>{{ row[5] }}</td>
-						<td>{{ row[6] }}</td>
-					</tr>
-				{% endfor %}
-			</table>
-	</div>
 </div>
 <script>
 	new Tablesort(document.getElementById('pullfrom'));

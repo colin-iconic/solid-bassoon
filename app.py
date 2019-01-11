@@ -70,24 +70,7 @@ def hotlist(name=None):
 		job_data.sort(key=itemgetter(1))
 		job.append(job_data[0][0])
 
-	jobs = []
-	rows = []
-	c = []
-	d = []
-	for a in data:
-		if a[1] not in jobs:
-			jobs.append(a[1])
-
-	for a in jobs:
-		centers = []
-		for b in data:
-			if a == b[1]:
-				centers.append(b)
-
-		centers.sort(key=itemgetter(8))
-		rows.append(centers[0])
-
-	#rows.sort(key=itemgetter(0))
+	rows.sort(key=itemgetter(0))
 
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
 	return render_template('hot.html', rows = rows, head = head, title = 'Hot List')

@@ -290,7 +290,11 @@ def racklist(name=None):
 
 	for part in trays:
 		cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + part[1] + "' and location_id = 'SHOP'")
-		stockqty = list(cursor.fetchall())
+		try:
+			stockqty = list(cursor.fetchall())[0][0]
+		except:
+			stockqty = 0
+			
 		part.append(stockqty)
 
 	return render_template('rackinventory.html', data = [flat70, jb70, flat76, jb76, flat86, jb86], tanks = tanks, sold = sold, stock = stocklist, trays = trays, head = ['Description','Part Number','Job', 'Customer', 'Quantity', 'Order Date', 'Shipped Quantity'], title = 'Headache Rack Production Tracker')

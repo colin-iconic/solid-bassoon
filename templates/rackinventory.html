@@ -82,10 +82,31 @@
 				{% endfor %}
 			</table>
 	</div>
+	<div id="trays" style="margin: 50px;">
+			<table id="trays-table" border=1 frame=void rules=rows>
+				<caption>Trays</caption>
+				<thead>
+					<thead>
+						job, part_number, description, order_quantity, cast(order_date as date) stock qty
+					{% for header in ['Part Number','Description','Order Quantity', 'Date', 'Stock Quantity'] %}
+						<th>{{header}}</th>
+					{% endfor %}
+					</thead>
+				</thead>
+				{% for row in trays %}
+					<tr>
+						{% for each in row %}
+						<td>{{ each }}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</table>
+	</div>
 </div>
 <script>
 	//new Tablesort(document.getElementById('summary-table'));
 	new Tablesort(document.getElementById('sold-table'));
 	new Tablesort(document.getElementById('stock-table'));
+	new Tablesort(document.getElementById('trays-table'));
 </script>
 {% endblock %}

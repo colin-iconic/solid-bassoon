@@ -1162,7 +1162,7 @@ def daimler_reminder():
 
 	msg = Message("Daimler - Daily Update",
 		sender="colin@iconicmetalgear.com",
-		recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com", "shipping@iconicmetalgear.com"])
+		recipients=["colin@iconicmetalgear.com"])
 
 	msg.html = render_template('mailer.html', po_list = po_list)
 	mail.send(msg)

@@ -285,7 +285,15 @@ def racklist(name=None):
 			stock.append(list(cursor.fetchall()[0])[0])
 			stocklist.append(stock)
 
-	return render_template('rackinventory.html', data = [flat70, jb70, flat76, jb76, flat86, jb86], tanks = tanks, sold = sold, stock = stocklist, head = ['Description','Part Number','Job', 'Customer', 'Quantity', 'Order Date', 'Shipped Quantity'], title = 'Headache Rack Production Tracker')
+	cursor.execute("select job, part_number, description, order_quantity, cast(order_date as date) from job where status = 'active' and part_number in ('1401', '1402', '1403', '1409', '1410', '1411')")
+	trays = [list(x) for x in cursor.fetchall()]
+
+	for part in trays:
+		cursor.execute("select cast(on_hand_qty as int) from material_location where material = '" + part[1] + "' and location_id = 'SHOP'")
+		stockqty = list(cursor.fetchall())[0]
+		part.append(stockqty)
+
+	return render_template('rackinventory.html', data = [flat70, jb70, flat76, jb76, flat86, jb86], tanks = tanks, sold = sold, stock = stocklist, trays = trays, head = ['Description','Part Number','Job', 'Customer', 'Quantity', 'Order Date', 'Shipped Quantity'], title = 'Headache Rack Production Tracker')
 
 @app.route('/onthego') #active jobs with values
 def onthego(name=None):

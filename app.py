@@ -22,7 +22,7 @@ from flask_mail import Message
 app = Flask(__name__)
 
 with open('gmail.txt', 'r') as f:
-	gmailpass = f.readlines()
+	gmailpass = f.readline()
 
 app.config.update(dict(
 	DEBUG = False,

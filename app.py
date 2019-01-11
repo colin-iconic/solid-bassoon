@@ -21,6 +21,9 @@ from flask_mail import Message
 
 app = Flask(__name__)
 
+with open('gmail.txt', 'r') as f:
+	gmailpass = f.readlines()
+
 app.config.update(dict(
 	DEBUG = False,
 	MAIL_SERVER = 'smtp.gmail.com',
@@ -28,7 +31,7 @@ app.config.update(dict(
 	MAIL_USE_TLS = True,
 	MAIL_USE_SSL = False,
 	MAIL_USERNAME = 'colin@iconicmetalgear.com',
-	MAIL_PASSWORD = '890MetalGear',
+	MAIL_PASSWORD = gmailpass,
 ))
 
 mail = Mail(app)
@@ -294,7 +297,7 @@ def racklist(name=None):
 			stockqty = list(cursor.fetchall())[0][0]
 		except:
 			stockqty = 0
-			
+
 		part.append(stockqty)
 
 	return render_template('rackinventory.html', data = [flat70, jb70, flat76, jb76, flat86, jb86], tanks = tanks, sold = sold, stock = stocklist, trays = trays, head = ['Description','Part Number','Job', 'Customer', 'Quantity', 'Order Date', 'Shipped Quantity'], title = 'Headache Rack Production Tracker')

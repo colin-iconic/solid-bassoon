@@ -1849,7 +1849,7 @@ def saw_packages(name=None):
 	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0 and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
 
-	cursor.execute("select job, status from job where job = '%-S%'")
+	cursor.execute("select job, status from job where job like '%-S%'")
 	saw_jobs = [list(x) for x in cursor.fetchall()]
 
 	need_saw = []

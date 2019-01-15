@@ -1860,7 +1860,7 @@ def saw_packages(name=None):
 
 	for job in need_saw:
 		for sjob in saw_jobs:
-			if job[0] == sjob[0]:
+			if job[0] == sjob[0][:2]:
 				if sjob[1] == 'Active':
 					job.append('At Saw')
 				else:

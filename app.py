@@ -1849,13 +1849,26 @@ def saw_packages(name=None):
 	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0")
 	data = [list(x) for x in cursor.fetchall()]
 
-	saw_jobs = []
+	cursor.execute("select job, status from job where job = '%-S'")
+	saw_jobs = [list(x) for x in cursor.fetchall()]
+
+	need_saw = []
 
 	for job in data:
 		if job[1] in ['3023','3021','3009','3027','3028','3011','3024','3022','3017','3026','3018','3020','3004','3006','3013','3007','3010','3003','3005','1800','1809','1810','1801','1802','1814','1807','1374','1500','1501','1502','1503','1504','1505','1506','1507','1508','1509','1510','1511','1512','1513','1526','1527','1514','1515','1516','1517','1518','1525','1519','1520','1521','1522','1523','1524','1367','1368','1369','1370','1371','1372','1373','1318','1303','1304','1305','1306','1307','1308','1309','1310','1311','1312','1313','1314','1315','1316','1317','1300','1301','1302','1364','1365','1366']:
-			saw_jobs.append(job)
+			need_saw.append(job)
 
-	#######Incomplete#########
+	for job in need_saw:
+		for sjob in saw_jobs:
+			if job[0] == sjob[0]:
+				if sjob[1] == 'Active':
+					job.append('At Saw')
+				elif sjob[1] == 'Complete':
+					job.append('Saw Complete')
+		if len(job) == 2:
+			job.append('Missing Saw')
+
+	return render_template('generic_table.html', rows = need_saw, head = ['Job', 'Part Number', 'Status'], title = 'Saw Packages')
 
 @app.route("/ncr_report")
 def ncr_report(name=None):

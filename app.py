@@ -1846,10 +1846,10 @@ def saw_packages(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0")
+	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0 and job not like '%-S%'")
 	data = [list(x) for x in cursor.fetchall()]
 
-	cursor.execute("select job, status from job where job = '%-S'")
+	cursor.execute("select job, status from job where job = '%-S%'")
 	saw_jobs = [list(x) for x in cursor.fetchall()]
 
 	need_saw = []
@@ -1865,6 +1865,8 @@ def saw_packages(name=None):
 					job.append('At Saw')
 				elif sjob[1] == 'Complete':
 					job.append('Saw Complete')
+
+	for job in need_saw:
 		if len(job) == 2:
 			job.append('Missing Saw')
 

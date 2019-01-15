@@ -1870,7 +1870,7 @@ def saw_packages(name=None):
 		if len(job) == 2:
 			job.append('Missing Saw')
 
-	return render_template('generic_table.html', rows = need_saw, head = ['Job', 'Part Number', 'Status'], title = 'Saw Packages')
+	return render_template('generic_table.html', rows = saw_jobs, head = ['Job', 'Part Number', 'Status'], title = 'Saw Packages')
 
 @app.route("/ncr_report")
 def ncr_report(name=None):

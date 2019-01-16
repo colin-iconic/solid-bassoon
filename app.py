@@ -1249,7 +1249,7 @@ def part_status():
 		try:
 			stock_in_production += each[1]
 		except:
-			stock_in_production += each[2]
+			continue
 
 	total_pull_from = 0
 	for each in pull_from_list:

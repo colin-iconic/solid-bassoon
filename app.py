@@ -1965,7 +1965,7 @@ def jobs_price(job):
 	return render_template('generic_table.html', rows = rows, head = head, title = 'Job List')
 
 @app.route('/reports/quotes')
-def quotes(job):
+def quotes(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

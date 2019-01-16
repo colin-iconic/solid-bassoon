@@ -1977,7 +1977,7 @@ def quotes(name=None):
 		quote_data = [list(x) for x in cursor.fetchall()][0]
 		quote.extend(quote_data)
 
-	head = ['Quote', 'Quote Status', 'RFQ', 'Customer', 'Quantity', 'Unit Price', 'Total Price']
+	head = ['Quote', 'Quoted By', 'Part Number', 'Quote Status', 'RFQ', 'Customer', 'Sales Rep', 'Date', 'Reference', 'Currency', 'Quantity', 'Unit Price', 'Total Price']
 	return render_template('generic_table.html', rows = data, head = head, title = 'Quotes')
 
 if __name__ == '__main__':

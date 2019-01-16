@@ -1964,6 +1964,16 @@ def jobs_price(job):
 	head = ['Job', 'Order Total', 'Currency']
 	return render_template('generic_table.html', rows = rows, head = head, title = 'Job List')
 
+@app.route('/reports/quotes')
+def quotes(job):
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select quote.quote, quote.status, quote.rfq, rfq.customer from quote inner join rfq on quote.quote = rfq.quote where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 21), 0)")
+	data = [list(x) for x in cursor.fetchall()]
+
+	head = ['Quote', 'Quote Status', 'RFQ', 'Customer']
+	return render_template('generic_table.html', rows = rows, head = head, title = 'Quotes')
 
 if __name__ == '__main__':
 	app.run()

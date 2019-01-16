@@ -1969,10 +1969,15 @@ def quotes(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select quote.status, quote.rfq, rfq.customer from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 21), 0)")
+	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.customer, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 21), 0)")
 	data = [list(x) for x in cursor.fetchall()]
 
-	head = ['Quote Status', 'RFQ', 'Customer']
+	for quote in data:
+		cursor.execute("select quote_qty, quoted_unit_price, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
+		quote_data = [list(x) for x in cursor.fetchall()][0]
+		quote.extend(quote_data)
+
+	head = ['Quote', 'Quote Status', 'RFQ', 'Customer', 'Quantity', 'Unit Price', 'Total Price']
 	return render_template('generic_table.html', rows = data, head = head, title = 'Quotes')
 
 if __name__ == '__main__':

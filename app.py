@@ -1982,7 +1982,7 @@ def quotes(name=None):
 	for quote in data:
 		quotes['quotes_per_week'] += 1
 		quotes['total_value'] += quote[11]
-		
+
 		if quote[3] == 'Won':
 			quotes['total_win'] += 1
 
@@ -2000,7 +2000,7 @@ def quotes(name=None):
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] += 1
 
-	head = ['Customer', '# of Quotes', 'Total $ Quoted', 'Win %']
+	head = ['Customer', '# of Quotes', '$ Quoted', 'Win %']
 	return render_template('quotes.html', quotes = quotes, head = head, title = 'Quotes')
 
 if __name__ == '__main__':

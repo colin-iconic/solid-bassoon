@@ -1980,7 +1980,7 @@ def quotes(name=None):
 	quotes = {'quotes_per_week': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
 
 	for quote in data:
-		quotes['quotes_per_week'] += 1;
+		quotes['quotes_per_week'] += 1
 		if quote[5] not in quotes['customers']:
 			quotes['customers'].append(quote[5])
 			quotes['customer_counts'][quote[5]] = 1

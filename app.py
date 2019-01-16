@@ -1973,7 +1973,7 @@ def quotes(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 
 	head = ['Quote Status', 'RFQ', 'Customer']
-	return render_template('generic_table.html', rows = rows, head = head, title = 'Quotes')
+	return render_template('generic_table.html', rows = data, head = head, title = 'Quotes')
 
 if __name__ == '__main__':
 	app.run()

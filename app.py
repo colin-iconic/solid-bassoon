@@ -1973,11 +1973,11 @@ def quotes(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 
 	for quote in data:
-		cursor.execute("select quote_qty, quoted_unit_price, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
+		cursor.execute("select quote_qty, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
 		quote_data = [list(x) for x in cursor.fetchall()][0]
 		quote.extend(quote_data)
 
-	head = ['Quote', 'Quoted By', 'Part Number', 'Quote Status', 'RFQ', 'Customer', 'Sales Rep', 'Date', 'Reference', 'Currency', 'Quantity', 'Unit Price', 'Total Price']
+	head = ['Quote', 'Quoted By', 'Part Number', 'Quote Status', 'RFQ', 'Customer', 'Sales Rep', 'Date', 'Reference', 'Currency', 'Quantity', 'Total Price']
 	return render_template('generic_table.html', rows = data, head = head, title = 'Quotes')
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@
 <p>{{ quotes['quotes_per_week'] }}<p>
 <br />
 <h3>Total Value Quoted in Last 21 Days</h3>
-<p>${{ quotes['total_value']|round(2) }}<p>
+<p>{{ "${:,.2f}".format(quotes['total_value']) }}<p>
 <br />
 <h3>Overall Win % in Last 21 Days</h3>
 <p>{{ ((quotes['total_win']/quotes['quotes_per_week'])*100)|round|int }}<p>
@@ -21,8 +21,8 @@
 	<tr>
 		<td>{{ customer }}</td>
     <td>{{ quotes['customer_counts'][customer] }}</td>
-    <td align="right">${{ quotes['customer_total'][customer]|round(2) }}</td>
-    <td>{{ ((quotes['customer_wins'][customer]/quotes['customer_counts'][customer])*100)|round(2)|int }}</td>
+    <td align="right">{{ "${:,.2f}".format(quotes['customer_total'][customer]) }}</td>
+    <td>{{ ((quotes['customer_wins'][customer]/quotes['customer_counts'][customer])*100)|round|int }}</td>
 	</tr>
 {% endfor %}
 </table>

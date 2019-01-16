@@ -1987,6 +1987,8 @@ def quotes(name=None):
 			quotes['customer_total'][quote[5]] = quote[11]
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] = 1
+			else:
+				quotes['customer_wins'][quote[5]] = 0
 		else:
 			quotes['customer_counts'][quote[5]] += 1
 			quotes['customer_total'][quote[5]] += quote[11]

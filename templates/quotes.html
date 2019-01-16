@@ -2,7 +2,8 @@
 {% block body %}
 <div style="padding-left: 10px;">
   <h2>{{title}}</h2>
-  <h3>Summary of the Last 21 Days</h3>
+	<h3><a href="http://192.168.2.81/reports/quotes/7">7 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/14">14 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/21">21 Day Summary</a></h3>
+  <h3>Summary of the Last {{ length }} Days</h3>
   <table>
     <thead>
       <tr>
@@ -19,7 +20,7 @@
   </table>
   <br />
   <br />
-  <h3>Quote Details of the Last 21 Days</h3>
+  <h3>Quote Details of the Last {{ length }} Days</h3>
   <table id="table-id" border=1 frame=void rules=rows>
   	<thead>
   		<tr>

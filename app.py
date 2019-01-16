@@ -1233,7 +1233,7 @@ def part_status():
 		if operation_count == 1:
 			ship_list.append(job)
 
-	cursor.execute("select job.job, delivery.remaining_quantity from job left join delivery on job.job = delivery.job where part_number = '" + part_number + "' and job.status = 'active' and job.job not like '%-%' and job.customer like 'I-H PROD'")
+	cursor.execute("select job.job, delivery.remaining_quantity, job.order_quantity from job left join delivery on job.job = delivery.job where part_number = '" + part_number + "' and job.status = 'active' and job.job not like '%-%' and job.customer like 'I-H PROD'")
 	stock_jobs = [list(x) for x in cursor.fetchall()]
 
 	for job in stock_jobs:
@@ -1249,7 +1249,7 @@ def part_status():
 		try:
 			stock_in_production += each[1]
 		except:
-			continue
+			stock_in_production += each[2]
 
 	total_pull_from = 0
 	for each in pull_from_list:

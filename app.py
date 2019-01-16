@@ -1977,8 +1977,24 @@ def quotes(name=None):
 		quote_data = [list(x) for x in cursor.fetchall()][0]
 		quote.extend(quote_data)
 
-	head = ['Quote', 'Quoted By', 'Part Number', 'Quote Status', 'RFQ', 'Customer', 'Sales Rep', 'Date', 'Reference', 'Currency', 'Quantity', 'Total Price']
-	return render_template('generic_table.html', rows = data, head = head, title = 'Quotes')
+	quotes = {'quotes_per_week': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
+
+	for quote in data:
+		quotes['quotes_per_week'] += 1;
+		if quote[5] not in quotes['customers']:
+			quotes['customers'].append(quote[5])
+			quotes['customer_counts'][quote[5]] = 1
+			quotes['customer_total'][quote[5]] = quote[11]
+			if quote[3] == 'Won':
+				quotes['customer_wins'][quote[5]] = 1
+		else:
+			quotes['customer_counts'][quote[5]] += 1
+			quotes['customer_total'][quote[5]] += quote[11]
+			if quote[3] == 'Won':
+				quotes['customer_wins'][quote[5]] += 1
+
+	head = ['Customer', '# of Quotes', 'Total $ Quoted', 'Win %']
+	return render_template('quotes.html', quotes = quotes, head = head, title = 'Quotes')
 
 if __name__ == '__main__':
 	app.run()

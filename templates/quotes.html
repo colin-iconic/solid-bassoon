@@ -2,12 +2,13 @@
 {% block body %}
 <div style="padding-left: 10px;">
   <h2>{{title}}</h2>
-  <table align="center">
+  <h3>Summary of the Last 21 Days</h3>
+  <table>
     <thead>
       <tr>
-        <th># of Items Quoted in Last 21 Days</th>
-        <th>Total Value Quoted in Last 21 Days</th>
-        <th>Overall Win % in Last 21 Days</th>
+        <th># of Items Quoted</th>
+        <th>Total Value Quoted</th>
+        <th>Overall Win %</th>
       </tr>
     </thead>
     <tr>
@@ -18,6 +19,7 @@
   </table>
   <br />
   <br />
+  <h3>Quote Details of the Last 21 Days</h3>
   <table id="table-id" border=1 frame=void rules=rows>
   	<thead>
   		<tr>

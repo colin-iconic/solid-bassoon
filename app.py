@@ -1246,7 +1246,10 @@ def part_status():
 
 	stock_in_production = 0
 	for each in stock_jobs:
-		stock_in_production += each[1]
+		try:
+			stock_in_production += each[1]
+		except:
+			continue
 
 	total_pull_from = 0
 	for each in pull_from_list:
@@ -1849,6 +1852,7 @@ def saw_packages(name=None):
 	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0 and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
 
+	cursor.execute("select dist job.job ")
 	cursor.execute("select job, status from job where job like '%-S%'")
 	saw_jobs = [list(x) for x in cursor.fetchall()]
 

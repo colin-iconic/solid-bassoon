@@ -2001,7 +2001,7 @@ def quotes(name=None):
 				quotes['customer_wins'][quote[5]] += 1
 
 	head = ['Customer', '# of Quotes', '$ Quoted', 'Win %']
-	return render_template('quotes.html', quotes = quotes, head = head, title = 'Quotes')
+	return render_template('quotes.html', quotes = quotes, head = head, length = 21, title = 'Quotes')
 
 @app.route('/reports/quotes/<length>')
 def quotes_length(length):

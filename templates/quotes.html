@@ -2,7 +2,7 @@
 {% block body %}
 <div style="padding-left: 10px;">
   <h2>{{title}}</h2>
-  <table>
+  <table align="center">
     <thead>
       <tr>
         <th># of Items Quoted in Last 21 Days</th>
@@ -16,16 +16,8 @@
       <td>{{ ((quotes['total_win']/quotes['quotes_per_week'])*100)|round|int }}%</td>
     </tr>
   </table>
-  <!--
-  <h3># of Items Quoted in Last 21 Days</h3>
-  <p>{{ quotes['quotes_per_week'] }}<p>
   <br />
-  <h3>Total Value Quoted in Last 21 Days</h3>
-  <p>{{ "${:,.2f}".format(quotes['total_value']) }}<p>
   <br />
-  <h3>Overall Win % in Last 21 Days</h3>
-  <p>{{ ((quotes['total_win']/quotes['quotes_per_week'])*100)|round|int }}%<p>
-  <br />-->
   <table id="table-id" border=1 frame=void rules=rows>
   	<thead>
   		<tr>

@@ -158,5 +158,14 @@
     bars.exit()
       .remove()
 
+    svg.selectAll(".text")
+      .data(dataset)
+      .enter()
+      .append("text")
+      .attr("class","label")
+      .attr("x", (function(d) { return x(d.mondayDate); }  ))
+      .attr("y", function(d) { return y(d.values.amount) - 20; })
+      .attr("dy", ".75em")
+      .text(function(d) { return d.value; });
 </script>
 {% endblock %}

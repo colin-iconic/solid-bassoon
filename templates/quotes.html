@@ -264,8 +264,8 @@
 </script>
 <script>
   // define diagram sizes
-  var margin = {top: 30, right: 10, bottom: 30, left: 20}
-    , totalWidth = 900
+  var margin = {top: 70, right: 10, bottom: 30, left: 20}
+    , totalWidth = 1200
     , totalHeight = 500
     , width = totalWidth - margin.left - margin.right
     , height = totalHeight - margin.top - margin.bottom
@@ -369,6 +369,15 @@
       .attr("dy", ".5em")
       .style('text-anchor', 'middle')
       .style("fill", "white")
-      .style("font-size", ".75em")
+      .style("font-size", "1em")
       .text(function(d) { return d.values.amount; });
+
+    // title
+    svg.append("text")
+      .attr("x", (width / 2))
+      .attr("y", 0 - (margin.top / 2))
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("text-decoration", "underline")
+      .text("Number of Quoted Lines Per Week");
 </script>

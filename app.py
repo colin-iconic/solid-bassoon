@@ -2010,16 +2010,17 @@ def quotes(name=None):
 
 	quote_date = []
 	for quote in data:
-		cursor.execute("select total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
-		quote_data = [list(x)[0] for x in cursor.fetchall()]
-		if not quote_data:
-			quote_data = 0
-		quote.append(quote_data)
+		#cursor.execute("select total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
+		#quote_data = [list(x)[0] for x in cursor.fetchall()]
+		#if not quote_data:
+		#	quote_data = 0
+		#quote.append(quote_data)
 
-		if quote[3] == 2: #if currency is CAD do nothing
-			pass
-		elif quote[3] == 1: #if currency is USD convert to CAD
-			quote[5] = Decimal(quote[5])*Decimal(1.3)
+		#if quote[3] == 2: #if currency is CAD do nothing
+		#	pass
+		#elif quote[3] == 1: #if currency is USD convert to CAD
+		#	quote[5] = Decimal(quote[5])*Decimal(1.3)
+		quote.append(0) #dummy quote total
 
 		if quote[4] == 'Won':
 			quote[4] = 1

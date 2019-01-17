@@ -394,7 +394,7 @@
 	    r = 100,                            //radius
 	    color = d3.scale.category20c();     //builtin range of colors
 
-	data = [{% for customer in quotes['customers'] %}{"letter":"{{ customer }}", "presses": {{ quotes['customer_total'][customer] }}},{% endfor %}];
+	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}];
   var vis = d3.select("div#tot")
       .append("svg:svg")              //create the SVG element inside the <body>
       .data([data])                   //associate our data with the document
@@ -408,3 +408,4 @@
 
   var pie = d3.layout.pie()           //this will create arc data for us given a list of values
       .value(function(d) { return d.value; });    //we must tell it out to access the value of each element in our data array
+</script>

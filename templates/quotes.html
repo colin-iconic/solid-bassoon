@@ -189,5 +189,28 @@
   bars.exit()
     .remove()
 
+  // Add the Y Axis
+  svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);
+
+  // text label for the y axis
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Number of Lines Quoted");
+
+  // title
+  svg.append("text")
+    .attr("x", (width / 2))
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("text-decoration", "underline")
+    .text("Number of Lines Quoted per Week");
+
 </script>
 {% endblock %}

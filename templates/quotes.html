@@ -74,7 +74,7 @@
 
     // group data by week
     var weekFormatter = d3.time.format('%y %W')
-      , toDate = function(d) { return d.occurred_at.split('T')[0] }
+      , toDate = function(d) { return d.date }
       , toWeek = function(d) { return weekFormatter(new Date(toDate(d))) }
 
     var eventsByDay = d3.nest()

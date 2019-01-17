@@ -394,11 +394,7 @@
     r = 300,                            //radius
     color = d3.scale.category20c();     //builtin range of colors
 
-		data = [
-						{% for customer in quotes['customers'] %}
-						{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},
-						{% endfor %}
-		]
+		data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}]
 
     var vis = d3.select("div#tot")
         .append("svg:svg")              //create the SVG element inside the <body>

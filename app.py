@@ -2082,9 +2082,7 @@ def quotes_length(length):
 
 	quote_date = []
 	for quote in data:
-		cursor.execute("select total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
-		quote_data = [list(x) for x in cursor.fetchall()][0]
-		quote.extend(quote_data)
+		quote.append(0)
 
 		if quote[3] == 2: #if currency is CAD do nothing
 			pass

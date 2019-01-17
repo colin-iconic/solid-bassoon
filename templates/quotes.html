@@ -132,7 +132,7 @@
     .orient("left")
     .ticks(10)
     .tickSize(-width, 0, 0)
-    .tickFormat(function(d) { return d });
+    .tickFormat('tick');
 
   // Add the Y Axis
   svg.append("g")
@@ -147,6 +147,15 @@
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Number of Lines Quoted");
+
+  // title
+  svg.append("text")
+    .attr("x", (graphWidth / 2))
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("text-decoration", "underline")
+    .text("Number of Lines Quoted per Week");
 
   // bar chart
   svg.append('clipPath') // relative to what it affects (here, g.bar.chart)

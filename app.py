@@ -1966,6 +1966,7 @@ def jobs_price(job):
 
 @app.route('/reports/quotes')
 def quotes(name=None):
+	length = 21
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

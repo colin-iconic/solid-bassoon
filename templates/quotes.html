@@ -389,13 +389,14 @@
       .style("fill", "black")
       .text("Number of Quoted Lines Per Week");
 </script>
-<script>
-	var w = 800,                        //width
-	    h = 800,                            //height
+<!--<script>
+	var w = 600,                        //width
+	    h = 600,                            //height
 	    r = 300,                            //radius
 	    color = d3.scale.category20c();     //builtin range of colors
 
 	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}];
+
   var vis = d3.select("#tot")
       .append("svg:svg")              //create the SVG element inside the <body>
       .data([data])                   //associate our data with the document
@@ -410,4 +411,4 @@
   var pie = d3.layout.pie()           //this will create arc data for us given a list of values
       .value(function(d) { return d.value; });    //we must tell it out to access the value of each element in our data array
 	console.log(data)
-</script>
+</script>-->

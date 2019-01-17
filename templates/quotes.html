@@ -1,5 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
+<style>
+  .axis {
+    font: 10px sans-serif;
+  }
+
+  .axis g.tick line {
+    stroke: black;
+    shape-rendering: crispEdges;
+  }
+
+  rect {
+    fill: gray;
+  }
+
+  rect:hover {
+    fill: orange !important;
+  }
+</style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div style="padding-left: 10px;">
   <h2>{{title}}</h2>
@@ -38,22 +56,7 @@
   	</tr>
   {% endfor %}
   </table>
-  <div id="vis" style=".axis {
-  font: 10px sans-serif;
-}
-
-.axis g.tick line {
-  stroke: black;
-  shape-rendering: crispEdges;
-}
-
-rect {
-  fill: gray;
-}
-
-rect:hover {
-  fill: orange !important;
-}">
+  <div id="vis">
   </div>
 </div>
 <script>

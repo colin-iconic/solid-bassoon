@@ -169,7 +169,7 @@
     .append('rect')
 
   bars
-    .style('fill', #15194f)
+    .style('fill', '#15194f')
     .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
     .attr('y', function(d) { return height - y(d.values.amount) })
     .attr('width', (width / eventsByDay.length - 1) - 5)

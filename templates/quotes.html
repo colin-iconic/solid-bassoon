@@ -389,7 +389,7 @@
       .text("Number of Quoted Lines Per Week");
 </script>
 <script>
-	data = [{% for customer in quotes['customers'][:-1] %}{"letter":"{{ customer }}", "presses": {{ quotes['customer_total'][customer] }}},{% endfor %}{{ quotes['customers'][-1]}}]
+	data = [{% for customer in quotes['customers'] %}{"letter":"{{ customer }}", "presses": {{ quotes['customer_total'][customer] }}},{% endfor %}{"letter":" ", "presses": 0}]
 
 	var width = 800,
 		height = 800,

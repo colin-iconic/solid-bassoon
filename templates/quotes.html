@@ -389,9 +389,9 @@
       .text("Number of Quoted Lines Per Week");
 </script>
 <script>
-	var w = 300,                        //width
-	    h = 300,                            //height
-	    r = 100,                            //radius
+	var w = 800,                        //width
+	    h = 800,                            //height
+	    r = 300,                            //radius
 	    color = d3.scale.category20c();     //builtin range of colors
 
 	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}];

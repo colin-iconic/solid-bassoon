@@ -164,7 +164,7 @@
       .append("text")
       .attr("class","label")
       .attr('x', function(d) { return x(new Date(d.values.mondayDate))+((width / eventsByDay.length - 1) - 5) })
-      .attr('y', function(d) { return height - y(d.values.amount)+10 })
+      .attr('y', function(d) { return height - y(d.values.amount)+30 })
       .attr('width', (width / eventsByDay.length - 1) - 5)
       .attr("dy", ".6em")
       .style('text-anchor', 'middle')

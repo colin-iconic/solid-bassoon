@@ -64,9 +64,9 @@
 </script>
 <script>
   // define diagram sizes
-  var margin = {top: 30, right: 10, bottom: 30, left: 20}
-    , totalWidth = 900
-    , totalHeight = 500
+  var margin = {top: 50, right: 160, bottom: 100, left: 150}
+    , totalWidth = 1200
+    , totalHeight = 800
     , width = totalWidth - margin.left - margin.right
     , height = totalHeight - margin.top - margin.bottom
 
@@ -131,7 +131,7 @@
     .scale(y)
     .orient("left")
     .ticks(10)
-    .tickSize(-width - 50, 0, 0)
+    .tickSize(-width, 0, 0)
     .tickFormat(function(d) { return d });
 
   // Add the Y Axis

@@ -115,6 +115,18 @@
     .tickSize(10, 0)
     .tickPadding(0)
 
+  svg.append('g')
+    .classed('x axis', true)
+    .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')
+    .call(xAxis)
+    .selectAll('text')
+      .attr('x', 6)
+      .attr('y', 2)
+      .style('text-anchor', 'start')
+
+  d3.selectAll('g.x.axis g.tick text')[0].reverse()[0].remove() // remove last tick
+
+  // y axis
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
@@ -131,21 +143,10 @@
   svg.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
-    .attr("x",0 - (totalHeight / 2))
+    .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Number of Lines Quoted");
-
-  svg.append('g')
-    .classed('x axis', true)
-    .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')
-    .call(xAxis)
-    .selectAll('text')
-      .attr('x', 6)
-      .attr('y', 2)
-      .style('text-anchor', 'start')
-
-  d3.selectAll('g.x.axis g.tick text')[0].reverse()[0].remove() // remove last tick
 
   // bar chart
   svg.append('clipPath') // relative to what it affects (here, g.bar.chart)
@@ -168,7 +169,7 @@
     .append('rect')
 
   bars
-    .style('fill', 'gray')
+    .style('fill', #15194f)
     .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
     .attr('y', function(d) { return height - y(d.values.amount) })
     .attr('width', (width / eventsByDay.length - 1) - 5)

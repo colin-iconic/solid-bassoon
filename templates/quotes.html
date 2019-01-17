@@ -166,7 +166,7 @@
       .attr('x', function(d) { return x(new Date(d.values.mondayDate))+(width / eventsByDay.length - 1) })
       .attr('y', function(d) { return height - y(d.values.amount)+40 })
       .attr('width', (width / eventsByDay.length - 1) - 4)
-      .attr("dy", ".6em")
+      .attr("dy", ".5em")
       .style('text-anchor', 'middle')
       .style("fill", "white")
       .text(function(d) { return d.values.amount; });

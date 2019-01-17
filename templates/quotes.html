@@ -159,11 +159,11 @@
       .remove()
 
     svg.selectAll(".text")
-      .data(dataset)
+      .data(eventsByDay)
       .enter()
       .append("text")
       .attr("class","label")
-      .attr("x", (function(d) { return x(d.mondayDate); }  ))
+      .attr("x", function(d) { return x(d.mondayDate); })
       .attr("y", function(d) { return y(d.values.amount) - 20; })
       .attr("dy", ".75em")
       .text(function(d) { return d.value; });

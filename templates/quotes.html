@@ -350,7 +350,7 @@
       .style('fill', '#15194f')
       .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
       .attr('y', function(d) { return height - y(d.values.amount) })
-      .attr('width', (width / eventsByDay.length - 1) - 4)
+      .attr('width', (width / eventsByDay.length - 1) - 5)
       .attr('height', function(d) { return y(d.values.amount) })
       .append('title')
         .text(function(d) { return d.key })
@@ -364,8 +364,8 @@
       .append("text")
       .attr("class","label")
       .attr('x', function(d) { return x(new Date(d.values.mondayDate))+(width / eventsByDay.length - 1) })
-      .attr('y', function(d) { return height - y(d.values.amount)+40 })
-      .attr('width', (width / eventsByDay.length - 1) - 4)
+      .attr('y', function(d) { return height - y(d.values.amount)+margin.top })
+      .attr('width', (width / eventsByDay.length - 1) - 5)
       .attr("dy", ".5em")
       .style('text-anchor', 'middle')
       .style("fill", "white")
@@ -375,9 +375,10 @@
     // title
     svg.append("text")
       .attr("x", (width / 2))
-      .attr("y", 0 - (margin.top / 2))
+      .attr("y", 0 - (margin.top))
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("text-decoration", "underline")
+      .style("fill", "black")
       .text("Number of Quoted Lines Per Week");
 </script>

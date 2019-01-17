@@ -153,7 +153,7 @@
     .attr('width', (width / eventsByDay.length - 1) - 5)
     .attr('height', function(d) { return y(d.values.amount) })
     .append('title')
-      .text(function(d) { return new Date(d.values.mondayDate }, function(d) { return d.values.amount} )
+      .text(function(d) { return d.values.amount})
 
   bars.exit()
     .remove()

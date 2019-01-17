@@ -247,7 +247,7 @@
         		<td>{{ customer }}</td>
             <td>{{ quotes['customer_counts'][customer] }}</td>
             <td align="right">{{ "${:,.2f}".format(quotes['customer_total'][customer]) }}</td>
-						<td align="right">{{ (quotes['customer_total'][customer]/quotes['total_value'])*100|round|int }}%</td>
+						<td align="right">{{ ((quotes['customer_total'][customer]/quotes['total_value'])*100)|round|int }}%</td>
             <td>{{ ((quotes['customer_wins'][customer]/quotes['customer_counts'][customer])*100)|round|int }}%</td>
         	</tr>
         {% endfor %}

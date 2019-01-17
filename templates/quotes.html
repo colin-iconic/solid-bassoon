@@ -131,7 +131,7 @@
     .scale(y)
     .orient("left")
     .ticks(10)
-    .tickSize(-totalWidth, 0, 0)
+    .tickSize(-width - 20, 0, 0)
     .tickFormat(function(d) { return d });
 
   // Add the Y Axis
@@ -142,7 +142,7 @@
   // text label for the y axis
   svg.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left / 2)
+    .attr("y", 0)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")

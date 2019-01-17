@@ -2012,6 +2012,8 @@ def quotes(name=None):
 	for quote in data:
 		cursor.execute("select total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
 		quote_data = [list(x)[0] for x in cursor.fetchall()]
+		if not quote_data:
+			quote_data = 0
 		quote.extend(quote_data)
 
 		if quote[3] == 2: #if currency is CAD do nothing

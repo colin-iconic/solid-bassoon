@@ -1,6 +1,198 @@
-{% extends "layout.html" %}
-{% block body %}
+<!doctype html>
+<head>
+	<title>Iconic Metalgear Portal</title>
+	<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='chart.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='tablesort.min.js') }}"></script>
+	<!-- Include sort types you need -->
+	<script src="{{ url_for('static', filename='tablesort.date.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='tablesort.number.min.js') }}"></script>
+ <meta charset="utf-8">
+</head>
+<div class="page">
+	<h1 class="no-print">Iconic Metalgear List Portal<a class="nav" href="{{ url_for('home') }}">Production</a><a class="nav" href="{{ url_for('office') }}">Office</a></h1>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style>
+  .nav {
+    padding-left: 20px;
+    font-size: 1em;
+  }
+
+  table {
+    background-color: #fff;
+  }
+
+  th {
+    padding-right: 15px;
+  }
+
+  td {
+    padding-right: 15px;
+  }
+
+  th[role=columnheader]:not(.no-sort) {
+    cursor: pointer;
+  }
+
+  th[role=columnheader]:not(.no-sort):after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 0 4px 4px;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  th[aria-sort=ascending]:not(.no-sort):after {
+    border-bottom: none;
+    border-width: 4px 4px 0;
+  }
+
+  th[aria-sort]:not(.no-sort):after {
+    visibility: visible;
+    opacity: 0.4;
+  }
+
+  th[role=columnheader]:not(.no-sort):hover:after {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  a:link {
+    text-decoration: none;
+  }
+  a:hover {
+    color: orange;
+  }
+  a:visited {
+    text-decoration: none;
+  }
+
+  html {
+    background-color: #15194f;
+    height: 100%;
+  }
+
+  body {
+    margin: 0px -170px 0px 100px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    float: left;
+    width: 100%;
+    min-height: 100%;
+    font-size: 1em;
+    font-family: 'Play', sans-serif;
+  }
+
+  h1 {
+    background-color: #131633;
+    color: #e5e5e5;
+    width: 100%;
+    margin: 0px -170px 0px -170px;
+    padding: 10px 0px 10px 0px;
+    padding-left: 170px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    font-size: 2.5em;
+  }
+
+  h2 {
+    background-color: #131633;
+    color: #e5e5e5;
+    width: 100%;
+    margin-left: -170px;
+    padding: 10px 0px 10px 0px;
+    padding-left: 170px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    font-size: 1.5em;
+  }
+
+  ul {
+    list-style: square outside none;
+  }
+
+  li {
+    padding: 10px;
+  }
+  hr {
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 8px auto;
+    height: 0;
+    width: 100%;
+    max-height: 0;
+    font-size: 1px;
+    line-height: 0;
+    clear: both;
+    border: none;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid #ffffff;
+  }
+  form {
+    padding: 20px;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+  #graphDiv {
+    font: 12px Arial;
+  }
+  #graphDiv path {
+    stroke-width: 2;
+    fill: none;
+  }
+  .axis path, .axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+  .area {
+    fill: #F0F8FF;
+    stroke-width: 0;
+  }
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 95px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px solid black;
+    pointer-events: none;
+  }
+  #parts {
+  }
+  .category {
+    width: 800px;
+  }
+  .part_title {
+    background-color: #e8e9f2;
+    color: black;
+    font-size: 1em;
+    width: 400px;
+    padding: 10px 0px 10px 10px;
+  }
+  .part_description {
+    background-color: #e8e9f2;
+    width: 120px;
+    padding: 10px 0px 10px 10px;
+  }
+  .search_results {
+    width: 1400px;
+    overflow-x: scroll;
+  }
+  .info {
+    max-height: 100px;
+    overflow: auto;
+    font-size: .8em;
+  }
   .axis {
     font: 12px sans-serif;
   }
@@ -180,4 +372,3 @@
       .style("font-size", ".75em")
       .text(function(d) { return d.values.amount; });
 </script>
-{% endblock %}

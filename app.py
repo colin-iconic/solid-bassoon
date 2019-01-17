@@ -2014,7 +2014,7 @@ def quotes(name=None):
 		quote_data = [list(x)[0] for x in cursor.fetchall()]
 		if not quote_data:
 			quote_data = 0
-		quote.extend(quote_data)
+		quote.append(quote_data)
 
 		if quote[3] == 2: #if currency is CAD do nothing
 			pass

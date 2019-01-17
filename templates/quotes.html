@@ -38,7 +38,22 @@
   	</tr>
   {% endfor %}
   </table>
-  <div id="vis">
+  <div id="vis" style=".axis {
+  font: 10px sans-serif;
+}
+
+.axis g.tick line {
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+rect {
+  fill: gray;
+}
+
+rect:hover {
+  fill: orange !important;
+}">
   </div>
 </div>
 <script>

@@ -95,8 +95,7 @@
     .nice(d3.time.month)
 
   var y = d3.scale.linear()
-    .domain([0, d3.max(eventsByDay, function(d) { return d.values.amount })])
-    .range([0, height])
+    .range([height, 0])
 
   // the chart
   var svg = d3.select('div#vis').append('svg')

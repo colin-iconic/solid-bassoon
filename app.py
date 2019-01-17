@@ -2033,7 +2033,7 @@ def quotes(name=None):
 	data_json = json.dumps(quote_data, indent=2, default=str)
 	chart_data = {'weekly_quotes': data_json}
 
-	head = ['Customer', '# of Quotes', '$ Quoted', 'Win %']
+	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
 	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
 @app.route('/reports/quotes/<length>')

@@ -115,6 +115,17 @@
     .tickSize(10, 0)
     .tickPadding(0)
 
+  var yAxis = d3.svg.axis().scale(y)
+    .orient("left")
+    .ticks(10)
+    .tickSize(-totalWidth, 0, 0)
+    .tickFormat( function(d) { return d } );
+
+  // Add the Y Axis
+  svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis);
+
   svg.append('g')
     .classed('x axis', true)
     .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')
@@ -153,7 +164,7 @@
     .attr('width', (width / eventsByDay.length - 1) - 5)
     .attr('height', function(d) { return y(d.values.amount) })
     .append('title')
-      .text(function(d) { return d.values.amount} + ' Quotes')
+      .text(function(d) { return d.values.amount})
 
   bars.exit()
     .remove()

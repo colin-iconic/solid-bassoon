@@ -163,7 +163,7 @@
       .enter()
       .append("text")
       .attr("class","label")
-      .attr("x", function(d) { return x(new Date(d.values.mondayDate))+5 })
+      .attr("x", function(d) { return x(new Date(d.values.mondayDate))+(((width / eventsByDay.length - 1) - 5)/2) })
       .attr("y", function(d) { return height - y(d.values.amount) })
       .attr("dy", ".75em")
       .text(function(d) { return d.values.amount; });

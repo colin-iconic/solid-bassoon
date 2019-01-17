@@ -396,7 +396,7 @@
 
 		data = [
 						{% for customer in quotes['customers'] %}
-						{"label":{{ customer }}, "value": {{ quotes['customer_total'][customer] }}},
+						{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},
 						{% endfor %}
 		]
 

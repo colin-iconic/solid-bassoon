@@ -2097,7 +2097,7 @@ def quotes_length(length):
 		quote_data.append({'date': quote[2].strftime('%Y-%m-%d'), 'total_price': quote[5], 'status': quote[4]})
 
 	data_json = json.dumps(quote_data, indent=2, default=str)
-	chart_data['weekly_quotes'] = data_json
+	chart_data = {'weekly_quotes': data_json}
 
 	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
 	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)

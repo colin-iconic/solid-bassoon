@@ -65,131 +65,98 @@
 <script>
   // define diagram sizes
   var margin = {top: 30, right: 10, bottom: 30, left: 20}
-    , totalWidth = 1200
-    , totalHeight = 800
+    , totalWidth = 900
+    , totalHeight = 500
     , width = totalWidth - margin.left - margin.right
     , height = totalHeight - margin.top - margin.bottom
 
-  var dataset = {{ chart_data['weekly_quotes'] | safe }}
+    var dataset = {{ chart_data['weekly_quotes'] | safe }}
 
-  // group data by week
-  var weekFormatter = d3.time.format('%y %W')
-    , toDate = function(d) { return d.date }
-    , toWeek = function(d) { return weekFormatter(new Date(toDate(d))) }
+    // group data by week
+    var weekFormatter = d3.time.format('%y %W')
+      , toDate = function(d) { return d.occurred_at.split('T')[0] }
+      , toWeek = function(d) { return weekFormatter(new Date(toDate(d))) }
 
-  var eventsByDay = d3.nest()
-    .key(toWeek)
-    .sortKeys(d3.ascending)
-    .rollup(function(values) { return {
-      amount: values.length
-    , mondayDate: d3.time.format('%y %W %a').parse(toWeek(values[0]) + ' Mon')
-    } })
-    .entries(dataset)
+    var eventsByDay = d3.nest()
+      .key(toWeek)
+      .sortKeys(d3.ascending)
+      .rollup(function(values) { return {
+        amount: values.length
+      , mondayDate: d3.time.format('%y %W %a').parse(toWeek(values[0]) + ' Mon')
+      } })
+      .entries(dataset)
 
-  console.log(eventsByDay[0])
+    console.log(eventsByDay[0])
 
-  // scales
-  var x = d3.time.scale()
-    .domain(d3.extent(dataset, function(d) { return new Date(toDate(d)) }))
-    .range([0, width])
-    .nice(d3.time.month)
+    // scales
+    var x = d3.time.scale()
+      .domain(d3.extent(dataset, function(d) { return new Date(toDate(d)) }))
+      .range([0, width])
+      .nice(d3.time.month)
 
-  var y = d3.scale.linear()
-    .domain([0, d3.max(eventsByDay, function(d) { return d.values.amount })])
-    .range([height, 0])
+    var y = d3.scale.linear()
+      .domain([0, d3.max(eventsByDay, function(d) { return d.values.amount })])
+      .range([0, height])
 
-  // the chart
-  var svg = d3.select('div#vis').append('svg')
-    .attr('width', totalWidth)
-    .attr('height', totalHeight)
+    // the chart
+    var svg = d3.select('div#vis').append('svg')
+      .attr('width', totalWidth)
+      .attr('height', totalHeight)
 
-  // x axis
-  var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient('bottom')
-    .ticks(d3.time.months, 1)
-    .tickFormat(d3.time.format.multi([
-      ['%b', function(d) { return d.getMonth(); }]
-    , ['%Y', function() { return true; }]
-    ]))
-    .tickSize(10, 0)
-    .tickPadding(0)
+    // x axis
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient('bottom')
+      .ticks(d3.time.months, 1)
+      .tickFormat(d3.time.format.multi([
+        ['%b', function(d) { return d.getMonth(); }]
+      , ['%Y', function() { return true; }]
+      ]))
+      .tickSize(10, 0)
+      .tickPadding(0)
 
-  svg.append('g')
-    .classed('x axis', true)
-    .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')
-    .call(xAxis)
-    .selectAll('text')
-      .attr('x', 6)
-      .attr('y', 2)
-      .style('text-anchor', 'start')
+    svg.append('g')
+      .classed('x axis', true)
+      .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')
+      .call(xAxis)
+      .selectAll('text')
+        .attr('x', 6)
+        .attr('y', 2)
+        .style('text-anchor', 'start')
 
-  d3.selectAll('g.x.axis g.tick text')[0].reverse()[0].remove() // remove last tick
+    d3.selectAll('g.x.axis g.tick text')[0].reverse()[0].remove() // remove last tick
 
-  // y axis
-  var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(10)
-    .tickSize(-width, 0, 0)
-    .tickFormat(function(d) { return d });
+    // bar chart
+    svg.append('clipPath') // relative to what it affects (here, g.bar.chart)
+      .attr('id', 'chart-area')
+      .append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', width)
+        .attr('height', height)
 
-  // Add the Y Axis
-  svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis);
+    var chart = svg.append('g')
+      .classed('bar chart', true)
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+      .attr('clip-path', 'url(#chart-area)')
 
-  // text label for the y axis
-  svg.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 0)
-    .attr("x", 0 - (height / 2))
-    .attr("dy", "1em")
-    .style("text-anchor", "middle")
-    .style("fill", "black")
-    .text("Number of Lines Quoted");
+    var bars = chart.selectAll('rect')
+      .data(eventsByDay)
 
-  // title
-  svg.append("text")
-    .attr("x", (width / 2))
-    .attr("y", 0 - (margin.top / 2))
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .style("text-decoration", "underline")
-    .style("fill", "black")
-    .text("Number of Lines Quoted per Week");
+    bars.enter()
+      .append('rect')
 
-  // bar chart
-  svg.append('clipPath') // relative to what it affects (here, g.bar.chart)
-    .attr('id', 'chart-area')
-    .append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', width)
-      .attr('height', height)
+    bars
+      .style('fill', 'gray')
+      .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
+      .attr('y', function(d) { return height - y(d.values.amount) })
+      .attr('width', (width / eventsByDay.length - 1))
+      .attr('height', function(d) { return y(d.values.amount) })
+      .append('title')
+        .text(function(d) { return d.key })
 
-  var chart = svg.append('g')
-    .classed('bar chart', true)
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-    .attr('clip-path', 'url(#chart-area)')
-
-  var bars = chart.selectAll('rect')
-    .data(eventsByDay)
-
-  bars.enter()
-    .append('rect')
-
-  bars
-    .style('fill', '#15194f')
-    .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
-    .attr('y', function(d) { return height - y(d.values.amount) })
-    .attr('width', (width / eventsByDay.length - 1) - 5)
-    .attr('height', function(d) { return y(d.values.amount) })
-    .append('title')
-      .text(function(d) { return d.values.amount})
-
-  bars.exit()
-    .remove()
+    bars.exit()
+      .remove()
 
 </script>
 {% endblock %}

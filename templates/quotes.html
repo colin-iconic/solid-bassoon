@@ -132,7 +132,7 @@
     .orient("left")
     .ticks(10)
     .tickSize(-width, 0, 0)
-    .tickFormat('tick');
+    .tickFormat(function(d) { return 'a' });
 
   // Add the Y Axis
   svg.append("g")

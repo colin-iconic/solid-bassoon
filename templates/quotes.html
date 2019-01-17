@@ -259,12 +259,11 @@
     </tr>
 		<tr>
 			<td>
-
+				<div id="tot">
+        </div>
 			</td>
 		</tr>
   </table>
-	<div id="tot">
-	</div>
 </div>
 <script>
 	new Tablesort(document.getElementById('table-id'));
@@ -390,7 +389,6 @@
       .text("Number of Quoted Lines Per Week");
 </script>
 <script>
-
 	data = [{% for customer in quotes['customers'] %}{"letter":"{{ customer }}", "presses": {{ quotes['customer_total'][customer] }}},{% endfor %}]
 
 	var width = 800,
@@ -410,7 +408,7 @@
 		.outerRadius(radius - 40)
 		.innerRadius(radius - 40);
 
-	var svglabels = d3.select("#tot")
+	var svglabels = d3.select("div#tot")
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height)

@@ -126,6 +126,15 @@
     .attr("class", "y axis")
     .call(yAxis);
 
+  // text label for the y axis
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x",0 - (graphHeight / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Number of Lines Quoted");
+
   svg.append('g')
     .classed('x axis', true)
     .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')

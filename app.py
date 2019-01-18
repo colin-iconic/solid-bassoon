@@ -2102,5 +2102,29 @@ def quotes_length(length):
 	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
 	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
+
+app.route('/test')
+def test(name=None):
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.customer, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0)".format(length))
+	data = [list(x) for x in cursor.fetchall()]
+
+	for quote in data:
+		cursor.execute("select quote_qty, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
+		quote_data = [list(x) for x in cursor.fetchall()][0]
+		quote.extend(quote_data)
+
+		if quote[9] == 2: #if currency is CAD do nothing
+			pass
+		elif quote[9] == 1: #if currency is USD convert to CAD
+			quote[11] = Decimal(quote[11])*Decimal(1.3)
+
+	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
+
+	return render_template('test.html', quotes = quotes)
+
+
 if __name__ == '__main__':
 	app.run()

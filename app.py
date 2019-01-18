@@ -2103,8 +2103,8 @@ def quotes_length(length):
 	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
 
-app.route('/test')
-def test(name=None):
+app.route('/testing')
+def testing(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

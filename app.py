@@ -2124,6 +2124,26 @@ def testing(name=None):
 
 	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
 
+	for quote in data:
+		quotes['quotes_per_week'] += 1
+		quotes['total_value'] += quote[11]
+
+		if quote[3] == 'Won':
+			quotes['total_win'] += 1
+
+		if quote[5] not in quotes['customers']:
+			quotes['customers'].append(quote[5])
+			quotes['customer_counts'][quote[5]] = 1
+			quotes['customer_total'][quote[5]] = quote[11]
+			if quote[3] == 'Won':
+				quotes['customer_wins'][quote[5]] = 1
+			else:
+				quotes['customer_wins'][quote[5]] = 0
+		else:
+			quotes['customer_counts'][quote[5]] += 1
+			quotes['customer_total'][quote[5]] += quote[11]
+			if quote[3] == 'Won':
+				quotes['customer_wins'][quote[5]] += 1
 	return render_template('test.html', quotes = quotes)
 
 

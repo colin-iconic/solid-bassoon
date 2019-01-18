@@ -5,26 +5,42 @@
 </div>
 
 <script>
-	var w = 600,                        //width
-	    h = 600,                            //height
-	    r = 300,                            //radius
-	    color = d3.scale.category20c();     //builtin range of colors
-
 	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];
 
-  var vis = d3.select("#tot")
-      .append("svg:svg")              //create the SVG element inside the <body>
-      .data([data])                   //associate our data with the document
-          .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
-          .attr("height", h)
-      .append("svg:g")                //make a group to hold our pie chart
-          .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+  var w = 400;
+  var h = 400;
+  var r = h/2;
+  var aColor = [
+      'rgb(178, 55, 56)',
+      'rgb(213, 69, 70)',
+      'rgb(230, 125, 126)',
+      'rgb(239, 183, 182)'
+  ]
+    
 
-  var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
-      .outerRadius(r);
+  var vis = d3.select('#chart').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
 
-  var pie = d3.layout.pie()           //this will create arc data for us given a list of values
-      .value(function(d) { return d.value; });    //we must tell it out to access the value of each element in our data array
-	console.log(data)
+  var pie = d3.layout.pie().value(function(d){return d.value;});
+
+  // Declare an arc generator function
+  var arc = d3.svg.arc().outerRadius(r);
+
+  // Select paths, use arc generator to draw
+  var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+  arcs.append("svg:path")
+      .attr("fill", function(d, i){return aColor[i];})
+      .attr("d", function (d) {return arc(d);})
+  ;
+
+  // Add the text
+  arcs.append("svg:text")
+      .attr("transform", function(d){
+          d.innerRadius = 100;
+          d.outerRadius = r;
+          return "translate(" + arc.centroid(d) + ")";}
+      )
+      .attr("text-anchor", "middle")
+      .text( function(d, i) {return data[i].label;})
+  ;
 </script>
 {% endblock %}

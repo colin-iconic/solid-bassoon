@@ -7,7 +7,7 @@
 <script>
 	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];
 
-	var threshold = {{ quotes['total_value'] }}/5
+	var threshold = {{ quotes['total_value'] }}/15
 
 	big_items = data.filter(item => item.value > threshold);
 	small_items = data.filter(item => item.value <= threshold);

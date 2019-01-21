@@ -2148,6 +2148,9 @@ def testing(name=None):
 					quotes['customer_wins'][quote[5]] += 1
 
 	for customer in quotes['customers']:
+		if customer == 'Other':
+			continue
+			
 		if quotes['customer_total'][customer] < (quotes['total_value']/10):
 			quotes['customer_total']['Other'] += quotes['customer_total'][customer]
 			del quotes['customers'][quotes['customers'].index(customer)]

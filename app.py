@@ -2149,7 +2149,7 @@ def testing(name=None):
 
 	for customer in quotes['customers']:
 		if customer == 'Other':
-			continue
+			pass
 
 		if quotes['customer_total'][customer] < (quotes['total_value']/5):
 			quotes['customer_total']['Other'] += quotes['customer_total'][customer]

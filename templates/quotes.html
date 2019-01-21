@@ -389,26 +389,52 @@
       .style("fill", "black")
       .text("Number of Quoted Lines Per Week");
 </script>
-<!--<script>
-	var w = 600,                        //width
-	    h = 600,                            //height
-	    r = 300,                            //radius
-	    color = d3.scale.category20c();     //builtin range of colors
+<script>
+	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];
 
-	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}];
+	var threshold = {{ quotes['total_value'] }}/20
 
-  var vis = d3.select("#tot")
-      .append("svg:svg")              //create the SVG element inside the <body>
-      .data([data])                   //associate our data with the document
-          .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
-          .attr("height", h)
-      .append("svg:g")                //make a group to hold our pie chart
-          .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+	big_items = data.filter(item => item.value > threshold);
+	small_items = data.filter(item => item.value <= threshold);
+	collected_value = {
+	    label: `Other - ${small_items.length} items`,
+	    value: small_items.reduce((accumulator, item) => accumulator + item.value, 0)
+	}
+	big_items.push(collected_value);
 
-  var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
-      .outerRadius(r);
+	data = big_items
 
-  var pie = d3.layout.pie()           //this will create arc data for us given a list of values
-      .value(function(d) { return d.value; });    //we must tell it out to access the value of each element in our data array
-	console.log(data)
-</script>-->
+  var w = 400;
+  var h = 300;
+  var r = (h-100)/2;
+  var aColor = ['rgb(12,192,170)', 'rgb(37,115,139)', 'rgb(135,206,254)', 'rgb(129,132,251)', 'rgb(202,45,197)', 'rgb(233,201,250)', 'rgb(208,113,172)', 'rgb(133,111,145)']
+
+
+  var vis = d3.select('#tot').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + w/2 + "," + (r+50) + ")");
+
+  var pie = d3.layout.pie().value(function(d){return d.value;});
+
+  // Declare an arc generator function
+  var arc = d3.svg.arc().outerRadius(r);
+
+  // Select paths, use arc generator to draw
+  var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+  arcs.append("svg:path")
+      .attr("fill", function(d, i){return aColor[i];})
+      .attr("d", function (d) {return arc(d);})
+  ;
+
+	// Add a legendLabel to each arc slice...
+  arcs.append("svg:text")
+    .attr("transform", function(d) { //set the label's origin to the center of the arc
+      //we have to make sure to set these before calling arc.centroid
+      d.outerRadius = r + 50; // Set Outer Coordinate
+      d.innerRadius = r + 45; // Set Inner Coordinate
+      return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor", "middle") //center the text on it's origin
+    .style("fill", "black")
+    .style("font", "bold 12px Arial")
+    .text(function(d) { return d.data.label; }); //get the label from our original data array
+
+</script>

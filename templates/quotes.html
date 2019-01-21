@@ -428,8 +428,8 @@
   arcs.append("svg:text")
     .attr("transform", function(d) { //set the label's origin to the center of the arc
       //we have to make sure to set these before calling arc.centroid
-      d.outerRadius = r + 50; // Set Outer Coordinate
-      d.innerRadius = r + 0; // Set Inner Coordinate
+      d.outerRadius = r + 80; // Set Outer Coordinate
+      d.innerRadius = r + 75; // Set Inner Coordinate
       return "translate(" + arc.centroid(d) + ")";
     })
     .attr("text-anchor", "middle") //center the text on it's origin

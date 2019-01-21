@@ -2124,7 +2124,7 @@ def testing(name=None):
 
 	data.sort(key=itemgetter(11), reverse=True)
 
-	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
+	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': ['Other'], 'customer_counts': {}, 'customer_total': {'Other': 0}, 'customer_wins': {}}
 
 	for quote in data:
 			quotes['quotes_per_week'] += 1
@@ -2146,6 +2146,11 @@ def testing(name=None):
 				quotes['customer_total'][quote[5]] += quote[11]
 				if quote[3] == 'Won':
 					quotes['customer_wins'][quote[5]] += 1
+
+	for customer in quotes['customers']:
+		if quotes['customer_total'][customer] < (quotes['total_value']* 0.1):
+			quotes['customer_total']['Other'] += quotes['customer_total'][customer]
+			del quotes['customers'][quotes['customers'].index(customer)]
 
 	return render_template('test.html', quotes = quotes)
 

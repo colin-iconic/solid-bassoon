@@ -388,6 +388,15 @@
       .style("text-decoration", "underline")
       .style("fill", "black")
       .text("Number of Quoted Lines Per Week");
+		// title
+    svg.append("text")
+      .attr("x", (width / 2))
+      .attr("y", 36)
+      .attr("text-anchor", "middle")
+      .style("font-size", "11px")
+      .style("text-decoration", "underline")
+      .style("fill", "black")
+      .text("For the Last Year");
 </script>
 <script>
 	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];

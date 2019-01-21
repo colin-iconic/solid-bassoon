@@ -22,7 +22,7 @@
   var w = 400;
   var h = 400;
   var r = h/2;
-  var aColor = ['rgb(161,222,240)', 'rgb(39,76,86)', 'rgb(35,158,179)', 'rgb(87,236,192)', 'rgb(42,150,86)', 'rgb(116,222,88)', 'rgb(124,138,79)', 'rgb(195,222,155)']
+  var aColor = ['rgb(12,192,170)', 'rgb(37,115,139)', 'rgb(135,206,254)', 'rgb(129,132,251)', 'rgb(202,45,197)', 'rgb(233,201,250)', 'rgb(208,113,172)', 'rgb(133,111,145)']
 
 
   var vis = d3.select('#tot').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
@@ -39,15 +39,69 @@
       .attr("d", function (d) {return arc(d);})
   ;
 
-  // Add the text
-  arcs.append("svg:text")
-      .attr("transform", function(d){
-          d.innerRadius = 100;
-          d.outerRadius = r;
-          return "translate(" + arc.centroid(d) + ")";}
-      )
-      .attr("text-anchor", "middle")
-      .text( function(d, i) {return data[i].label;})
-  ;
+	/* ------- TEXT LABELS -------*/
+
+	var text = svg.select(".labels").selectAll("text")
+		.data(pie(data), key);
+
+	text.enter()
+		.append("text")
+		.attr("dy", ".35em")
+		.text(function(d) {
+			return d.data.label;
+		});
+
+	function midAngle(d){
+		return d.startAngle + (d.endAngle - d.startAngle)/2;
+	}
+
+	text.transition().duration(1000)
+		.attrTween("transform", function(d) {
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				var pos = outerArc.centroid(d2);
+				pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+				return "translate("+ pos +")";
+			};
+		})
+		.styleTween("text-anchor", function(d){
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				return midAngle(d2) < Math.PI ? "start":"end";
+			};
+		});
+
+	text.exit()
+		.remove();
+
+	/* ------- SLICE TO TEXT POLYLINES -------*/
+
+	var polyline = svg.select(".lines").selectAll("polyline")
+		.data(pie(data), key);
+
+	polyline.enter()
+		.append("polyline");
+
+	polyline.transition().duration(1000)
+		.attrTween("points", function(d){
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				var pos = outerArc.centroid(d2);
+				pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+				return [arc.centroid(d2), outerArc.centroid(d2), pos];
+			};
+		});
+
+	polyline.exit()
+		.remove();
 </script>
 {% endblock %}

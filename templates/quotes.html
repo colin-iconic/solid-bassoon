@@ -254,13 +254,13 @@
         </table>
       </td>
       <td>
-        <div id="vis">
+        <div id="tot">
         </div>
       </td>
     </tr>
 		<tr>
 			<td>
-				<div id="tot">
+				<div id="vis">
         </div>
 			</td>
 		</tr>
@@ -376,7 +376,7 @@
       .attr("dy", ".5em")
       .style('text-anchor', 'middle')
       .style("fill", "white")
-      .style("font-size", "1em")
+      .style("font-size", ".5em")
       .text(function(d) { return d.values.amount; });
 
     // title
@@ -446,4 +446,13 @@
 		.style("text-decoration", "underline")
 		.style("fill", "black")
 		.text("Total Value of Quotes per Customer");
+	// title
+	arcs.append("text")
+		.attr("x", 0)
+		.attr("y", -(h / 2) + 32)
+		.attr("text-anchor", "middle")
+		.style("font-size", "11px")
+		.style("text-decoration", "underline")
+		.style("fill", "black")
+		.text("For the Last " + {{ length }} + " Days");
 </script>

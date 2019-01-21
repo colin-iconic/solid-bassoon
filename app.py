@@ -2150,11 +2150,11 @@ def testing(name=None):
 	for customer in quotes['customers']:
 		if customer == 'Other':
 			pass
-
-		if quotes['customer_total'][customer] < (quotes['total_value']/5):
-			quotes['customer_total']['Other'] += quotes['customer_total'][customer]
-			del quotes['customers'][quotes['customers'].index(customer)]
-			del quotes['customer_total'][customer]
+		else:
+			if quotes['customer_total'][customer] < (quotes['total_value']/5):
+				quotes['customer_total']['Other'] += quotes['customer_total'][customer]
+				del quotes['customers'][quotes['customers'].index(customer)]
+				del quotes['customer_total'][customer]
 
 	return render_template('test.html', quotes = quotes)
 

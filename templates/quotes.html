@@ -213,7 +213,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div style="padding-left: 10px;">
   <h2>{{title}}</h2>
-	<h3><a href="http://192.168.2.81/reports/quotes/7">7 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/14">14 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/21">21 Day Summary</a></h3>
+	<h3><a href="http://192.168.2.81/reports/quotes/7">7 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/14">14 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/21">21 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/60">60 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/120">120 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/365">365 Day Summary</a></h3>
   <h3>Summary of the Last {{ length }} Days</h3>
   <table>
     <thead>
@@ -437,4 +437,13 @@
     .style("font", "bold 12px Arial")
     .text(function(d) { return d.data.label; }); //get the label from our original data array
 
+	// title
+	svg.append("text")
+		.attr("x", (width / 2))
+		.attr("y", 20)
+		.attr("text-anchor", "middle")
+		.style("font-size", "16px")
+		.style("text-decoration", "underline")
+		.style("fill", "black")
+		.text("Total Value of Quotes per Customer");
 </script>

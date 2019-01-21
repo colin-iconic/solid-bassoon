@@ -1964,80 +1964,11 @@ def jobs_price(job):
 	head = ['Job', 'Order Total', 'Currency']
 	return render_template('generic_table.html', rows = rows, head = head, title = 'Job List')
 
-@app.route('/reports/quotes')
-def quotes(name=None):
-	length = 21
-	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
-	cursor = connection.cursor()
-
-	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.customer, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 21), 0)")
-	data = [list(x) for x in cursor.fetchall()]
-
-	for quote in data:
-		cursor.execute("select quote_qty, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
-		quote_data = [list(x) for x in cursor.fetchall()][0]
-		quote.extend(quote_data)
-
-		if quote[9] == 2: #if currency is CAD do nothing
-			pass
-		elif quote[9] == 1: #if currency is USD convert to CAD
-			quote[11] = Decimal(quote[11])*Decimal(1.3)
-
-	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
-
-	for quote in data:
-		quotes['quotes_per_week'] += 1
-		quotes['total_value'] += quote[11]
-
-		if quote[3] == 'Won':
-			quotes['total_win'] += 1
-
-		if quote[5] not in quotes['customers']:
-			quotes['customers'].append(quote[5])
-			quotes['customer_counts'][quote[5]] = 1
-			quotes['customer_total'][quote[5]] = quote[11]
-			if quote[3] == 'Won':
-				quotes['customer_wins'][quote[5]] = 1
-			else:
-				quotes['customer_wins'][quote[5]] = 0
-		else:
-			quotes['customer_counts'][quote[5]] += 1
-			quotes['customer_total'][quote[5]] += quote[11]
-			if quote[3] == 'Won':
-				quotes['customer_wins'][quote[5]] += 1
-
-	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 182), 0)")
-	data = [list(x) for x in cursor.fetchall()]
-
-	quote_data = []
-	for quote in data:
-		#cursor.execute("select total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
-		#quote_data = [list(x)[0] for x in cursor.fetchall()]
-		#if not quote_data:
-		#	quote_data = 0
-		#quote.append(quote_data)
-
-		#if quote[3] == 2: #if currency is CAD do nothing
-		#	pass
-		#elif quote[3] == 1: #if currency is USD convert to CAD
-		#	quote[5] = Decimal(quote[5])*Decimal(1.3)
-		quote.append(0) #dummy quote total
-
-		if quote[4] == 'Won':
-			quote[4] = 1
-		else:
-			quote[4] = 0
-
-		quote_data.append({'date': quote[2].strftime('%Y-%m-%d'), 'total_price': quote[5], 'status': quote[4]})
-
-	data_json = json.dumps(quote_data, indent=2, default=str)
-	chart_data = {'weekly_quotes': data_json}
-
-	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
-	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
-
 @app.route('/reports/quotes/<length>')
 def quotes_length(length):
+	if not length:
+		length = 21;
+
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

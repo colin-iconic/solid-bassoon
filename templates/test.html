@@ -39,38 +39,17 @@
       .attr("d", function (d) {return arc(d);})
   ;
 
-	arcs.append("text")
-	    .attr("text-anchor", "middle")
-	    .attr("x", function(d) {
-	        var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-	        d.cx = Math.cos(a) * (r - 45);
-	        return d.x = Math.cos(a) * (r+30);
-	    })
-	    .attr("y", function(d) {
-	        var a = d.startAngle + (d.endAngle - d.startAngle)/2 - Math.PI/2;
-	        d.cy = Math.sin(a) * (r - 45);
-	        return d.y = Math.sin(a) * (r + 30);
-	    })
-	    .text(function(d) { return d.data.label;})
-	    .each(function(d) {
-	        var bbox = this.getBBox();
-	        d.sx = d.x - bbox.width/2 - 2;
-	        d.ox = d.x + bbox.width/2 + 2;
-	        d.sy = d.oy = d.y + 5;
-	    });
-
-		arcs.append("path")
-	    .attr("class", "pointer")
-	    .style("fill", "none")
-	    .style("stroke", "black")
-
-	    .attr("d", function(d) {
-	     console.log(d);
-	        if(d.cx > d.ox) {
-	            return "M" + d.sx + "," + d.sy + "L" + d.ox + "," + d.oy + " " + d.cx + "," + d.cy;
-	        } else {
-	            return "M" + d.ox + "," + d.oy + "L" + d.sx + "," + d.sy + " " + d.cx + "," + d.cy;
-	        }
-	    });
+	// Add a legendLabel to each arc slice...
+  arcs.append("svg:text")
+    .attr("transform", function(d) { //set the label's origin to the center of the arc
+      //we have to make sure to set these before calling arc.centroid
+      d.outerRadius = r + 50; // Set Outer Coordinate
+      d.innerRadius = r + 45; // Set Inner Coordinate
+      return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor", "middle") //center the text on it's origin
+    .style("fill", "Purple")
+    .style("font", "bold 12px Arial")
+    .text(function(d, i) { return dataSet[i].legendLabel; }); //get the label from our original data array
 </script>
 {% endblock %}

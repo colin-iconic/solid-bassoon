@@ -7,6 +7,18 @@
 <script>
 	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];
 
+	var threshold = quotes['total_value']/10
+
+	big_items = data.filter(item => item.value > threshold);
+	small_items = data.filter(item => item.value <= threshold);
+	collected_value = {
+	    label: `other - ${small_items.length} items`,
+	    value: small_items.reduce((accumulator, item) => accumulator + item.value, 0)
+	}
+	big_items.push(collected_value);
+
+	data = big_items
+	
   var w = 400;
   var h = 400;
   var r = h/2;

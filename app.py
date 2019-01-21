@@ -2147,16 +2147,6 @@ def testing(name=None):
 				if quote[3] == 'Won':
 					quotes['customer_wins'][quote[5]] += 1
 
-	for customer in quotes['customers']:
-		if customer == 'Other':
-			pass
-		else:
-			if quotes['customer_total'][customer] < (quotes['total_value']/5):
-				quotes['customer_total']['Other'] += quotes['customer_total'][customer]
-				i = quotes['customers'].index(customer)
-				del quotes['customers'][i]
-				quotes['customer_total'].pop(customer, None)
-
 	return render_template('test.html', quotes = quotes)
 
 

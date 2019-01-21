@@ -1768,8 +1768,11 @@ def mobile_traveler(name=None):
 	job_details['address'] = [x for x in cursor.fetchall()][0]
 
 	cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job))
-	job_details['promised date'] = [list(x) for x in cursor.fetchall()][0][0]
-
+	try:
+		job_details['promised date'] = [list(x) for x in cursor.fetchall()][0][0]
+	except:
+		job_details['promised date'] = datetime.now().date().strftime('%Y-%m-%d')
+		
 	cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job))
 	data = [list(x) for x in cursor.fetchall()]
 	if data == []:

@@ -2011,7 +2011,7 @@ def quotes_length(length):
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] += 1
 
-	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 182), 0)")
+	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0)")
 	data = [list(x) for x in cursor.fetchall()]
 
 	quote_date = []

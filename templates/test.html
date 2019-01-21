@@ -51,7 +51,7 @@
 	        d.cy = Math.sin(a) * (r - 45);
 	        return d.y = Math.sin(a) * (r + 30);
 	    })
-	    .text(function(d) { return d.label;  } + " - " + function(d) { return d.value.toFixed(2);  })
+	    .text(function(d) { return d.label;  })
 	    .each(function(d) {
 	        var bbox = this.getBBox();
 	        d.sx = d.x - bbox.width/2 - 2;

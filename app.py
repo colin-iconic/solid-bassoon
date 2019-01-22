@@ -1835,7 +1835,7 @@ def customer_jobs(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity from job where customer = '{0}' and status = 'Active'".format(customer))
+	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer = '{0}' and status = 'Active'".format(customer))
 	data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:
@@ -1844,7 +1844,11 @@ def customer_jobs(name=None):
 		job_data.sort(key=itemgetter(1))
 		job.append(job_data[0][0])
 
-	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
+		cursor.execute("select name from address where address = '{0}'".format(job[7]))
+		job_ship = [x for x in cursor.fetchall()][0]
+		job.append(job_ship)
+
+	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Ship To', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 
 @app.route("/saw_packages")
 def saw_packages(name=None):
@@ -2063,7 +2067,7 @@ def testing(name=None):
 		elif quote[9] == 1: #if currency is USD convert to CAD
 			quote[11] = Decimal(quote[11])*Decimal(1.3)
 
-	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
+	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}, 'quotes': {}}
 
 	for quote in data:
 		quotes['quotes_per_week'] += 1
@@ -2086,7 +2090,9 @@ def testing(name=None):
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] += 1
 
-	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0)")
+		quotes['quotes'][quote[0]] = {'part_number': quote[2], 'total_price': quote[11], }
+
+	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and rfq.customer = '{0}'".format(cust))
 	data = [list(x) for x in cursor.fetchall()]
 
 	quote_date = []

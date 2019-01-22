@@ -14,7 +14,7 @@
 	</thead>
 {% for row in rows %}
 	<tr>
-	{% for i in range(0, row|length) %}
+	{% for i in range(0, (row|length)-1 ) %}
     {% if i == 0 %}
     <td><a href="/mobile_traveler?job={{ row[i] }}">{{ row[i] }}</a></td>
     {% elif i == 1 %}

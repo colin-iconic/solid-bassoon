@@ -250,7 +250,7 @@
             <td>{{ quote['reference'] }}</td>
             <td>{{ quote['part_number'] }}</td>
             <td>{{ quote['quantity'] }}</td>
-            <td align="right">{{ "${:,.2f}".format(quote['total_price']) }}</td>
+            <td align="right">${{ quote['total_price'] }}</td>
             <td>{{ quote['status'] }}</td>
         	</tr>
         {% endfor %}

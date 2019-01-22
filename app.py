@@ -2103,7 +2103,7 @@ def testing(name=None):
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] += 1
 
-		quotes['quotes'][quote[0]] = {'part_number': quote[2], 'total_price': quote[11], }
+		quotes['quotes'][quote[0]] = {'part_number': quote[2], 'quantity': quote[10], 'total_price': quote[11], 'quote': quote[0], 'status': quote[3], 'quoted_by': quote[1], 'date': quote[7], 'reference': quote[8]}
 
 	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and rfq.customer = '{0}'".format(cust))
 	data = [list(x) for x in cursor.fetchall()]
@@ -2127,8 +2127,8 @@ def testing(name=None):
 	data_json = json.dumps(quote_data, indent=2, default=str)
 	chart_data = {'weekly_quotes': data_json}
 
-	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
-	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
+	head = ['Quote', 'Quoted By', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status']
+	return render_template('customer_quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,470 @@
+<!doctype html>
+<head>
+	<title>Iconic Metalgear Portal</title>
+	<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='chart.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='tablesort.min.js') }}"></script>
+	<!-- Include sort types you need -->
+	<script src="{{ url_for('static', filename='tablesort.date.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='tablesort.number.min.js') }}"></script>
+ <meta charset="utf-8">
+</head>
+<div class="page">
+	<h1 class="no-print">Iconic Metalgear List Portal<a class="nav" href="{{ url_for('home') }}">Production</a><a class="nav" href="{{ url_for('office') }}">Office</a></h1>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<style>
+  .nav {
+    padding-left: 20px;
+    font-size: 1em;
+  }
+
+  table {
+    background-color: #fff;
+  }
+
+  th {
+    padding-right: 15px;
+  }
+
+  td {
+    padding-right: 15px;
+  }
+
+  th[role=columnheader]:not(.no-sort) {
+    cursor: pointer;
+  }
+
+  th[role=columnheader]:not(.no-sort):after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 0 4px 4px;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  th[aria-sort=ascending]:not(.no-sort):after {
+    border-bottom: none;
+    border-width: 4px 4px 0;
+  }
+
+  th[aria-sort]:not(.no-sort):after {
+    visibility: visible;
+    opacity: 0.4;
+  }
+
+  th[role=columnheader]:not(.no-sort):hover:after {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  a:link {
+    text-decoration: none;
+  }
+  a:hover {
+    color: orange;
+  }
+  a:visited {
+    text-decoration: none;
+  }
+
+  html {
+    background-color: #15194f;
+    height: 100%;
+  }
+
+  body {
+    margin: 0px -170px 0px 100px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    float: left;
+    width: 100%;
+    min-height: 100%;
+    font-size: 1em;
+    font-family: 'Play', sans-serif;
+  }
+
+  h1 {
+    background-color: #131633;
+    color: #e5e5e5;
+    width: 100%;
+    margin: 0px -170px 0px -170px;
+    padding: 10px 0px 10px 0px;
+    padding-left: 170px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    font-size: 2.5em;
+  }
+
+  h2 {
+    background-color: #131633;
+    color: #e5e5e5;
+    width: 100%;
+    margin-left: -170px;
+    padding: 10px 0px 10px 0px;
+    padding-left: 170px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    font-size: 1.5em;
+  }
+
+  ul {
+    list-style: square outside none;
+  }
+
+  li {
+    padding: 10px;
+  }
+  hr {
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 8px auto;
+    height: 0;
+    width: 100%;
+    max-height: 0;
+    font-size: 1px;
+    line-height: 0;
+    clear: both;
+    border: none;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid #ffffff;
+  }
+  form {
+    padding: 20px;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+  #graphDiv {
+    font: 12px Arial;
+  }
+  #graphDiv path {
+    stroke-width: 2;
+    fill: none;
+  }
+  .axis path, .axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+  .area {
+    fill: #F0F8FF;
+    stroke-width: 0;
+  }
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 95px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: white;
+    border: 1px solid black;
+    pointer-events: none;
+  }
+  #parts {
+  }
+  .category {
+    width: 800px;
+  }
+  .part_title {
+    background-color: #e8e9f2;
+    color: black;
+    font-size: 1em;
+    width: 400px;
+    padding: 10px 0px 10px 10px;
+  }
+  .part_description {
+    background-color: #e8e9f2;
+    width: 120px;
+    padding: 10px 0px 10px 10px;
+  }
+  .search_results {
+    width: 1400px;
+    overflow-x: scroll;
+  }
+  .info {
+    max-height: 100px;
+    overflow: auto;
+    font-size: .8em;
+  }
+  .axis {
+    font: 12px sans-serif;
+  }
+
+  .axis g.tick line {
+    stroke: black;
+    shape-rendering: crispEdges;
+  }
+
+  rect {
+    fill: gray;
+  }
+
+  rect:hover {
+    fill: orange !important;
+  }
+</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<div style="padding-left: 10px;">
+  <h2>{{title}}</h2>
+	<h3><a href="http://192.168.2.81/reports/quotes/7">7 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/14">14 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/21">21 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/60">60 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/120">120 Day Summary</a></h3>
+  <h3>Summary of the Last {{ length }} Days</h3>
+  <table>
+    <thead>
+      <tr>
+        <th># of Items Quoted</th>
+        <th>Total Value Quoted</th>
+        <th>Overall Win %</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>{{ quotes['quotes_per_week'] }}</td>
+      <td>{{ "${:,.2f}".format(quotes['total_value']) }}</td>
+      <td>{{ ((quotes['total_win']/quotes['quotes_per_week'])*100)|round|int }}%</td>
+    </tr>
+  </table>
+  <br />
+  <br />
+  <table>
+    <tr>
+      <td rowspan="2">
+        <h3>Quote Details of the Last {{ length }} Days</h3>
+        <table id="table-id" border=1 frame=void rules=rows>
+        	<thead>
+        		<tr>
+        	{% for header in head %}
+        			<th>{{header}}</th>
+        	{% endfor %}
+        	</thead>
+        {% for quote in quotes['quote'] %}Quote', 'Quoted By', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status
+        	<tr>
+        		<td>{{ quote['quote'] }}</td>
+            <td>{{ quote['quoted_by'] }}</td>
+            <td>{{ quote['date'] }}</td>
+            <td>{{ quote['reference'] }}</td>
+            <td>{{ quote['part_number'] }}</td>
+            <td>{{ quote['quantity'] }}</td>
+            <td align="right">{{ "${:,.2f}".format(quote['total_price']) }}</td>
+            <td>{{ quote['status'] }}</td>
+        	</tr>
+        {% endfor %}
+        </table>
+      </td>
+      <td>
+        <div id="tot">
+        </div>
+      </td>
+    </tr>
+		<tr>
+			<td>
+				<div id="vis">
+        </div>
+			</td>
+		</tr>
+  </table>
+</div>
+<script>
+	new Tablesort(document.getElementById('table-id'));
+</script>
+<script>
+  // define diagram sizes
+  var margin = {top: 70, right: 10, bottom: 30, left: 20}
+    , totalWidth = 1200
+    , totalHeight = 500
+    , width = totalWidth - margin.left - margin.right
+    , height = totalHeight - margin.top - margin.bottom
+
+    var dataset = {{ chart_data['weekly_quotes'] | safe }}
+
+    // group data by week
+    var weekFormatter = d3.time.format('%y %W')
+      , toDate = function(d) { return d.date }
+      , toWeek = function(d) { return weekFormatter(new Date(toDate(d))) }
+
+    var eventsByDay = d3.nest()
+      .key(toWeek)
+      .sortKeys(d3.ascending)
+      .rollup(function(values) { return {
+        amount: values.length
+      , mondayDate: d3.time.format('%y %W %a').parse(toWeek(values[0]) + ' Mon')
+      } })
+      .entries(dataset)
+
+    console.log(eventsByDay[0])
+
+    // scales
+    var x = d3.time.scale()
+      .domain(d3.extent(dataset, function(d) { return new Date(toDate(d)) }))
+      .range([0, width])
+      .nice(d3.time.month)
+
+    var y = d3.scale.linear()
+      .domain([0, d3.max(eventsByDay, function(d) { return d.values.amount })])
+      .range([0, height])
+
+    // the chart
+    var svg = d3.select('div#vis').append('svg')
+      .attr('width', totalWidth)
+      .attr('height', totalHeight)
+
+    // x axis
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient('bottom')
+      .ticks(d3.time.months, 1)
+      .tickFormat(d3.time.format.multi([
+        ['%b', function(d) { return d.getMonth(); }]
+      , ['%Y', function() { return true; }]
+      ]))
+      .tickSize(10, 0)
+      .tickPadding(0)
+
+    svg.append('g')
+      .classed('x axis', true)
+      .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height + 5) + ')')
+      .call(xAxis)
+      .selectAll('text')
+        .attr('x', 6)
+        .attr('y', 2)
+        .style('text-anchor', 'start')
+
+    d3.selectAll('g.x.axis g.tick text')[0].reverse()[0].remove() // remove last tick
+
+    // bar chart
+    svg.append('clipPath') // relative to what it affects (here, g.bar.chart)
+      .attr('id', 'chart-area')
+      .append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', width)
+        .attr('height', height)
+
+    var chart = svg.append('g')
+      .classed('bar chart', true)
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+      .attr('clip-path', 'url(#chart-area)')
+
+    var bars = chart.selectAll('rect')
+      .data(eventsByDay)
+
+    bars.enter()
+      .append('rect')
+
+    bars
+      .style('fill', '#15194f')
+      .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
+      .attr('y', function(d) { return height - y(d.values.amount) })
+      .attr('width', (width / eventsByDay.length - 1) - 2)
+      .attr('height', function(d) { return y(d.values.amount) })
+      .append('title')
+        .text(function(d) { return d.key })
+
+    bars.exit()
+      .remove()
+
+    svg.selectAll(".text")
+      .data(eventsByDay)
+      .enter()
+      .append("text")
+      .attr("class","label")
+      .attr('x', function(d) { return x(new Date(d.values.mondayDate))+(width / eventsByDay.length - 1) + 8 })
+      .attr('y', function(d) { return height - y(d.values.amount) + margin.top + 10 })
+      .attr('width', (width / eventsByDay.length - 1))
+      .attr("dy", ".5em")
+      .style('text-anchor', 'middle')
+      .style("fill", "white")
+      .style("font-size", ".6em")
+      .text(function(d) { return d.values.amount; });
+
+    // title
+    svg.append("text")
+      .attr("x", (width / 2))
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("text-decoration", "underline")
+      .style("fill", "black")
+      .text("Number of Quoted Lines Per Week");
+		// title
+    svg.append("text")
+      .attr("x", (width / 2))
+      .attr("y", 36)
+      .attr("text-anchor", "middle")
+      .style("font-size", "11px")
+      .style("text-decoration", "underline")
+      .style("fill", "black")
+      .text("For the Last Year");
+</script>
+<script>
+	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];
+
+	var threshold = {{ quotes['total_value'] }}/20
+
+	big_items = data.filter(item => item.value > threshold);
+	small_items = data.filter(item => item.value <= threshold);
+	collected_value = {
+	    label: `Other - ${small_items.length} items`,
+	    value: small_items.reduce((accumulator, item) => accumulator + item.value, 0)
+	}
+	big_items.push(collected_value);
+
+	data = big_items
+
+  var w = 600;
+  var h = 500;
+  var r = (h-200)/2;
+  var aColor = ['rgb(12,192,170)', 'rgb(37,115,139)', 'rgb(135,206,254)', 'rgb(129,132,251)', 'rgb(202,45,197)', 'rgb(233,201,250)', 'rgb(208,113,172)', 'rgb(133,111,145)']
+
+
+  var vis = d3.select('#tot').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + w/2 + "," + (r+100) + ")");
+
+  var pie = d3.layout.pie().value(function(d){return d.value;});
+
+  // Declare an arc generator function
+  var arc = d3.svg.arc().outerRadius(r);
+
+  // Select paths, use arc generator to draw
+  var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+  arcs.append("svg:path")
+      .attr("fill", function(d, i){return aColor[i];})
+      .attr("d", function (d) {return arc(d);})
+  ;
+
+	// Add a legendLabel to each arc slice...
+  arcs.append("svg:text")
+    .attr("transform", function(d) { //set the label's origin to the center of the arc
+      //we have to make sure to set these before calling arc.centroid
+      d.outerRadius = r + 80; // Set Outer Coordinate
+      d.innerRadius = r + 75; // Set Inner Coordinate
+      return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor", "middle") //center the text on it's origin
+    .style("fill", "black")
+    .style("font", "bold 12px Arial")
+    .text(function(d) { return d.data.label; }); //get the label from our original data array
+
+	// title
+	arcs.append("text")
+		.attr("x", 0)
+		.attr("y", -(h / 2) + 16)
+		.attr("text-anchor", "middle")
+		.style("font-size", "16px")
+		.style("text-decoration", "underline")
+		.style("fill", "black")
+		.text("Total Value of Quotes per Customer");
+	// title
+	arcs.append("text")
+		.attr("x", 0)
+		.attr("y", -(h / 2) + 32)
+		.attr("text-anchor", "middle")
+		.style("font-size", "11px")
+		.style("text-decoration", "underline")
+		.style("fill", "black")
+		.text("For the Last " + {{ length }} + " Days");
+</script>

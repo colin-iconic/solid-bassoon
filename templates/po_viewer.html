@@ -20,6 +20,8 @@
 	    {% elif i == 1 %}
 	    <td><a href="/customer_jobs?customer={{ row[i] }}">{{ row[i] }}</a></td>
 			{% elif i == 2 %}
+			<td><a href="/po_viewer?po={{ row[2] }}">{{ row[2] }}</a></td>
+			{% elif i == 3 %}
 	    <td><a href="/part_viewer?part={{ row[i] }}">{{ row[i] }}</a></td>
 	    {% else %}
 			<td>{{row[i]}}</td>

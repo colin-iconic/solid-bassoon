@@ -1817,10 +1817,10 @@ def po_viewer(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}' and status = 'Active'".format(po))
+	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}' and status = 'Active'".format(po))
 	data = [list(x) for x in cursor.fetchall()]
 	if not data:
-		cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po like '{0}%' and status = 'Active'".format(po))
+		cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity from job where customer_po like '{0}%' and status = 'Active'".format(po))
 		data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:
@@ -1829,7 +1829,7 @@ def po_viewer(name=None):
 		job_data.sort(key=itemgetter(1))
 		job.append(job_data[0][0])
 
-	return render_template('po_viewer.html', rows = data, head = ['Job', 'Customer', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'PO Viewer')
+	return render_template('po_viewer.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'PO Viewer')
 
 @app.route("/customer_jobs")
 def customer_jobs(name=None):

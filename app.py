@@ -2047,7 +2047,7 @@ def testing(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and rfq.customer = '{1}'".format(length, cust))
+	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.customer, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and rfq.customer = '{1}'".format(length, cust))
 	data = [list(x) for x in cursor.fetchall()]
 
 	for quote in data:

@@ -1846,7 +1846,7 @@ def customer_jobs(name=None):
 
 		cursor.execute("select name from address where address = '{0}'".format(job[7]))
 		job_ship = [x for x in cursor.fetchall()][0]
-		job.append(job_ship)
+		job.append(job_ship[0])
 
 	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Ship To', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 

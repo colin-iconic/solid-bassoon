@@ -22,6 +22,8 @@
     {% elif i == 2 %}
     <td><a href="/po_viewer?po={{ row[i] }}">{{ row[i] }}</a></td>
     {% elif i == 3 %}
+    <td>{{ row[i] }}</td>
+		{% elif i == 4 %}
     <td><a href="/part_viewer?part={{ row[i] }}">{{ row[i] }}</a></td>
     {% else %}
 		<td>{{row[i]}}</td>

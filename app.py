@@ -2041,17 +2041,21 @@ def quotes_length(length):
 
 @app.route('/testing')
 def testing(name=None):
+	length = 180
+	cust = 'DRIVE PROD'
+
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	length = 21
-
-	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.customer, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0)".format(length))
+	cursor.execute("select quote.quote, quote.quoted_by, quote.part_number, quote.status, quote.rfq, rfq.sales_rep, cast(rfq.quote_date as date), rfq.reference, rfq.trade_currency from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and rfq.customer = '{1}'".format(length, cust))
 	data = [list(x) for x in cursor.fetchall()]
 
 	for quote in data:
-		cursor.execute("select quote_qty, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
-		quote_data = [list(x) for x in cursor.fetchall()][0]
+		try:
+			cursor.execute("select quote_qty, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
+			quote_data = [list(x) for x in cursor.fetchall()][0]
+		except:
+			pass
 		quote.extend(quote_data)
 
 		if quote[9] == 2: #if currency is CAD do nothing
@@ -2059,32 +2063,53 @@ def testing(name=None):
 		elif quote[9] == 1: #if currency is USD convert to CAD
 			quote[11] = Decimal(quote[11])*Decimal(1.3)
 
-	data.sort(key=itemgetter(11), reverse=True)
-
-	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': ['Other'], 'customer_counts': {}, 'customer_total': {'Other': 0}, 'customer_wins': {}}
+	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}}
 
 	for quote in data:
-			quotes['quotes_per_week'] += 1
-			quotes['total_value'] += quote[11]
+		quotes['quotes_per_week'] += 1
+		quotes['total_value'] += quote[11]
 
+		if quote[3] == 'Won':
+			quotes['total_win'] += 1
+
+		if quote[5] not in quotes['customers']:
+			quotes['customers'].append(quote[5])
+			quotes['customer_counts'][quote[5]] = 1
+			quotes['customer_total'][quote[5]] = quote[11]
 			if quote[3] == 'Won':
-				quotes['total_win'] += 1
-
-			if quote[5] not in quotes['customers']:
-				quotes['customers'].append(quote[5])
-				quotes['customer_counts'][quote[5]] = 1
-				quotes['customer_total'][quote[5]] = quote[11]
-				if quote[3] == 'Won':
-					quotes['customer_wins'][quote[5]] = 1
-				else:
-					quotes['customer_wins'][quote[5]] = 0
+				quotes['customer_wins'][quote[5]] = 1
 			else:
-				quotes['customer_counts'][quote[5]] += 1
-				quotes['customer_total'][quote[5]] += quote[11]
-				if quote[3] == 'Won':
-					quotes['customer_wins'][quote[5]] += 1
+				quotes['customer_wins'][quote[5]] = 0
+		else:
+			quotes['customer_counts'][quote[5]] += 1
+			quotes['customer_total'][quote[5]] += quote[11]
+			if quote[3] == 'Won':
+				quotes['customer_wins'][quote[5]] += 1
 
-	return render_template('test.html', quotes = quotes)
+	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0)")
+	data = [list(x) for x in cursor.fetchall()]
+
+	quote_date = []
+	for quote in data:
+		quote.append(0)
+
+		if quote[3] == 2: #if currency is CAD do nothing
+			pass
+		elif quote[3] == 1: #if currency is USD convert to CAD
+			quote[5] = Decimal(quote[5])*Decimal(1.3)
+
+		if quote[4] == 'Won':
+			quote[4] = 1
+		else:
+			quote[4] = 0
+
+		quote_data.append({'date': quote[2].strftime('%Y-%m-%d'), 'total_price': quote[5], 'status': quote[4]})
+
+	data_json = json.dumps(quote_data, indent=2, default=str)
+	chart_data = {'weekly_quotes': data_json}
+
+	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
+	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
 
 if __name__ == '__main__':

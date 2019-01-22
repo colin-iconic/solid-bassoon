@@ -2080,7 +2080,7 @@ def testing(name=None):
 		elif quote[9] == 1: #if currency is USD convert to CAD
 			quote[11] = Decimal(quote[11])*Decimal(1.3)
 
-	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}, 'quotes': []]}
+	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}, 'quotes': []}
 
 	for quote in data:
 		quotes['quotes_per_week'] += 1

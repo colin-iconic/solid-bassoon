@@ -1793,7 +1793,7 @@ def part_viewer(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, customer_po, description, cast(order_date as date), order_quantity from job where part_number = '{0}' and status = 'Active'".format(part))
+	cursor.execute("select job, customer, customer_po, description, cast(order_date as date), order_quantity from job where part_number = '{0}%' and status = 'Active'".format(part))
 	data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:
@@ -1814,7 +1814,7 @@ def po_viewer(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}' and status = 'Active'".format(po))
+	cursor.execute("select job, customer, part_number, description, cast(order_date as date), order_quantity from job where customer_po = '{0}%' and status = 'Active'".format(po))
 	data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:
@@ -1835,7 +1835,7 @@ def customer_jobs(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer = '{0}' and status = 'Active'".format(customer))
+	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer = '{0}%' and status = 'Active'".format(customer))
 	data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:

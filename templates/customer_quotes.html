@@ -239,10 +239,10 @@
         	<thead>
         		<tr>
         	{% for header in head %}
-        			<th>{{header}}</th>
+        			<th>{{ header }}</th>
         	{% endfor %}
         	</thead>
-        {% for quote in quotes['quotes'] %}Quote', 'Quoted By', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status
+        {% for quote in quotes['quotes'] %}
         	<tr>
         		<td>{{ quote['quote'] }}</td>
             <td>{{ quote['quoted_by'] }}</td>

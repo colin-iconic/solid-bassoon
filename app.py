@@ -1843,6 +1843,9 @@ def customer_jobs(name=None):
 
 	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer = '{0}' and status = 'Active'".format(customer))
 	data = [list(x) for x in cursor.fetchall()]
+	if not data:
+		cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer like '{0}%' and status = 'Active'".format(customer))
+		data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))

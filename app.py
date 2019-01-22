@@ -1851,7 +1851,10 @@ def customer_jobs(name=None):
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 		job_data = [list(x) for x in cursor.fetchall()]
 		job_data.sort(key=itemgetter(1))
-		job.append(job_data[0][0])
+		try:
+			job.append(job_data[0][0])
+		except:
+			job.append('NA')
 
 		cursor.execute("select name from address where address = '{0}'".format(job[7]))
 		job_ship = [x for x in cursor.fetchall()][0]

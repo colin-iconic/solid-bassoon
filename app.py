@@ -2056,10 +2056,9 @@ def quotes_length(length):
 	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
 	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
-@app.route('/testing')
-def testing(name=None):
-	length = 180
-	cust = 'DRIVE PROD'
+@app.route('/reports/customer_quotes/<cust>')
+def customer_quotes(length):
+	length = 60;
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
@@ -2128,7 +2127,7 @@ def testing(name=None):
 	chart_data = {'weekly_quotes': data_json}
 
 	head = ['Quote', 'Quoted By', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status']
-	return render_template('customer_quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
+	return render_template('customer_quotes.html', quotes = quotes, head = head, length = length, title = '{0} Quotes'.format(cust), chart_data = chart_data)
 
 
 if __name__ == '__main__':

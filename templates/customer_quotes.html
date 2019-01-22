@@ -213,7 +213,6 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <div style="padding-left: 10px;">
   <h2>{{title}}</h2>
-	<h3><a href="http://192.168.2.81/reports/quotes/7">7 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/14">14 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/21">21 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/60">60 Day Summary</a> | <a href="http://192.168.2.81/reports/quotes/120">120 Day Summary</a></h3>
   <h3>Summary of the Last {{ length }} Days</h3>
   <table>
     <thead>
@@ -256,7 +255,7 @@
         {% endfor %}
         </table>
       </td>
-      <td>
+      <td valign="top">
         <div id="vis">
         </div>
       </td>
@@ -394,71 +393,4 @@
       .style("text-decoration", "underline")
       .style("fill", "black")
       .text("For the Last Year");
-</script>
-<script>
-	data = [{% for customer in quotes['customers'] %}{"label":"{{ customer }}", "value": {{ quotes['customer_total'][customer] }}},{% endfor %}{"label":" ", "value": 0}];
-
-	var threshold = {{ quotes['total_value'] }}/20
-
-	big_items = data.filter(item => item.value > threshold);
-	small_items = data.filter(item => item.value <= threshold);
-	collected_value = {
-	    label: `Other - ${small_items.length} items`,
-	    value: small_items.reduce((accumulator, item) => accumulator + item.value, 0)
-	}
-	big_items.push(collected_value);
-
-	data = big_items
-
-  var w = 600;
-  var h = 500;
-  var r = (h-200)/2;
-  var aColor = ['rgb(12,192,170)', 'rgb(37,115,139)', 'rgb(135,206,254)', 'rgb(129,132,251)', 'rgb(202,45,197)', 'rgb(233,201,250)', 'rgb(208,113,172)', 'rgb(133,111,145)']
-
-
-  var vis = d3.select('#tot').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + w/2 + "," + (r+100) + ")");
-
-  var pie = d3.layout.pie().value(function(d){return d.value;});
-
-  // Declare an arc generator function
-  var arc = d3.svg.arc().outerRadius(r);
-
-  // Select paths, use arc generator to draw
-  var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-  arcs.append("svg:path")
-      .attr("fill", function(d, i){return aColor[i];})
-      .attr("d", function (d) {return arc(d);})
-  ;
-
-	// Add a legendLabel to each arc slice...
-  arcs.append("svg:text")
-    .attr("transform", function(d) { //set the label's origin to the center of the arc
-      //we have to make sure to set these before calling arc.centroid
-      d.outerRadius = r + 80; // Set Outer Coordinate
-      d.innerRadius = r + 75; // Set Inner Coordinate
-      return "translate(" + arc.centroid(d) + ")";
-    })
-    .attr("text-anchor", "middle") //center the text on it's origin
-    .style("fill", "black")
-    .style("font", "bold 12px Arial")
-    .text(function(d) { return d.data.label; }); //get the label from our original data array
-
-	// title
-	arcs.append("text")
-		.attr("x", 0)
-		.attr("y", -(h / 2) + 16)
-		.attr("text-anchor", "middle")
-		.style("font-size", "16px")
-		.style("text-decoration", "underline")
-		.style("fill", "black")
-		.text("Total Value of Quotes per Customer");
-	// title
-	arcs.append("text")
-		.attr("x", 0)
-		.attr("y", -(h / 2) + 32)
-		.attr("text-anchor", "middle")
-		.style("font-size", "11px")
-		.style("text-decoration", "underline")
-		.style("fill", "black")
-		.text("For the Last " + {{ length }} + " Days");
 </script>

@@ -244,7 +244,7 @@
         	</thead>
         {% for customer in quotes['customers'] %}
         	<tr>
-        		<td>{{ customer }}</td>
+        		<td><a href="/reports/customer_quotes/{{ customer }}">{{ customer }}</a></td>
             <td>{{ quotes['customer_counts'][customer] }}</td>
             <td align="right">{{ "${:,.2f}".format(quotes['customer_total'][customer]) }}</td>
 						<td align="right">{{ ((quotes['customer_total'][customer]/quotes['total_value'])*100)|round|int }}%</td>

@@ -404,7 +404,7 @@
 	var d = 20
 	var slice_count = 0
 
-	while (slice_count < 6) {
+	while (slice_count < 4) {
 		var threshold = {{ quotes['total_value'] }}/d
 		big_items = data.filter(item => item.value > threshold);
 		slice_count = big_items.length

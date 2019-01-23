@@ -353,7 +353,7 @@
       .style('fill', '#15194f')
       .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
       .attr('y', function(d) { return height - y(d.values.amount) })
-      .attr('width', (width / eventsByDay.length - 1) - 2)
+      .attr('width', (width / 51) - 2)
       .attr('height', function(d) { return y(d.values.amount) })
       .append('title')
         .text(function(d) { return d.key })

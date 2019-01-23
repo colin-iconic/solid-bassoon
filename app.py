@@ -2126,7 +2126,7 @@ def customer_quotes(cust):
 	data_json = json.dumps(quote_data, indent=2, default=str)
 	chart_data = {'weekly_quotes': data_json}
 
-	head = ['Quote', 'Quoted By', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status']
+	head = ['Quote', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status']
 	return render_template('customer_quotes.html', quotes = quotes, head = head, length = length, title = '{0} Quotes'.format(cust), chart_data = chart_data)
 
 

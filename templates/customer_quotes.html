@@ -366,7 +366,7 @@
       .enter()
       .append("text")
       .attr("class","label")
-      .attr('x', function(d) { return x(new Date(d.values.mondayDate))+(width / eventsByDay.length - 1) - 3 })
+      .attr('x', function(d) { return x(new Date(d.values.mondayDate))+(width / 54) })
       .attr('y', function(d) { return height - y(d.values.amount) + margin.top + 10 })
       .attr('width', (width / eventsByDay.length - 1))
       .attr("dy", ".5em")

@@ -408,6 +408,7 @@
 		var threshold = {{ quotes['total_value'] }}/d
 		big_items = data.filter(item => item.value > threshold);
 		slice_count = big_items.length
+		d++
 	};
 
 	small_items = data.filter(item => item.value <= threshold);

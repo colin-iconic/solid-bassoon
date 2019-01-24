@@ -2000,6 +2000,7 @@ def quotes_length(length):
 			cursor.execute("select quote_qty, total_price from quote_qty where quote like '%{0}%'".format(quote[0]))
 			quote_data = [list(x) for x in cursor.fetchall()][0]
 		except:
+			quote_data = [0, 0]
 			pass
 		quote.extend(quote_data)
 

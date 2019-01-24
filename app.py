@@ -2035,7 +2035,7 @@ def quotes_length(length):
 	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0)")
 	data = [list(x) for x in cursor.fetchall()]
 
-	quote_date = []
+	quote_data = []
 	for quote in data:
 		quote.append(0)
 
@@ -2109,7 +2109,7 @@ def customer_quotes(cust):
 	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and rfq.customer = '{0}'".format(cust))
 	data = [list(x) for x in cursor.fetchall()]
 
-	quote_date = []
+	quote_data = []
 	for quote in data:
 		quote.append(0)
 

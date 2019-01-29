@@ -128,7 +128,7 @@
   .duration(1000)
   //Position the number in the middle of the progress path by calculating the width in pixels and dividing it by 2
   .style("min-width", function(d, i) {
-     return (d*3)/2 + "px";
+     return (d*9)/2 + "px";
   })
   //Transition the number by making use of tweens
   .tween(".percentage", function(d) {
@@ -148,7 +148,7 @@
   })
   .duration(1000)
   .style("width", function(d, i) {
-     return d*3 + "px";
+     return d*9 + "px";
   });
   //transition between the different colors depending on the value
   d3.select("body").selectAll(".pattern")

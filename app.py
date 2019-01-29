@@ -2167,7 +2167,9 @@ def job_progress(name=None):
 		data.sort(key=itemgetter(1))
 		job_details['current wc'] = data[0][0]
 
-	return render_template('job_progress.html', job_details = job_details)
+	data = [100,100,100,83]
+
+	return render_template('job_progress.html', job_details = job_details, data = data)
 
 if __name__ == '__main__':
 	app.run()

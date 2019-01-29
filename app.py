@@ -2131,6 +2131,43 @@ def customer_quotes(cust):
 	head = ['Quote', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status']
 	return render_template('customer_quotes.html', quotes = quotes, head = head, length = length, title = '{0} Quotes'.format(cust), chart_data = chart_data)
 
+@app.route("/job_progress")
+def job_progress(name=None):
+	if request.args.get('job'):
+		job = request.args.get('job')
+	else:
+		return render_template('job_progress.html', job_details = {'job': 'Enter Job'})
+
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select status, part_number, order_quantity, customer_po, customer, ship_to, note_text, cast(order_date as date) from job where job = '{0}'".format(job))
+	data = list(cursor.fetchall())
+	if not data:
+		return render_template('mobile_traveler.html', job_details = {'job': 'Invalid Job - Try Again'})
+
+	data = [list(x) for x in data][0]
+
+	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6], 'order date': data[7]}
+
+	cursor.execute("select name, line1, line2, city, state, zip from address where address = '{0}'".format(job_details['ship to']))
+	job_details['address'] = [x for x in cursor.fetchall()][0]
+
+	cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job))
+	try:
+		job_details['promised date'] = [list(x) for x in cursor.fetchall()][0][0]
+	except:
+		job_details['promised date'] = datetime.datetime.now().date().strftime('%Y-%m-%d')
+
+	cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job))
+	data = [list(x) for x in cursor.fetchall()]
+	if data == []:
+		job_details['current wc'] = 'COMPLETE'
+	else:
+		data.sort(key=itemgetter(1))
+		job_details['current wc'] = data[0][0]
+
+	return render_template('job_progress.html', job_details = job_details)
 
 if __name__ == '__main__':
 	app.run()

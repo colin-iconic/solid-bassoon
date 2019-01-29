@@ -1872,7 +1872,7 @@ def saw_packages(name=None):
 	cursor.execute("select job, part_number from job where status = 'Active' and make_quantity > 0 and job not like '%-%'")
 	data = [list(x) for x in cursor.fetchall()]
 
-	cursor.execute("select dist job.job ")
+	# cursor.execute("select dist job.job ")
 	cursor.execute("select job, status from job where job like '%-S%'")
 	saw_jobs = [list(x) for x in cursor.fetchall()]
 
@@ -2166,6 +2166,19 @@ def job_progress(name=None):
 	else:
 		data.sort(key=itemgetter(1))
 		job_details['current wc'] = data[0][0]
+
+	wc_details = {
+		'DESIGN': {'length': .14, 'name': 'Design'},
+		'PROGRAMMIN': {'length': .07, 'name': 'Programming'},
+		'KIT': {'length': .42, 'name': 'Kit'},
+		'SCHEDULE': {'length': .07, 'name': 'Schedule'},
+		'LASER': {'length': .035, 'name': 'Laser'},
+		'TOYOKOKI': {'length': .035, 'name': 'Bending'},
+		'WELDING': {'length': .16, 'name': 'Welding'},
+		'SHOP': {'length': .035, 'name': 'Assembly'},
+		'SHIPPING': {'length': .035, 'name': 'Shipping'},
+		'PULL_FROM': {'length': .965, 'name': 'Pull From'},
+	}
 
 	data = [100]
 

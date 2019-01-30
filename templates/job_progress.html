@@ -48,7 +48,7 @@
 <br />
 <div style="padding: 10px; background: white;">
   <h3>{{ job_details['job'] }}</h3>
-  <div class="progress-bars">
+  <div id="progress-bar">
   </div>
   <table style="width: 500px; font-size: 1.5em">
     <tr>
@@ -102,7 +102,7 @@
    height += offset * 2;
    var dimensions = '' + 0 + ' ' + 0 + ' ' + width + ' ' + height;
 
-   var svg = d3.select('body').append('svg')
+   var svg = d3.select('#progress-bar').append('svg')
        .attr('id', 'scene', true)
        .attr('preserveAspectRatio', 'xMinYMin meet')
        .attr('viewBox', dimensions)

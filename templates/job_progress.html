@@ -57,7 +57,7 @@
   //Data
   var data = {{ progress }};
   var colors = { green: '#4DC87F', lightGreen: '#D9F0E3' };
-  var width = 700, height = 200, offset = 48;
+  var width = 960, height = 480, offset = 48;
 
    width += offset * 2;
    height += offset * 2;
@@ -71,7 +71,7 @@
 
    var steps = ['0', '1', '2', '3', '4', '5'];
    stepWidth = (width - offset * 2) / (steps.length - 1),
-   currentStep = "0";
+   currentStep = '0';
 
    var progressBar = svg.append('g')
                  .attr('transform', 'translate(' + offset + ',' + offset + ')')

@@ -93,7 +93,10 @@
       .duration(1000)
       .attr('width', function(){
           var index = steps.indexOf(currentStep);
-          return (index + 1) * stepWidth;
+          var e = 0;
+          var w = 0;
+          while(index > e) { w += stepWidth[e]; e++; }
+          return w;
       });
 
   progressBar.selectAll('circle')
@@ -101,7 +104,12 @@
   .enter()
   .append('circle')
   .attr('id', function(d, i){ return 'step_' + i; })
-  .attr('cx', function(d, i){ return i * stepWidth[i]; })
+  .attr('cx', function(d, i){
+    var e = 0;
+    var w = 0;
+    while(i > e) { w += stepWidth[e]; e++; }
+    return w;
+  })
   .attr('cy', 4)
   .attr('r', 20)
   .attr('fill', '#FFFFFF')
@@ -113,7 +121,12 @@
   .enter()
   .append('text')
   .attr('id', function(d, i){ return 'label_' + i; })
-  .attr('dx', function(d, i){ return i * stepWidth[i]; })
+  .attr('dx', function(d, i){
+    var e = 0;
+    var w = 0;
+    while(i > e) { w += stepWidth[e]; e++; }
+    return w;
+  })
   .attr('dy', 10)
   .attr('text-anchor', 'middle')
   .text(function(d, i) { return i + 1; })
@@ -138,7 +151,10 @@
           .attr('fill', colors.green)
           .attr('width', function(){
               var index = steps.indexOf(step_);
-              return (index) * stepWidth[index];
+              var e = 0;
+              var w = 0;
+              while(index > e) { w += stepWidth[e]; e++; }
+              return w;
           });
 
       for(var i = 0; i < steps.length; i++){

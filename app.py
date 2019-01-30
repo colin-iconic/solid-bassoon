@@ -1764,8 +1764,11 @@ def mobile_traveler(name=None):
 
 	job_details = {'job': job, 'status': data[0], 'part number': data[1], 'quantity': data[2], 'customer po': data[3], 'customer': data[4], 'ship to': data[5], 'note text': data[6], 'order date': data[7]}
 
-	cursor.execute("select name, line1, line2, city, state, zip from address where address = '{0}'".format(job_details['ship to']))
-	job_details['address'] = [x for x in cursor.fetchall()][0]
+	try:
+		cursor.execute("select name, line1, line2, city, state, zip from address where address = '{0}'".format(job_details['ship to']))
+		job_details['address'] = [x for x in cursor.fetchall()][0]
+	except:
+		job_details['address'] = ['NA']
 
 	cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job))
 	try:

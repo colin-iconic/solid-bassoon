@@ -2173,7 +2173,7 @@ def job_progress(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 	if data == []:
 		job_details['current wc'] = 'COMPLETE'
-		progress = 0
+		progress = 9
 	else:
 		data.sort(key=itemgetter(1))
 		job_details['current wc'] = data[0][0]

@@ -110,7 +110,7 @@
 
    var steps = ['0', '1', '2', '3', '4', '5'];
    stepWidth = (width - offset * 2) / (steps.length - 1),
-   currentStep = data.toString();
+   currentStep = "0";
 
    var progressBar = svg.append('g')
                  .attr('transform', 'translate(' + offset + ',' + offset + ')')
@@ -159,7 +159,7 @@
    .attr('text-anchor', 'middle')
    .text(function(d, i) { return i + 1; })
 
-   updateProgressBar("0");
+   updateProgressBar(data.toString(););
 
    //self-running demo
    //setInterval(function() { updateProgressBar(Math.floor(Math.random() * (steps.length - 1)).toString()); } , 2500)

@@ -54,12 +54,12 @@
   {% endfor %}</p>
 </div>
 <script>
+  var step = {{ progress }}
   var colors = { green: '#4DC87F', lightGreen: '#D9F0E3' };
-  var width = 480, height = 240, offset = 24;
+  var width = 480, height = 80, offset = 24;
 
   width += offset * 2;
   height += offset * 2;
-  var dimensions = '' + 0 + ' ' + 0 + ' ' + width + ' ' + height;
 
   var svg = d3.select('#progress-bar').append('svg')
       .attr('id', 'scene', true)
@@ -67,9 +67,9 @@
       .attr('height', height)
       .classed('svg-content', true);
 
-  var steps = ['0', '1', '2', '3', '4', '5'];
+  var steps = ['Design', 'Programming', 'Kit', 'Schedule', 'Laser', 'Bending', 'Welding', 'Assembly', 'Shop', 'Shipping'];
   stepWidth = (width - offset * 2) / (steps.length - 1),
-  currentStep = '0';
+  currentStep = 'Design';
 
   var progressBar = svg.append('g')
                 .attr('transform', 'translate(' + offset + ',' + offset + ')')
@@ -118,10 +118,10 @@
   .attr('text-anchor', 'middle')
   .text(function(d, i) { return i + 1; })
 
-  updateProgressBar("0");
+  updateProgressBar(steps[step]);
 
   //self-running demo
-  setInterval(function() { updateProgressBar(Math.floor(Math.random() * (steps.length - 1)).toString()); } , 2500)
+  //setInterval(function() { updateProgressBar(Math.floor(Math.random() * (steps.length - 1)).toString()); } , 2500)
 
   function setupProgressBar(data_){
 

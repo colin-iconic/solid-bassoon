@@ -54,9 +54,14 @@
   {% endfor %}</p>
 </div>
 <script>
+  var steps = ['Pre-Production', 'Laser', 'Bending', 'Welding', 'Assembly', 'Shipping', 'Complete'];
+  var stepWidth = [140, 35, 35, 140, 70, 30, 30];
+  var currentStep = 'Pre-Production';
+
   var step = {{ progress }}
   var colors = { green: '#f77f00', lightGreen: '#20274b ' };
-  var width = 480, height = 80, offset = 24;
+  var width = stepWidth.reduce((a, b) => a + b, 0);
+  var height = 80, offset = 24;
 
   width += offset * 2;
   height += offset * 2;
@@ -66,10 +71,6 @@
       .attr('width', width)
       .attr('height', height)
       .classed('svg-content', true);
-
-  var steps = ['Pre-Production', 'Laser', 'Bending', 'Welding', 'Assembly', 'Shipping', 'Complete'];
-  stepWidth = [140, 35, 35, 140, 70, 30, 30],
-  currentStep = 'Pre-Production';
 
   var progressBar = svg.append('g')
                 .attr('transform', 'translate(' + offset + ',' + offset + ')')

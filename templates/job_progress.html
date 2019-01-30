@@ -145,21 +145,13 @@
 
           if(i <= steps.indexOf(step_)) {
 
-              d3.select('#step_' + i).transition()
-              .duration(100)
-              .attr('fill', colors.green)
-              .attr('stroke', colors.green);
-
+              d3.select('#step_' + i).attr('fill', colors.green).attr('stroke', colors.green);
               d3.select('#label_' + i).attr('fill', '#FFFFFF');
 
 
           } else {
 
-              d3.select('#step_' + i)
-              .transition()
-              .duration(100)
-              .attr('fill', '#FFFFFF')
-              .attr('stroke', colors.lightGreen);
+              d3.select('#step_' + i).attr('fill', '#FFFFFF').attr('stroke', colors.lightGreen);
               d3.select('#label_' + i).attr('fill', '#000000');
 
           }

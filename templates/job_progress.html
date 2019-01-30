@@ -142,7 +142,7 @@
           });
 
       for(var i = 0; i < steps.length; i++){
-
+          var until = new Date().getTime() + 250; while(new Date().getTime() < until) {};
           if(i <= steps.indexOf(step_)) {
 
               d3.select('#step_' + i).attr('fill', colors.green).attr('stroke', colors.green);

@@ -1881,7 +1881,7 @@ def saw_packages(name=None):
 		if job[1] in [
 				'3023','3021','3009','3027','3028','3011','3024','3022',
 				'3017','3026','3018','3020','3004','3006','3013','3007','3010',
-				'3003','3005','1800','1809','1810','1801','1802','1814','1807',
+				'3003','1800','1809','1810','1801','1802','1814','1807',
 				'1374','1500','1501','1502','1503','1504','1505','1506','1507',
 				'1508','1509','1510','1511','1512','1513','1526','1527','1514',
 				'1515','1516','1517','1518','1525','1519','1520','1521','1522',
@@ -2173,26 +2173,13 @@ def job_progress(name=None):
 	data = [list(x) for x in cursor.fetchall()]
 	if data == []:
 		job_details['current wc'] = 'COMPLETE'
+		progress = 0
 	else:
 		data.sort(key=itemgetter(1))
 		job_details['current wc'] = data[0][0]
+		progress = data[0][1]
 
-	wc_details = {
-		'DESIGN': {'length': .14, 'name': 'Design'},
-		'PROGRAMMIN': {'length': .07, 'name': 'Programming'},
-		'KIT': {'length': .42, 'name': 'Kit'},
-		'SCHEDULE': {'length': .07, 'name': 'Schedule'},
-		'LASER': {'length': .035, 'name': 'Laser'},
-		'TOYOKOKI': {'length': .035, 'name': 'Bending'},
-		'WELDING': {'length': .16, 'name': 'Welding'},
-		'SHOP': {'length': .035, 'name': 'Assembly'},
-		'SHIPPING': {'length': .035, 'name': 'Shipping'},
-		'PULL_FROM': {'length': .965, 'name': 'Pull From'},
-	}
-
-	data = [100]
-
-	return render_template('job_progress.html', job_details = job_details, data = data)
+	return render_template('job_progress.html', job_details = job_details, progress = progress)
 
 if __name__ == '__main__':
 	app.run()

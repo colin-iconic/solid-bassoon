@@ -142,16 +142,24 @@
           });
 
       for(var i = 0; i < steps.length; i++){
-          var until = new Date().getTime() + 250; while(new Date().getTime() < until) {};
+
           if(i <= steps.indexOf(step_)) {
 
-              d3.select('#step_' + i).attr('fill', colors.green).attr('stroke', colors.green);
+              d3.select('#step_' + i).transition()
+              .duration(250)
+              .attr('fill', colors.green)
+              .attr('stroke', colors.green);
+
               d3.select('#label_' + i).attr('fill', '#FFFFFF');
 
 
           } else {
 
-              d3.select('#step_' + i).attr('fill', '#FFFFFF').attr('stroke', colors.lightGreen);
+              d3.select('#step_' + i)
+              .transition()
+              .duration(250)
+              .attr('fill', '#FFFFFF')
+              .attr('stroke', colors.lightGreen);
               d3.select('#label_' + i).attr('fill', '#000000');
 
           }

@@ -2,7 +2,7 @@
 {% block body %}
 <script src='http://d3js.org/d3.v4.min.js'></script>
 <h2 class="no-print">Job Progress</h2>
-<form method="GET" class="no-print" style="font-size: 1.5em">
+<form method="GET" class="no-print">
 	Search: <input name="job" placeholder="{{ job_details['job'] }}">
 	<button type="submit">Submit</button>
 </form>
@@ -11,7 +11,7 @@
   <h3>{{ job_details['job'] }}</h3>
   <div id="progress-bar">
   </div>
-  <table style="width: 500px; font-size: 1.5em">
+  <table>
     <tr>
       <td>Customer: </td>
       <td><a href="/customer_jobs?customer={{ job_details['customer'] }}">{{ job_details['customer'] }}</a></td>
@@ -46,10 +46,10 @@
   </table>
   <br />
   Job Notes:<br />
-  <p style="width: 500px; font-size: 1.5em">{{ job_details['note text'] }}</p>
+  <p>{{ job_details['note text'] }}</p>
   <br />
   Ship To:<br />
-  <p style="width: 500px; font-size: 1.5em">{% for line in job_details['address'] %}
+  <p>{% for line in job_details['address'] %}
     {{ line }}<br />
   {% endfor %}</p>
 </div>

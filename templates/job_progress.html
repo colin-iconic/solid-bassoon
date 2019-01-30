@@ -67,9 +67,9 @@
       .attr('height', height)
       .classed('svg-content', true);
 
-  var steps = ['Design', 'Programming', 'Kit', 'Schedule', 'Laser', 'Bending', 'Welding', 'Assembly', 'Shipping', 'Complete'];
-  stepWidth = (width - offset * 2) / (steps.length - 1),
-  currentStep = 'Design';
+  var steps = ['Pre-Production', 'Laser', 'Bending', 'Welding', 'Assembly', 'Shipping', 'Complete'];
+  stepWidth = [140, 35, 35, 140, 70, 30, 30],
+  currentStep = 'Pre-Production';
 
   var progressBar = svg.append('g')
                 .attr('transform', 'translate(' + offset + ',' + offset + ')')
@@ -101,7 +101,7 @@
   .enter()
   .append('circle')
   .attr('id', function(d, i){ return 'step_' + i; })
-  .attr('cx', function(d, i){ return i * stepWidth; })
+  .attr('cx', function(d, i){ return i * stepWidth[i]; })
   .attr('cy', 4)
   .attr('r', 20)
   .attr('fill', '#FFFFFF')
@@ -113,7 +113,7 @@
   .enter()
   .append('text')
   .attr('id', function(d, i){ return 'label_' + i; })
-  .attr('dx', function(d, i){ return i * stepWidth; })
+  .attr('dx', function(d, i){ return i * stepWidth[i]; })
   .attr('dy', 10)
   .attr('text-anchor', 'middle')
   .text(function(d, i) { return i + 1; })
@@ -138,7 +138,7 @@
           .attr('fill', colors.green)
           .attr('width', function(){
               var index = steps.indexOf(step_);
-              return (index) * stepWidth;
+              return (index) * stepWidth[index];
           });
 
       for(var i = 0; i < steps.length; i++){

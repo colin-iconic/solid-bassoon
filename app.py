@@ -2177,7 +2177,10 @@ def job_progress(name=None):
 	else:
 		data.sort(key=itemgetter(1))
 		job_details['current wc'] = data[0][0]
-		progress = data[0][1]
+		if data[0][1] < 4:
+			progress = 0
+		else:
+			progress = data[0][1]
 
 	return render_template('job_progress.html', job_details = job_details, progress = progress)
 

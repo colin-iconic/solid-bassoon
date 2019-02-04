@@ -1459,7 +1459,7 @@ def analytics(name=None):
 
 	#Promised Date distrobution
 	#Under Construction
-	cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%'")
+	cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%' and job.est_rem_hrs > 0")
 
 	active_orders = [list(x)[0] for x in cursor.fetchall()]
 

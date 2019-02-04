@@ -1457,6 +1457,28 @@ def analytics(name=None):
 	order_count_data = json.dumps(order_count, indent=2, default=str)
 	data['counts'] = order_count_data
 
+	#Promised Date distrobution
+	#Under Construction
+	cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%'")
+
+	active_orders = [list(x)[0] for x in cursor.fetchall()]
+
+	order_count = []
+
+	def daterange(start_date, end_date):
+		for n in range(int ((end_date - start_date).days)):
+			yield start_date + datetime.timedelta(n)
+
+	start_date = min(active_orders)
+	end_date = max(active_orders)
+
+	for single_date in daterange(start_date, end_date):
+		count = sum(1 for d in active_orders if d == single_date)
+		order_count.append({'date': single_date, 'count': count})
+
+	order_count_data = json.dumps(order_count, indent=2, default=str)
+	data['promised_counts'] = order_count_data
+
 	return render_template('analytics.html', data = data)
 
 @app.route("/report/in_stock")

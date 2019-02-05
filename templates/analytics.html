@@ -553,7 +553,7 @@
       .key(toWeek)
       .sortKeys(d3.ascending)
       .rollup(function(values) { return {
-        amount: values.length
+        amount: values[1]
       , mondayDate: d3.time.format('%y %W %a').parse(toWeek(values[0]) + ' Mon')
       } })
       .entries(dataset)

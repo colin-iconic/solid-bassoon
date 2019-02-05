@@ -567,7 +567,7 @@
       .nice(d3.time.month)
 
     var y = d3.scale.linear()
-      .domain([0, d3.max(eventsByDay, function(d) { return d.values.amount })])
+      .domain([0, d3.max(eventsByDay, function(d) { return d.values.count })])
       .range([0, height])
 
     // the chart
@@ -621,9 +621,9 @@
     bars
       .style('fill', '#15194f')
       .attr('x', function(d) { return x(new Date(d.values.mondayDate)) })
-      .attr('y', function(d) { return height - y(d.values.amount) })
+      .attr('y', function(d) { return height - y(d.values.count) })
       .attr('width', (width / eventsByDay.length - 1) - 2)
-      .attr('height', function(d) { return y(d.values.amount) })
+      .attr('height', function(d) { return y(d.values.count) })
       .append('title')
         .text(function(d) { return d.key })
 
@@ -642,7 +642,7 @@
       .style('text-anchor', 'middle')
       .style("fill", "white")
       .style("font-size", ".6em")
-      .text(function(d) { return d.values.amount; });
+      .text(function(d) { return d.values.count; });
 
     // title
     svg.append("text")

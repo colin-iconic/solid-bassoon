@@ -2220,6 +2220,7 @@ def shippinglist(name=None):
 	cursor.execute("select priority, job, customer, customer_po, description, cast(order_date as date), order_quantity, part_number from job where status = 'active'")
 	data = [list(x) for x in cursor.fetchall()]
 
+	shipping = []
 	for job in data:
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[1]))
 		job_data = [list(x) for x in cursor.fetchall()]
@@ -2227,13 +2228,14 @@ def shippinglist(name=None):
 		try:
 			if job_data[0][0] == 'SHIPPING':
 				job.append(job_data[0][0])
+				shipping.append(job)
 		except:
 			continue
 
 	data.sort(key=itemgetter(0,5))
 
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
-	return render_template('hot.html', rows = data, head = head, title = 'Hot List')
+	return render_template('hot.html', rows = shipping, head = head, title = 'Hot List')
 
 
 if __name__ == '__main__':

@@ -2232,7 +2232,7 @@ def shippinglist(name=None):
 		except:
 			continue
 
-	data.sort(key=itemgetter(0,5))
+	shipping.sort(key=itemgetter(0,5))
 
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
 	return render_template('hot.html', rows = shipping, head = head, title = 'Shipping List')

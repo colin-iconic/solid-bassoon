@@ -2224,7 +2224,7 @@ def shippinglist(name=None):
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[1]))
 		job_data = [list(x) for x in cursor.fetchall()]
 		job_data.sort(key=itemgetter(1))
-		if job_data[0][0] == 'SHIPPING':
+		if job_data[0][0] && job_data[0][0] == 'SHIPPING':
 			job.append(job_data[0][0])
 
 	data.sort(key=itemgetter(0,5))

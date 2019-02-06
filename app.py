@@ -2217,7 +2217,7 @@ def shippinglist(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select priority, job, customer, customer_po, description, cast(order_date as date), order_quantity, part_number from job where status = 'active' and part_number not in ['1900', '1906', '1907']")
+	cursor.execute("select priority, job, customer, customer_po, description, cast(order_date as date), order_quantity, part_number from job where status = 'active' and part_number not in ('1900', '1906', '1907')")
 	data = [list(x) for x in cursor.fetchall()]
 
 	shipping = []
@@ -2235,7 +2235,7 @@ def shippinglist(name=None):
 	data.sort(key=itemgetter(0,5))
 
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
-	return render_template('hot.html', rows = shipping, head = head, title = 'Hot List')
+	return render_template('hot.html', rows = shipping, head = head, title = 'Shipping List')
 
 
 if __name__ == '__main__':

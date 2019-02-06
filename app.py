@@ -2217,7 +2217,7 @@ def shippinglist(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select priority, job, customer, customer_po, description, cast(order_date as date), order_quantity, part_number from job where status = 'active'")
+	cursor.execute("select priority, job, customer, customer_po, description, cast(order_date as date), order_quantity, part_number from job where status = 'active' and part_number not in ['1900', '1906', '1907']")
 	data = [list(x) for x in cursor.fetchall()]
 
 	shipping = []

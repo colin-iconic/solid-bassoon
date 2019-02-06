@@ -2212,5 +2212,26 @@ def job_progress(name=None):
 
 	return render_template('job_progress.html', job_details = job_details, progress = progress)
 
+@app.route('/shipping_list')
+def hotlist(name=None):
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+	cursor = connection.cursor()
+
+	cursor.execute("select priority, job, customer, customer_po, description, cast(order_date as date), order_quantity, part_number from job where status = 'active'")
+	data = [list(x) for x in cursor.fetchall()]
+
+	for job in data:
+		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[1]))
+		job_data = [list(x) for x in cursor.fetchall()]
+		job_data.sort(key=itemgetter(1))
+		if job_data[0][0] == 'SHIPPING'
+			job.append(job_data[0][0])
+
+	data.sort(key=itemgetter(0,5))
+
+	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
+	return render_template('hot.html', rows = data, head = head, title = 'Hot List')
+
+
 if __name__ == '__main__':
 	app.run()

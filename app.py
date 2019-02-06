@@ -2213,7 +2213,7 @@ def job_progress(name=None):
 	return render_template('job_progress.html', job_details = job_details, progress = progress)
 
 @app.route('/shipping_list')
-def hotlist(name=None):
+def shippinglist(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 

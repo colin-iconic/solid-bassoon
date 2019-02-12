@@ -1089,41 +1089,6 @@ def parts_charts_post():
 	values = [r_y1, values_order1]
 	return render_template('item_chart.html', values=values, labels=week_order, legend=legend, title=title, caption=caption)
 
-@app.route('/update_mailer') #Send Email for each Routing Update
-def update_mailer(name=None):
-	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
-	cursor = connection.cursor()
-
-	with open('change_history', 'r') as data_file:
-		last_change = data_file.read()
-
-	pos = ["GGAT 007"]
-
-	for po in pos:
-		cursor.execute("select job from job where customer_po = '" + po + "'")
-		jobs = [list(x) for x in cursor.fetchall()]
-
-	for job in jobs:
-		cursor.execute("SELECT CHANGE_HISTORY.CHANGED_BY, CHANGE_HISTORY.CHANGE_DATE, CHANGE_HISTORY.OLD_TEXT, CHANGE_HISTORY.NEW_TEXT, CHANGE_HISTORY.WC_VENDOR, CHANGE_HISTORY.JOB, JOB.CUSTOMER, JOB.DESCRIPTION, JOB.PART_NUMBER, JOB.ORDER_QUANTITY FROM (CHANGE_HISTORY INNER JOIN JOB ON CHANGE_HISTORY.JOB = JOB.JOB) WHERE CHANGE_HISTORY.CHANGE_DATE > convert(Datetime, '" + last_change[:-3] + "', 101) AND CHANGE_HISTORY.CHANGE_TYPE = 14 and job.job = '" + job[0] + "' order by change_history.change_date desc")
-		#===========================================
-		data = cursor.fetchall()
-
-		if data:
-			msg = Message("Job " + data[0][5] + " for " + data[0][6] + " updated!",
-						  sender="colin@iconicmetalgear.com",
-						  recipients=["colin@iconicmetalgear.com", "jason@iconicmetalgear.com"])
-
-			msg.html = "<h2>Status Update</h2><br /><p>The " + data[0][4] + " step for this job was changed from " + data[0][2] + " to " + data[0][3] + " by " + data[0][0] +"</p>"
-
-			mail.send(msg)
-
-			with open('change_history', 'w') as data_file:
-				data_file.write(str(data[0][1]))
-		else:
-			data = ['Nothing to update']
-
-	return render_template('mailer.html', head = ['Sending Updates...'], title = 'Update Mailer', update = data[0])
-
 @app.route("/reminder")
 def daimler_reminder():
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
@@ -2237,6 +2202,32 @@ def shippinglist(name=None):
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
 	return render_template('hot.html', rows = shipping, head = head, title = 'Shipping List')
 
+@app.route("/update_mailer")
+def update_mailer():
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+
+	cursor = connection.cursor()
+
+	cursor.execute("select job.job, user_values.text3, user_values.text4 from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None'")
+	update_jobs = [list(x) for x in cursor.fetchall()]
+
+	for job in update_jobs:
+		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+		data = [list(x) for x in cursor.fetchall()]
+		if data == []:
+			job.append('COMPLETE')
+		else:
+			data.sort(key=itemgetter(1))
+			job.append(data[0][0])
+
+	msg = Message("Job Updates",
+		sender="colin@iconicmetalgear.com",
+		recipients=["colin@iconicmetalgear.com"])
+
+	msg.html = render_template('update_mailer.html', po_list = po_list) #update variables and template
+	#mail.send(msg)
+
+	return render_template('update_mailer.html', po_list = po_list)
 
 if __name__ == '__main__':
 	app.run()

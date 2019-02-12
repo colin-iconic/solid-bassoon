@@ -30,7 +30,7 @@ app.config.update(dict(
 	MAIL_PORT = 587,
 	MAIL_USE_TLS = True,
 	MAIL_USE_SSL = False,
-	MAIL_USERNAME = 'colin@iconicmetalgear.com',
+	MAIL_USERNAME = 'no-reply@iconicmetalgear.com',
 	MAIL_PASSWORD = gmailpass,
 ))
 
@@ -2248,7 +2248,7 @@ def update_mailer():
 
 	for job in update_jobs:
 		msg = Message("Order Update",
-			sender="colin@iconicmetalgear.com",
+			sender="no-reply@iconicmetalgear.com",
 			recipients=job[2].split(', '))
 
 		msg.html = render_template('update_mailer.html', update_jobs = [job])

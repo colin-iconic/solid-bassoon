@@ -2209,23 +2209,35 @@ def update_mailer():
 	cursor = connection.cursor()
 
 	cursor.execute("select job.job, user_values.text3, user_values.text4 from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.text4 not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE())")
-	update_jobs = [list(x) for x in cursor.fetchall()]
+	data = [list(x) for x in cursor.fetchall()]
+
+	update_jobs = []
+
+	for job in data:
+		if job[1] == 'Routing':
+			cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+			data = [list(x) for x in cursor.fetchall()]
+			if data == []:
+				job.append('COMPLETE')
+			else:
+				data.sort(key=itemgetter(1))
+				job.append(data[0][0])
+
+			update_jobs.append(job)
+		elif job[1] == 'Complete':
+			cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+			data = [list(x) for x in cursor.fetchall()]
+			if data == []:
+				job.append('COMPLETE')
+				update_jobs.append(job)
 
 	for job in update_jobs:
-		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
-		data = [list(x) for x in cursor.fetchall()]
-		if data == []:
-			job.append('COMPLETE')
-		else:
-			data.sort(key=itemgetter(1))
-			job.append(data[0][0])
+		msg = Message("Order Update",
+			sender="colin@iconicmetalgear.com",
+			recipients=["{0}".format(job[2])])
 
-	msg = Message("Order Update",
-		sender="colin@iconicmetalgear.com",
-		recipients=["colin@iconicmetalgear.com"])
-
-	msg.html = render_template('update_mailer.html', update_jobs = update_jobs)
-	#mail.send(msg)
+		msg.html = render_template('update_mailer.html', update_jobs = job)
+		#mail.send(msg)
 
 	return render_template('update_mailer.html', update_jobs = update_jobs)
 

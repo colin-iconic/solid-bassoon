@@ -1,7 +1,7 @@
 {% for job in update_jobs %}
 	<h2>PO# {{ job[0] }}</h2>
 		{% for j in job %}
-      each <br />
+      {{j}} <br />
 		{% endfor %}
 	<br><br>
 {% endfor %}

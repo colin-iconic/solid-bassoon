@@ -2251,10 +2251,10 @@ def update_viewer():
 
 	cursor = connection.cursor()
 
-	cursor.execute("select job.job, user_values.text3, user_values.text4, job.open_operations from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.text4 not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE()) and change_history.new_text = 'C'")
+	cursor.execute("select job.job, user_values.text3, user_values.text4, job.open_operations from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.text4 not like 'None'")
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('generic_table.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer' )
+	return render_template('generic_table.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')
 
 if __name__ == '__main__':
 	app.run()

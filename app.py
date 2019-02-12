@@ -2224,10 +2224,10 @@ def update_mailer():
 		sender="colin@iconicmetalgear.com",
 		recipients=["colin@iconicmetalgear.com"])
 
-	msg.html = render_template('update_mailer.html', po_list = po_list) #update variables and template
+	msg.html = render_template('update_mailer.html', update_jobs = update_jobs) #update variables and template
 	#mail.send(msg)
 
-	return render_template('update_mailer.html', po_list = po_list)
+	return render_template('update_mailer.html', update_jobs = update_jobs)
 
 if __name__ == '__main__':
 	app.run()

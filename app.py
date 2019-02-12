@@ -2214,6 +2214,7 @@ def update_mailer():
 	update_jobs = []
 
 	for job in data:
+		job[3] = int(job[3]) - 1
 		if job[1] == 'Routing':
 			cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 			data = [list(x) for x in cursor.fetchall()]

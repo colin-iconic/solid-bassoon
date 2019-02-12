@@ -2208,7 +2208,7 @@ def update_mailer():
 
 	cursor = connection.cursor()
 
-	cursor.execute("select job.job, user_values.text3, user_values.text4 from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.text4 not like 'None'")
+	cursor.execute("select job.job, user_values.text3, user_values.text4 from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.text4 not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE())")
 	update_jobs = [list(x) for x in cursor.fetchall()]
 
 	for job in update_jobs:
@@ -2224,7 +2224,7 @@ def update_mailer():
 		sender="colin@iconicmetalgear.com",
 		recipients=["colin@iconicmetalgear.com"])
 
-	msg.html = render_template('update_mailer.html', update_jobs = update_jobs) #update variables and template
+	msg.html = render_template('update_mailer.html', update_jobs = update_jobs)
 	#mail.send(msg)
 
 	return render_template('update_mailer.html', update_jobs = update_jobs)

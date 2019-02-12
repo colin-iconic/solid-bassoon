@@ -2237,7 +2237,7 @@ def update_mailer():
 			sender="colin@iconicmetalgear.com",
 			recipients=["{0}".format(job[2])])
 
-		msg.html = render_template('update_mailer.html', update_jobs = job)
+		msg.html = render_template('update_mailer.html', update_jobs = [job])
 		try:
 			mail.send(msg)
 		except:

@@ -2208,7 +2208,7 @@ def update_mailer():
 
 	cursor = connection.cursor()
 
-	cursor.execute("select job.job, user_values.text3, user_values.text4 from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None'")
+	cursor.execute("select job.job, user_values.text3, user_values.text4 from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.text4 not like 'None'")
 	update_jobs = [list(x) for x in cursor.fetchall()]
 
 	for job in update_jobs:
@@ -2220,7 +2220,7 @@ def update_mailer():
 			data.sort(key=itemgetter(1))
 			job.append(data[0][0])
 
-	msg = Message("Job Updates",
+	msg = Message("Order Update",
 		sender="colin@iconicmetalgear.com",
 		recipients=["colin@iconicmetalgear.com"])
 

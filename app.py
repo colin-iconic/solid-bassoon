@@ -2249,7 +2249,7 @@ def update_mailer():
 	for job in update_jobs:
 		msg = Message("Order Update",
 			sender="colin@iconicmetalgear.com",
-			recipients=["{0}".format(job[2])])
+			recipients=job[2].split(', '))
 
 		msg.html = render_template('update_mailer.html', update_jobs = [job])
 		try:

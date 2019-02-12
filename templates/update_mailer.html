@@ -1,7 +1,7 @@
 {% for job in update_jobs %}
 	<h2>Job# {{ job[0] }}</h2>
 		{% if job[-1]=='COMPLETE' %}<p>Your job has shipped.</p>
-    {% else %}<p>Your job has progressed to the {{ job[-1] }} station. There are {{ job[3]-1 }} operations remaining.</p>
+    {% else %}<p>Your job has progressed to the {{ job[-1] }} station. There are {{ job[3]|int - 1 }} operations remaining.</p>
     {% endif %}
 	<br><br>
 {% endfor %}

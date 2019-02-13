@@ -2274,7 +2274,7 @@ def update_viewer():
 	cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None'")
 	data = [list(x) for x in cursor.fetchall()]
 
-	return render_template('generic_table.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')
+	return render_template('update_viewer.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')
 
 if __name__ == '__main__':
 	app.run()

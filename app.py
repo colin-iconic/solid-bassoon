@@ -2230,7 +2230,7 @@ def update_mailer():
 	for job in data:
 		job[3] = int(job[3]) - 1
 		if job[1].lower() == 'routing':
-			cursor.execute("select work_center, sequence, vendor from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+			cursor.execute("select work_center, sequence, operation_service from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 			data = [list(x) for x in cursor.fetchall()]
 			if data == []:
 				job.append('COMPLETE')
@@ -2242,7 +2242,7 @@ def update_mailer():
 
 			update_jobs.append(job)
 		elif job[1].lower() == 'complete':
-			cursor.execute("select work_center, sequence, vendor from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
+			cursor.execute("select work_center, sequence, operation_service from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 			data = [list(x) for x in cursor.fetchall()]
 			if data == []:
 				job.append('COMPLETE')

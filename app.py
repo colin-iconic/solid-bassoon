@@ -2208,7 +2208,7 @@ def update_mailer():
 
 	cursor = connection.cursor()
 
-	cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations, job.part_number, job.description, job.order_quantity from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE()) and change_history.new_text = 'C'")
+	cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations, job.part_number, job.description, job.order_quantity, job.customer_po from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE()) and change_history.new_text = 'C'")
 	query = [list(x) for x in cursor.fetchall()]
 
 	data = []

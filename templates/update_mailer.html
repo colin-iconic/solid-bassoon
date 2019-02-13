@@ -1,10 +1,11 @@
 {% for job in update_jobs %}
-	<h2>Job# {{ job[0] }} | PO# {{ job[7] }}</h2>
-    Part#: {{ job[4] }} | Description: {{ job[5] }} | Quantity: {{ job[6] }}<br />
-		{% if job[-1]=='COMPLETE' %}<p>Your job has shipped.</p>
-    {% else %}<p>Your job has progressed to the {{ job[-1] }} station. There are {{ job[3] }} operations remaining.</p>
-    {% endif %}
-    <br>
+	<h2>Job# {{ job[0] }} <br />
+	PO# {{ job[7] }}</h2>
+  Part#: {{ job[4] }} | Description: {{ job[5] }} | Quantity: {{ job[6] }}<br />
+	{% if job[-1]=='COMPLETE' %}<p>Your job has shipped.</p>
+  {% else %}<p>Your job has progressed to the {{ job[-1] }} station. There are {{ job[3] }} operations remaining.</p>
+  {% endif %}
+  <br>
 {% endfor %}
 Best regards,<br />
 Iconic Metalgear Team<br />

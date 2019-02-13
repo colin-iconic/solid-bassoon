@@ -2237,7 +2237,7 @@ def update_mailer():
 				job.append('COMPLETE')
 			else:
 				data.sort(key=itemgetter(1))
-				if data[0][0] == 'None':
+				if data[0][0] is None:
 					job.append(data[0][2])
 				else:
 					job.append(data[0][0])

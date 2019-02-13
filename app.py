@@ -1424,11 +1424,17 @@ def analytics(name=None):
 
 	#Promised Date distrobution
 	#Under Construction
-	cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%' and job.est_rem_hrs > 0")
+	#cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%' and job.est_rem_hrs > 0")
 
-	active_orders = [list(x)[0] for x in cursor.fetchall()]
+	#active_orders = [list(x)[0] for x in cursor.fetchall()]
 
-	order_count = []
+	cursor.execute("select job.job, job.est_total_hrs, cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status = 'Active' and job.est_rem_hrs > 0")
+	active_orders = [list(x) for x in cursor.fetchall()]
+
+	for job in active_orders:
+		job[2] = job[2].strftime('%Y-%V')
+
+	order_count = {}
 
 	def daterange(start_date, end_date):
 		for n in range(int ((end_date - start_date).days)):
@@ -1438,11 +1444,21 @@ def analytics(name=None):
 	end_date = max(active_orders)
 
 	for single_date in daterange(start_date, end_date):
-		count = sum(1 for d in active_orders if d == single_date)
-		order_count.append({'date': single_date, 'count': count})
+		order_count[single_date.strftime('%Y-%V')] = 0
+
+	for job in active_orders:
+		order_count[job[2]] = order_count[job[2]] + job[1]
 
 	order_count_data = json.dumps(order_count, indent=2, default=str)
 	data['promised_count'] = order_count_data
+
+	#Hours of work per week
+
+	cursor.execute("select job.job, job.est_total_hrs, cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status = 'Active' and job.est_rem_hrs > 0")
+	query = [list(x) for x in cursor.fetchall()]
+
+	for job in query:
+		job[2] = job[2].strftime('%Y-%V')
 
 	return render_template('analytics.html', data = data)
 

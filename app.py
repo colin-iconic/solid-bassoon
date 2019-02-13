@@ -2239,6 +2239,8 @@ def update_mailer():
 				data.sort(key=itemgetter(1))
 				if data[0][0] is None:
 					job.append(data[0][2])
+				elif data[0][0] == 'TOYOKOKI':
+					job.append('BENDING')
 				else:
 					job.append(data[0][0])
 

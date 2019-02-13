@@ -2223,7 +2223,8 @@ def update_mailer():
 
 		i = i + 1
 
-	data.append(query[-1])
+	if query:
+		data.append(query[-1])
 
 	update_jobs = []
 

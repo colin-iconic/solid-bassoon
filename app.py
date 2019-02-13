@@ -1442,7 +1442,7 @@ def analytics(name=None):
 		order_count.append({'date': single_date, 'count': count})
 
 	order_count_data = json.dumps(order_count, indent=2, default=str)
-	data['promised_counts'] = order_count_data
+	data['promised_count'] = order_count_data
 
 	return render_template('analytics.html', data = data)
 

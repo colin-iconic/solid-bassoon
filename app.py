@@ -73,7 +73,7 @@ def hotlist(name=None):
 		job_data.sort(key=itemgetter(1))
 		job.append(job_data[0][0])
 
-		cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job))
+		cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job[1]))
 		try:
 			job.append([list(x) for x in cursor.fetchall()][0][0])
 		except:

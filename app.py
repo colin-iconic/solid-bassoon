@@ -73,9 +73,15 @@ def hotlist(name=None):
 		job_data.sort(key=itemgetter(1))
 		job.append(job_data[0][0])
 
+		cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job))
+		try:
+			job.append([list(x) for x in cursor.fetchall()][0][0])
+		except:
+			job.append(job[5])
+
 	data.sort(key=itemgetter(0))
 
-	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']
+	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Promised Date']
 	return render_template('hot.html', rows = data, head = head, title = 'Hot List')
 
 @app.route('/racks')
@@ -1424,17 +1430,11 @@ def analytics(name=None):
 
 	#Promised Date distrobution
 	#Under Construction
-	#cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%' and job.est_rem_hrs > 0")
+	cursor.execute("select cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status like 'Active' and job.job not like '%-%' and job.customer not like '%I-H%' and job.est_rem_hrs > 0")
 
-	#active_orders = [list(x)[0] for x in cursor.fetchall()]
+	active_orders = [list(x)[0] for x in cursor.fetchall()]
 
-	cursor.execute("select job.job, job.est_total_hrs, cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status = 'Active' and job.est_rem_hrs > 0")
-	active_orders = [list(x) for x in cursor.fetchall()]
-
-	for job in active_orders:
-		job[2] = job[2].strftime('%Y-%V')
-
-	order_count = {}
+	order_count = []
 
 	def daterange(start_date, end_date):
 		for n in range(int ((end_date - start_date).days)):
@@ -1444,10 +1444,8 @@ def analytics(name=None):
 	end_date = max(active_orders)
 
 	for single_date in daterange(start_date, end_date):
-		order_count[single_date.strftime('%Y-%V')] = 0
-
-	for job in active_orders:
-		order_count[job[2]] = order_count[job[2]] + job[1]
+		count = sum(1 for d in active_orders if d == single_date)
+		order_count.append({'date': single_date, 'count': count})
 
 	order_count_data = json.dumps(order_count, indent=2, default=str)
 	data['promised_count'] = order_count_data
@@ -1459,6 +1457,8 @@ def analytics(name=None):
 
 	for job in query:
 		job[2] = job[2].strftime('%Y-%V')
+
+	data['weekly_hours'] = query
 
 	return render_template('analytics.html', data = data)
 

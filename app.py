@@ -2213,6 +2213,8 @@ def shippinglist(name=None):
 		except:
 			continue
 
+		job.append(' ')
+
 	shipping.sort(key=itemgetter(0,5))
 
 	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center']

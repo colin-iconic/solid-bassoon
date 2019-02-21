@@ -337,7 +337,7 @@ def jobs(job):
 	rows = []
 	for each in joblist:
 		try:
-			cursor.execute("select job.priority, job.job, job.customer, job.description, cast(job.order_date as date), job.order_quantity, job.part_number, job.note_text from job inner join job_operation on job.job = job_operation.job where job.job = '"+ each +"'")
+			cursor.execute("select job.priority, job.job, job.customer, job.description, cast(job.order_date as date), cast(delivery.promised_date), job.order_quantity, job.part_number, job.note_text from job left join delivery on job.job = delivery.job inner join job_operation on job.job = job_operation.job where job.job = '"+ each +"'")
 		except:
 			continue
 		data = cursor.fetchall()
@@ -365,7 +365,7 @@ def jobs(job):
 			data[0].insert(7, c[0][0])
 			rows.append(data[0])
 
-	head = ['Priority', 'Job Number', 'Customer', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Note Text']
+	head = ['Priority', 'Job Number', 'Customer', 'Description', 'Order Date', 'Promised Date', 'Order Quantity', 'Part Number', 'Work Center', 'Note Text']
 	return render_template('jobs_list.html', rows = rows, head = head, title = 'Job List')
 
 @app.route('/report/boxes') #boxes ordered since January 1 2018

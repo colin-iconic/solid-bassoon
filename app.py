@@ -362,10 +362,16 @@ def jobs(job):
 				c.append(['COMPLETE', 0])
 			c.sort(key=itemgetter(1))
 
+			cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(a))
+			try:
+				data[0].append([list(x) for x in cursor.fetchall()][0][0])
+			except:
+				data[0].append('None')
+
 			data[0].insert(7, c[0][0])
 			rows.append(data[0])
 
-	head = ['Priority', 'Job Number', 'Customer', 'Description', 'Order Date', 'Promised Date', 'Order Quantity', 'Part Number', 'Work Center', 'Note Text']
+	head = ['Priority', 'Job Number', 'Customer', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Note Text', 'Promised Date']
 	return render_template('jobs_list.html', rows = rows, head = head, title = 'Job List')
 
 @app.route('/report/boxes') #boxes ordered since January 1 2018

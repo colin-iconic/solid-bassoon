@@ -337,7 +337,7 @@ def jobs(job):
 	rows = []
 	for each in joblist:
 		try:
-			cursor.execute("select job.priority, job.job, job.customer, job.description, cast(job.order_date as date), cast(delivery.promised_date), job.order_quantity, job.part_number, job.note_text from job inner join job_operation on job.job = job_operation.job left join delivery on job.job = delivery.job where job.job = '"+ each +"'")
+			cursor.execute("select job.priority, job.job, job.customer, job.description, cast(job.order_date as date), cast(delivery.promised_date), job.order_quantity, job.part_number, job.note_text from delivery left join job on job.job = delivery.job inner join job_operation on job.job = job_operation.job where job.job = '"+ each +"'")
 		except:
 			continue
 		data = cursor.fetchall()

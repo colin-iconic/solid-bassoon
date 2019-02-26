@@ -2265,6 +2265,10 @@ def update_mailer():
 					job.append(data[0][2])
 				elif data[0][0] == 'TOYOKOKI':
 					job.append('BENDING')
+				elif data[0][0] == 'PROGRAMMIN':
+					job.append('NESTING')
+				elif data[0][0] == 'SHOP':
+					job.append('ASSEMBLY')
 				else:
 					job.append(data[0][0])
 

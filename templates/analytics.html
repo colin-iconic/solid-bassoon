@@ -541,21 +541,26 @@
   var width = 2500 - margin.left - margin.right,
       height = 750 - margin.top - margin.bottom;
 
+
   // set the ranges
   var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
 
   var y = d3.scale.linear().range([height, 0]);
 
   // define the axis
+  parseDate = d3.time.format("%Y-%V").parse;
+  formatDate = d3.time.format("%d-%m-%Y");
+
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
-      .tickFormat(d3.time.format('%d-%m-%Y'));
+      .tickFormat(formatDate());
 
   var yAxis = d3.svg.axis()
       .scale(y)
       .orient("left")
       .ticks(10);
+
 
   // add the SVG element
   var svg = d3.select("#weekly_hours").append("svg")
@@ -572,7 +577,7 @@
   var data = {{ data.weekly_hours | safe }};
 
   // load the data
-  parseDate = d3.time.format("%d-%m-%Y").parse
+
   data.forEach(function(d) {
       d.date = parseDate(d.date);
       d.count = +d.count;

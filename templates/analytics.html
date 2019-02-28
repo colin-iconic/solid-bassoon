@@ -634,13 +634,13 @@
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.count); })
       .attr("height", function(d) { return height - y(d.count); })
-      .on("mouseover", function() { tooltip3.style("display", null); console.log(function(d) { return d.jlist; }); })
+      .on("mouseover", function() { tooltip3.style("display", null); console.log(d.jlist); })
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
         var yPosition = d3.mouse(this)[1] - 25;
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-        tooltip3.select("text").text(function(d) { return d.jlist; });
+        tooltip3.select("text").text(d.jlist);
       });
 </script>
 {% endblock %}

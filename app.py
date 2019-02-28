@@ -1464,7 +1464,7 @@ def analytics(name=None):
 	weekly_hours_data = []
 
 	for job in query:
-		if job[2] < datetime.datetime.now():
+		if job[2] < datetime.datetime.now().date():
 			job[2] = datetime.datetime.now().date()
 		job.append(job[2])
 		job[2] = job[2].strftime('%Y-%V')

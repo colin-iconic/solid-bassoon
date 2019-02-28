@@ -8,6 +8,7 @@
 <div class="tooltip"></div>
 <div class="tooltip1"></div>
 <div class="tooltip2"></div>
+<div class="tooltip3"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
   var graphData = {{ data.osp | safe }};
@@ -579,6 +580,7 @@
   data.forEach(function(d) {
       d.date = d.date;
       d.count = +d.count;
+      d.jlist = d.jlist;
   });
 
   // scale the range of the data
@@ -615,6 +617,14 @@
       .attr("x", function(d) { return x(d.date); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.count); })
-      .attr("height", function(d) { return height - y(d.count); });
+      .attr("height", function(d) { return height - y(d.count); })
+      .on("mouseover", function() { tooltip3.style("display", null); })
+      .on("mouseout", function() { tooltip3.style("display", "none"); })
+      .on("mousemove", function(d) {
+        var xPosition = d3.mouse(this)[0] - 15;
+        var yPosition = d3.mouse(this)[1] - 25;
+        tooltip2.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+        tooltip2.select("text").text(d.jlist);
+      });
 </script>
 {% endblock %}

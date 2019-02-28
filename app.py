@@ -1464,9 +1464,10 @@ def analytics(name=None):
 	weekly_hours_data = []
 
 	for job in query:
+		job.append(job[2])
 		job[2] = job[2].strftime('%Y-%V')
 		if not any(j['date'] == job[2] for j in weekly_hours_data):
-			weekly_hours_data.append({'date': job[2], 'count': job[1]})
+			weekly_hours_data.append({'date': job[2], 'count': job[1], 'fdate': job[3]})
 		else:
 			for d in weekly_hours_data:
 				if d['date'] == job[2]:
@@ -1474,9 +1475,9 @@ def analytics(name=None):
 
 	weekly_hours_data.sort(key=itemgetter('date'))
 	for each in weekly_hours_data:
-		day = datetime.datetime.strptime(each['date'], '%Y-%V')
-		each['date'] = day.strftime('%d-%m-%Y')
-		
+		each['date'] = each['fdate']
+		del each['fdate']
+
 	data['weekly_hours'] = json.dumps(weekly_hours_data, indent=2, default=str)
 
 	return render_template('analytics.html', data = data)

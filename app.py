@@ -1473,6 +1473,10 @@ def analytics(name=None):
 					d['count'] += job[1]
 
 	weekly_hours_data.sort(key=itemgetter('date'))
+	for each in weekly_hours_data:
+		day = datetime.datetime.strptime(each['date'], '%Y-%V')
+		each['date'] = day.strftime('%d-%m-%Y')
+		
 	data['weekly_hours'] = json.dumps(weekly_hours_data, indent=2, default=str)
 
 	return render_template('analytics.html', data = data)

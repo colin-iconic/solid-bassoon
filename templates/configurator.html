@@ -176,7 +176,7 @@
 					<button id="1361">P/N: 1361<br>86" Rack/Tank Combo - 70GA</button>
 				</div>
 			</div>
-			<h3>Select Options:   <button id="clear">Clear Options</button></h3>
+			<h3>Select Options:   <button id="clearoptions">Clear Options</button></h3>
 
 			<form id="optionsform">
 				<div id="rack">
@@ -532,7 +532,7 @@
 			});
 
 			/* Clear Options */
-			$('#clear button').click(function() {
+			$('#clearoptions button').click(function() {
 				console.log('Clear!');
 				$('input.clear[type="radio"]').each(function (i) {
 					$(this).prop("checked", true);

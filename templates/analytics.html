@@ -643,5 +643,14 @@
       .style("text-anchor", "middle")
       .attr("font-size", "12px")
       .attr("font-weight", "bold");
+
+    // title
+    svg.append("text")
+      .attr("x", (width / 2))
+      .attr("y", 0 - (margin.top / 2))
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("text-decoration", "underline")
+      .text("Total Remaining Hours for Jobs Due per Week");
 </script>
 {% endblock %}

@@ -563,6 +563,20 @@
   var tooltip3 = svg.append("g")
     .attr("class", "tooltip3")
     .style("display", "none");
+
+  tooltip3.append("rect")
+    .attr("width", 60)
+    .attr("height", 20)
+    .attr("fill", "white")
+    .style("opacity", 0.5);
+
+  tooltip3.append("text")
+    .attr("x", 30)
+    .attr("dy", "1.2em")
+    .style("text-anchor", "middle")
+    .attr("font-size", "12px")
+    .attr("font-weight", "bold");
+
   // add the SVG element
   var svg = d3.select("#weekly_hours").append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -620,13 +634,13 @@
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.count); })
       .attr("height", function(d) { return height - y(d.count); })
-      .on("mouseover", function() { tooltip3.style("display", null); console.log(d.jlist);})
+      .on("mouseover", function() { tooltip3.style("display", null); console.log(function(d) { return d.jlist; }); })
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
         var yPosition = d3.mouse(this)[1] - 25;
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-        tooltip3.select("text").text(d.jlist);
+        tooltip3.select("text").text(function(d) { return d.jlist; });
       });
 </script>
 {% endblock %}

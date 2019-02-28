@@ -177,26 +177,27 @@
 				</div>
 			</div>
 			<h3>Select Options:</h3>
+			<span><button id="clear">Clear Options</button></span>
 			<form id="optionsform">
 				<div id="rack">
-					<input class="1351 1352 1353" type="radio" id="70" name="rack" value="901.46">
+					<input class="1351 1352 1353 clear" type="radio" id="70" name="rack" value="901.46">
 					<label for="70">70" Headache Rack</label>
-			
+
 					<input class="1355 1356 1357" type="radio" id="76" name="rack" value="988.40">
 					<label for="76">76" Headache Rack</label>
-			
+
 					<input class="1359 1360 1361" type="radio" id="86" name="rack" value="1069.91">
 					<label for="86">86" Headache Rack</label>
 				</div>
 				<div id="leftside">
 					<select name="lefttop">
-						<option class="none" value="0">None</option>
+						<option class="none clear" value="0">None</option>
 						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361 changer" value="100.52">P/N: 1404 Chain Hanger</option>
 						<option class="cab" value="533.87">P/N: 1414 Cabinet</option>
 					</select>
 					<br >
 					<select name="leftbottom">
-						<option class="notray none" value="0">None</option>
+						<option class="notray none clear" value="0">None</option>
 						<option class="1355 1356 1357 1359 1360 1361 tray24" value="98.90">P/N: 1411 24" Chain Tray</option>
 						<option class="1351 1352 1353 tray20" value="89.12">P/N: 1410 20" Chain Tray</option>
 						<option class="tray18" value="82.6">P/N: 1409 18" Chain Tray</option>
@@ -205,7 +206,7 @@
 				</div>
 				<div id="middleside">
 					<select name="middle">
-						<option class="none" value="0">None</option>
+						<option class="none clear" value="0">None</option>
 						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361 jb" value="167.90">P/N: 1400 Jail Bar Window</option>
 						<option class="ez" value="57.05">P/N: 1412 EZ View Window</option>
 						<option class="cab" value="628.14">P/N: 1415 Center Cabinet</option>
@@ -214,13 +215,13 @@
 				</div>
 				<div id="rightside">
 					<select name="righttop">
-						<option class="notray none" value="0">None</option>
+						<option class="notray none clear" value="0">None</option>
 						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361 changer" value="100.52">P/N: 1404 Chain Hanger</option>
 						<option class="cab" value="533.87">P/N: 1414 Cabinet</option>
 					</select>
 					<br >
 					<select name="rightbottom">
-						<option class="notray none" value="0">None</option>
+						<option class="notray none clear" value="0">None</option>
 						<option class="1355 1356 1357 1359 1360 1361 tray24" value="98.90">P/N: 1411 24" Chain Tray</option>
 						<option class="1351 1352 1353 tray20" value="89.12">P/N: 1410 20" Chain Tray</option>
 						<option class="tray18" value="82.6">P/N: 1409 18" Chain Tray</option>
@@ -228,7 +229,7 @@
 					</select>
 				</div>
 				<div id="tank">
-					<label for="notank"><input type="radio" id="notank" name="tank" value="0">No Tank</label>
+					<label for="notank"><input type="radio" class="clear" id="notank" name="tank" value="0">No Tank</label>
 					<label for="30gallon"><input class="1351 1355 1359" type="radio" id="30gallon" name="tank" value="1182.38">30 Gallon</label>
 					<label for="50gallon"><input class="1352 1356 1360" type="radio" id="50gallon" name="tank" value="1280.19">50 Gallon</label>
 					<label for="70gallon"><input class="1353 1357 1361" type="radio" id="70gallon" name="tank" value="1345.39">70 Gallon</label>
@@ -246,7 +247,7 @@
 					<br >
 					<label for="mounting">Mounting Kit Options:</label>
 					<select name="mounting">
-						<option id="nomounting" value="0">None</option>
+						<option class="clear" id="nomounting" value="0">None</option>
 						<option value="104.00">P/N: 1906 17" U-bolt Mounting Kit</option>
 						<option class="1351 1352 1353 1355 1356 1357 1359 1360 1361" value="109.00">P/N: 1907 21" U-bolt Mounting Kit</option>
 						<option value="69.55">P/N: 1908 Quick-Mount Mounting Kit</option>
@@ -255,7 +256,7 @@
 				<div id="currency">
 					<input type="radio" id="cad" name="currency" value="cad">
 					<label for="cad">Canadian Dollars</label>
-			
+
 					<input type="radio" id="usd" name="currency" value="usd">
 					<label for="usd">U.S. Dollars</label>
 				</div>
@@ -277,23 +278,23 @@
 				var righttop = $('select[name="righttop"]').val();
 				var rightbottom = $('select[name="rightbottom"]').val();
 				var tank = $('input[name="tank"]:checked').val();
-				
+
 				var mounting = $('select[name="mounting"]').val();
 				var currency = $('input[name="currency"]:checked').val();
-				
+
 				var light = 0
 				$('#lightbar input[type="checkbox"]:checked').each(function () {
 					light = light + Number($(this).val());
 				});
-				
+
 				var total = 0;
-				
+
 				/* Reset options */
 				$('#50gallon').prop("disabled", false);
 				$('#70gallon').prop("disabled", false);
 				$('#1407').prop('disabled', false);
 				$('#1425').prop('disabled', false);
-				
+
 				/* If full trays are selected, remove tray from right slot, get price based on width of rack */
 				if(leftbottom == '188.01' || rightbottom == '188.01') {
 					if(rack == '901.46') {
@@ -316,7 +317,7 @@
 							$('#notank').prop("checked", true);
 						}
 						$('#50gallon').prop("disabled", true);
-						$('#70gallon').prop("disabled", true);	
+						$('#70gallon').prop("disabled", true);
 					}
 					if(rack == '1069.91') {
 						leftbottom = '211.66';
@@ -330,7 +331,7 @@
 						$('#70gallon').prop("disabled", true);
 					}
 				}
-				
+
 				/* If cabinets are selected remove trays, disable tanks for middle, disable 142* and 1407 lightbars */
 				if(lefttop == '533.87') {
 					$('select[name="leftbottom"] option.notray').prop("selected", true);
@@ -339,7 +340,7 @@
 					$('#1407').prop('checked', false);
 					$('#1407').prop('disabled', true);
 				}
-				
+
 				if(righttop == '533.87') {
 					$('select[name="rightbottom"] option.notray').prop("selected", true);
 					$('#1425').prop('checked', false);
@@ -347,7 +348,7 @@
 					$('#1407').prop('checked', false);
 					$('#1407').prop('disabled', true);
 				}
-				
+
 				if(middle == '628.14') {
 					if(tank == '1280.19' || tank == '1345.39' ) {
 							$('#notank').prop("checked", true);
@@ -357,7 +358,7 @@
 					$('#1425').prop('checked', false);
 					$('#1425').prop('disabled', true);
 				}
-				
+
 				/* Mounting Kit included with all tanks, disable option */
 				var tank = $('input[name="tank"]:checked').val();
 				if(tank != '0') {
@@ -368,7 +369,7 @@
 					$('select[name="mounting"]').prop("disabled", false);
 					$('select[name="mounting"] option.1351').prop('value', '97.18');
 				}
-				
+
 				/* 70" racks with tanks do not get 24" trays */
 				if(rack == '901.46' && tank != '0') {
 					if(rightbottom == '98.90') {
@@ -378,7 +379,7 @@
 						$('select[name="leftbottom"] option.1351').prop("selected", true);
 					}
 				}
-				
+
 				/* get correct pricing for 142* lightbars */
 				if($('#1425').prop('checked') == true) {
 					if(rack == '901.46') {
@@ -389,19 +390,19 @@
 						$('#1425').prop('value', 520.80);
 					}
 				}
-				
+
 				/* if 1425 selected disable 1407 */
 				if($('#1425').prop('checked') == true) {
 					$('#1407').prop('checked', false);
 					$('#1407').prop('disabled', true);
 				}
-				
+
 				/* if 1407 selected disable 1425 */
 				if($('#1407').prop('checked') == true) {
 					$('#1425').prop('checked', false);
 					$('#1425').prop('disabled', true);
 				}
-					
+
 				/* Update prices */
 				var rack = $('input[name="rack"]:checked').val();
 				var lefttop = $('select[name="lefttop"]').val();
@@ -412,15 +413,15 @@
 				var tank = $('input[name="tank"]:checked').val();
 				var mounting = $('select[name="mounting"]').val();
 				var currency = $('input[name="currency"]:checked').val();
-				
+
 				var light = 0
 				$('#lightbar input[type="checkbox"]:checked').each(function () {
 					light = light + Number($(this).val());
 				});
-				
+
 				var options = [rack, lefttop, leftbottom, middle, righttop, rightbottom, tank, light, mounting];
 				var optionslen = options.length;
-				
+
 				/* Calculate total price, with changes if USD */
 				if(currency == 'cad') {
 					for (var i = 0; i < optionslen; i++) {
@@ -437,7 +438,7 @@
 					optionslen = options.length;
 					tank = Number(tank);
 					rack = Number(rack);
-					
+
 					/* Annoying math to deal with tanks */
 					if(rack == 901.46) {
 						tank = tank + 206.95 + 10.35;
@@ -446,7 +447,7 @@
 					} else {
 						tank = tank + 206.95 + 26.86 + 11.69;
 					}
-					
+
 					/* Options are priced in US at 15% less than CAD, the tank is priced the same in CAD and USD */
 					for (var i = 0; i < optionslen; i++) {
 						total = total + Number(options[i]);
@@ -454,11 +455,11 @@
 					total = total - total * 0.15;
 					total = total + tank;
 				}
-				
+
 				$('#details > h2').remove();
 				total = total.toFixed(2);
 				$('#details').prepend('<h2>Price: ' + total + '</h2>');
-				
+
 				/* Update dropdown background color to be the same as the selected option */
 				$('select').each(
 					function (){
@@ -466,7 +467,7 @@
 						$(this).css('background-color',color);
 					}
 				);
-				
+
 				/* Get options text for description */
 				var idVal = $('input[name="rack"]:checked').prop("id");
 				var rackt = $("label[for='"+idVal+"']").text();
@@ -480,13 +481,13 @@
 				var mountingt = $('select[name="mounting"] option:selected').text();
 				idVal = $('input[name="currency"]:checked').prop("id");
 				var currencyt = $("label[for='"+idVal+"']").text();
-				
+
 				var lightt = ''
 				$('#lightbar input[type="checkbox"]:checked').each(function() {
 					idVal = $(this).prop("id");
 					 lightt = lightt + $("label[for='"+idVal+"']").text() + '<br>';
 				});
-				
+
 				var desc = '<span><h3>Description:</h3>'+
 				'<div id="discoutline">'+rackt+'<br>'+'<br>'+
 				'Top Left: '+'<br>'+lefttopt+'<br>'+'<br>'+
@@ -498,10 +499,10 @@
 				'Light: '+'<br>'+lightt+'<br>'+
 				'Mounting: '+'<br>'+mountingt+'<br></div>'+'<br>'+
 				'Currency: '+'<br>'+currencyt+'</span>';
-				
+
 				$('#descriptions > span').remove();
 				$('#descriptions').prepend(desc);
-				
+
 				/* outline for checkboxes/radio buttons */
 				$('input:checked').each(function () {
 					$(this).css('outline-color', 'red');
@@ -512,9 +513,9 @@
 					$(this).css('outline', '0');
 				});
 			}
-			
+
 			/* Update on change */
-			
+
 			$('#optionsform').change(calculate);
 
 			/* Fill out form for standard combos */
@@ -529,7 +530,18 @@
 				});
 				calculate();
 			});
-			
+
+			/* Clear Options */
+			$('#clear button').click(function() {
+				$('#rack').trigger("reset");
+				$('input.clear[type="radio"]').each(function (i) {
+					$(this).prop("checked", true);
+				});
+				$('select option.clear').each(function (i) {
+					$(this).prop("selected", true);
+				});
+				calculate();
+			});
 			/* Set to 1351 combo on page load */
 			$(document).ready(function() {
 				$('input.1351[type="radio"]').each(function (i) {
@@ -539,7 +551,7 @@
 					$(this).prop("selected", true);
 				});
 				$('#cad').prop("checked", true);
-				
+
 				calculate()
 			});
 		</script>

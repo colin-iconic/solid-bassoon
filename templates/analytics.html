@@ -638,7 +638,7 @@
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
-        var yPosition = d3.mouse(this)[1] - 525;
+        var yPosition = d3.mouse(this)[1] + 525;
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip3.select("text").text(d.jlist.toString());
       });

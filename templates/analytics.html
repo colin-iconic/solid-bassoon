@@ -625,8 +625,8 @@
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
         var yPosition = d3.mouse(this)[1] - 25;
-        tooltip2.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-        tooltip2.select("text").text(d.jlist);
+        tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+        tooltip3.select("text").text(d.jlist);
       });
 </script>
 {% endblock %}

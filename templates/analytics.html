@@ -560,7 +560,9 @@
       .orient("left")
       .ticks(10);
 
-
+  var tooltip3 = svg.append("g")
+    .attr("class", "tooltip3")
+    .style("display", "none");
   // add the SVG element
   var svg = d3.select("#weekly_hours").append("svg")
       .attr("width", width + margin.left + margin.right)

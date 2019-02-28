@@ -1472,7 +1472,7 @@ def analytics(name=None):
 				if d['date'] == job[2]:
 					d['count'] += job[1]
 
-	weekly_hours_date.sort(key=itemgetter('date'))
+	weekly_hours_data.sort(key=itemgetter('date'))
 	data['weekly_hours'] = json.dumps(weekly_hours_data, indent=2, default=str)
 
 	return render_template('analytics.html', data = data)

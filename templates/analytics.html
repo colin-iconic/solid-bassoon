@@ -548,6 +548,7 @@
   var y = d3.scale.linear().range([height, 0]);
 
   // define the axis
+
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
@@ -574,9 +575,9 @@
   var data = {{ data.weekly_hours | safe }};
 
   // load the data
-  formatDate = d3.time.format("%d-%m-%Y");
+
   data.forEach(function(d) {
-      d.date = d3.time.format("%Y-%V").parse(d.date);
+      d.date = d.date;
       d.count = +d.count;
   });
 

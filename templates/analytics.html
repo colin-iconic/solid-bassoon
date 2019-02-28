@@ -620,7 +620,7 @@
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.count); })
       .attr("height", function(d) { return height - y(d.count); })
-      .on("mouseover", function() { tooltip3.style("display", null); })
+      .on("mouseover", function() { tooltip3.style("display", null); console.log(d.jlist);})
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;

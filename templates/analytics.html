@@ -4,7 +4,7 @@
 <div id="family"></div>
 <div id="currency"></div>
 <div id="count"></div>
-<div id="promised_count"></div>
+<div id="weekly_hours"></div>
 <div class="tooltip"></div>
 <div class="tooltip1"></div>
 <div class="tooltip2"></div>
@@ -560,7 +560,7 @@
 
 
   // add the SVG element
-  var svg = d3.select("#promised_count").append("svg")
+  var svg = d3.select("#weekly_hours").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -571,7 +571,7 @@
       .attr("height", "100%")
       .attr("fill", "white");
 
-  var data = {{ data.promised_count | safe }};
+  var data = {{ data.weekly_hours | safe }};
 
   // load the data
 

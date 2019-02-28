@@ -1461,10 +1461,13 @@ def analytics(name=None):
 	cursor.execute("select job.job, job.est_total_hrs, cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status = 'Active' and job.est_rem_hrs > 0")
 	query = [list(x) for x in cursor.fetchall()]
 
+	weekly_hours_data = []
+
 	for job in query:
 		job[2] = job[2].strftime('%Y-%V')
+		weekly_hours_data.append({'date': job[2], 'count': job[1]})
 
-	data['weekly_hours'] = query
+	data['weekly_hours'] = json.dumps(weekly_hours_data, indent=2, default=str)
 
 	return render_template('analytics.html', data = data)
 

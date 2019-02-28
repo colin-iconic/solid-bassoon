@@ -1458,7 +1458,7 @@ def analytics(name=None):
 
 	#Hours of work per week
 
-	cursor.execute("select job.job, job.est_total_hrs, cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status = 'Active' and job.est_rem_hrs > 0")
+	cursor.execute("select job.job, job.est_rem_hrs, cast(delivery.promised_date as date) from delivery left join job on delivery.job = job.job where job.status = 'Active' and job.est_rem_hrs > 0")
 	query = [list(x) for x in cursor.fetchall()]
 
 	weekly_hours_data = []

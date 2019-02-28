@@ -572,9 +572,9 @@
   var data = {{ data.weekly_hours | safe }};
 
   // load the data
-
+  parseDate = d3.time.format("%d-%m-%Y").parse
   data.forEach(function(d) {
-      d.date = d.date;
+      d.date = parseDate(d.date);
       d.count = +d.count;
   });
 

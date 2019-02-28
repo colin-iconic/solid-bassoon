@@ -1467,11 +1467,12 @@ def analytics(name=None):
 		job.append(job[2])
 		job[2] = job[2].strftime('%Y-%V')
 		if not any(j['date'] == job[2] for j in weekly_hours_data):
-			weekly_hours_data.append({'date': job[2], 'count': job[1], 'fdate': job[3]})
+			weekly_hours_data.append({'date': job[2], 'count': job[1], 'fdate': job[3], 'jlist': [job[0]]})
 		else:
 			for d in weekly_hours_data:
 				if d['date'] == job[2]:
 					d['count'] += job[1]
+					d['jlist'].append(job[0])
 
 	weekly_hours_data.sort(key=itemgetter('date'))
 	for each in weekly_hours_data:

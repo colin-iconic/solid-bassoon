@@ -581,7 +581,7 @@
     .attr("width", 60)
     .attr("height", 20)
     .attr("fill", "white")
-    .style("opacity", 0.5);
+    .style("opacity", 1);
 
   tooltip3.append("text")
     .attr("x", 30)
@@ -639,7 +639,7 @@
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
-        var yPosition = d3.mouse(this)[1] - 25;
+        var yPosition = d3.mouse(this)[1] - 50;
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip3.select("text").text(d.jlist.toString());
       });

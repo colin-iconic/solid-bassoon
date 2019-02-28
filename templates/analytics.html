@@ -573,23 +573,6 @@
       .attr("height", "100%")
       .attr("fill", "white");
 
-  var tooltip3 = svg.append("g")
-    .attr("class", "tooltip3")
-    .style("display", "none");
-
-  tooltip3.append("rect")
-    .attr("width", 60)
-    .attr("height", 20)
-    .attr("fill", "white")
-    .style("opacity", 1);
-
-  tooltip3.append("text")
-    .attr("x", 30)
-    .attr("dy", "1.2em")
-    .style("text-anchor", "middle")
-    .attr("font-size", "12px")
-    .attr("font-weight", "bold");
-
   var data = {{ data.weekly_hours | safe }};
 
   // load the data
@@ -643,5 +626,22 @@
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip3.select("text").text(d.jlist.toString());
       });
+      
+    var tooltip3 = svg.append("g")
+      .attr("class", "tooltip3")
+      .style("display", "none");
+
+    tooltip3.append("rect")
+      .attr("width", 60)
+      .attr("height", 20)
+      .attr("fill", "white")
+      .style("opacity", 1);
+
+    tooltip3.append("text")
+      .attr("x", 30)
+      .attr("dy", "1.2em")
+      .style("text-anchor", "middle")
+      .attr("font-size", "12px")
+      .attr("font-weight", "bold");
 </script>
 {% endblock %}

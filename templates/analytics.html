@@ -622,7 +622,7 @@
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - width/2;
-        var yPosition = d3.mouse(this)[1] - 25;
+        var yPosition = d3.mouse(this)[1] - 50;
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip3.select("text").text(d.jlist.toString());
       });
@@ -639,7 +639,7 @@
 
     tooltip3.append("text")
       .attr("x", width/2)
-      .attr("dy", "2em")
+      .attr("dy", "1.2em")
       .style("text-anchor", "middle")
       .attr("font-size", "16px")
       .attr("font-weight", "bold");

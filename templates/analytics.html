@@ -589,7 +589,7 @@
     .style("text-anchor", "middle")
     .attr("font-size", "12px")
     .attr("font-weight", "bold");
-    
+
   var data = {{ data.weekly_hours | safe }};
 
   // load the data
@@ -639,7 +639,7 @@
       .on("mouseout", function() { tooltip3.style("display", "none"); })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
-        var yPosition = d3.mouse(this)[1] + 750;
+        var yPosition = d3.mouse(this)[1] - 25;
         tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip3.select("text").text(d.jlist.toString());
       });

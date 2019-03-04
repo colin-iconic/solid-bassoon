@@ -81,7 +81,7 @@ def hotlist(name=None):
 
 	data.sort(key=itemgetter(0))
 
-	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Part Number', 'Work Center', 'Promised Date']
+	head = ['Priority', 'Job Number', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Promised Date', 'Order Quantity', 'Part Number', 'Work Center']
 	return render_template('hot.html', rows = data, head = head, title = 'Hot List')
 
 @app.route('/racks')

@@ -1891,7 +1891,7 @@ def customer_jobs(name=None):
 			job.append(job_ship[0])
 		except:
 			job.append('NA')
-		del job[7]
+		del job[8]
 
 	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Ship To', 'Part Number', 'Description', 'Order Date', 'Promised Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 

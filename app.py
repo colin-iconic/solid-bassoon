@@ -1886,7 +1886,7 @@ def customer_jobs(name=None):
 			job.append('NA')
 
 		try:
-			cursor.execute("select name from address where address = '{0}'".format(job[7]))
+			cursor.execute("select name from address where address = '{0}'".format(job[8]))
 			job_ship = [x for x in cursor.fetchall()][0]
 			job.append(job_ship[0])
 		except:

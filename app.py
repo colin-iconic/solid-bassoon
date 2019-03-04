@@ -1870,10 +1870,10 @@ def customer_jobs(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer = '{0}' and status = 'Active'".format(customer))
+	cursor.execute("select job.job, job.customer, job.customer_po, job.part_number, job.description, cast(job.order_date as date), cast(delivery.promised_date as date), job.order_quantity, job.ship_to from job left join delivery on job.job = delivery.job where job.customer = '{0}' and job.status = 'Active'".format(customer))
 	data = [list(x) for x in cursor.fetchall()]
 	if not data:
-		cursor.execute("select job, customer, customer_po, part_number, description, cast(order_date as date), order_quantity, ship_to from job where customer like '{0}%' and status = 'Active'".format(customer))
+		cursor.execute("select job.job, job.customer, job.customer_po, job.part_number, job.description, cast(job.order_date as date), cast(delivery.promised_date as date), job.order_quantity, job.ship_to from job left join delivery on job.job = delivery.job where job.customer like '{0}%' and job.status = 'Active'".format(customer))
 		data = [list(x) for x in cursor.fetchall()]
 
 	for job in data:
@@ -1893,7 +1893,7 @@ def customer_jobs(name=None):
 			job.append('NA')
 		del job[7]
 
-	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Ship To', 'Part Number', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
+	return render_template('customer_jobs.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Ship To', 'Part Number', 'Description', 'Order Date', 'Promised Date', 'Order Quantity', 'Current WC'], title = 'Customer Jobs')
 
 @app.route("/saw_packages")
 def saw_packages(name=None):

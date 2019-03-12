@@ -22,7 +22,8 @@ from flask_mail import Message
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/colin/dev/jb_reporter/jb_app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -32,7 +33,39 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-		
+
+class Material(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    thickness = db.Column(db.Float, nullable=False)
+    sheet_x = db.Column(db.Float, nullable=False)
+    sheet_y = db.Column(db.Float, nullable=False)
+    type = db.Column(db.String(80))
+    metal = db.Column(db.String(80), nullable=False)
+    finish = db.Column(db.String(80), nullable=False)
+
+class Stock(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    material_id = db.Column(db.Integer, db.ForeignKey('material.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    po_number = db.Column(db.String(80))
+
+class Nest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    material_id = db.Column(db.Integer, db.ForeignKey('material.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(80))
+    drop_id = db.Column(db.Integer, db.ForeignKey('drop.id'))
+
+class Drop(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    material_id = db.Column(db.Integer, db.ForeignKey('material.id'), nullable=False)
+    drop_number = db.Column(db.String(80), nullable=False)
+    location = db.Column(db.String(80))
+    sheet_x = db.Column(db.Float, nullable=False)
+    sheet_y = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(80), nullable=False)
+    origin = db.Column(db.Integer, db.ForeignKey('nest.id'), nullable=False)
+
 with open('gmail.txt', 'r') as f:
 	gmailpass = f.readline()
 

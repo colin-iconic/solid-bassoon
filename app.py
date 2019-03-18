@@ -522,12 +522,11 @@ def wip(name=None):
 		pulls = cursor.fetchall()
 		if pulls:
 			pull_froms.append(job)
-            
+
 	cursor.execute("select sum(total_price) from job where job.job in ('" + "', '".join(pull_froms) + "')")
 	pvalue = cursor.fetchall()[0][0]
 	total_value = float(cvalue) + total_stock
     cursor.execute("select sum(cast(material_location.on_hand_qty as int) * material.selling_price) from material left join material_location on material.material = material_location.material where material.material not like '%[a-zA-Z]%' and len(material.material) = 4 and material.material like '[1-3]%' and cast(material_location.on_hand_qty as int) > 0 and material_location.location_id in ('BUFFALO', 'SHOP') and material.selling_price != 0")
-
     stock_value = cursor.fetchall()[0][0]
     info = [[total_stock, cvalue, pvalue, stock_value]]
 

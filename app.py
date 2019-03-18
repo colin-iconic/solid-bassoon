@@ -532,9 +532,9 @@ def wip(name=None):
     cursor.execute("select sum(cast(material_location.on_hand_qty as int) * material.selling_price) from material left join material_location on material.material = material_location.material where material.material not like '%[a-zA-Z]%' and len(material.material) = 4 and material.material like '[1-3]%' and cast(material_location.on_hand_qty as int) > 0 and material_location.location_id in ('BUFFALO', 'SHOP') and material.selling_price != 0")
     stock_value = cursor.fetchall()[0][0]
     info[0].append(stock_value)
-    
+
 	head = ['I-H Prod', 'Customer', 'Pull Froms', 'In Stock']
-	return render_template('generic_table.html', rows = info, head = head, title = 'Work In Progress', body = "Value of jobs on the floor, does not include 'Pull From' jobs under Customer. Total job value: $" + str(total_value))
+	return render_template('generic_table.html', rows = info, head = head, title = 'Work In Progress', body = ["Value of jobs on the floor, does not include 'Pull From' jobs under Customer. Total job value: $" + str(total_value)])
 
 @app.route('/report/routing_changes')
 def routing_changes(name=None):

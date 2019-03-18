@@ -531,7 +531,7 @@ def wip(name=None):
 	info = [[total_stock, cvalue, pvalue, stock_value]]
 
 	head = ['I-H Prod', 'Customer', 'Pull Froms', 'In Stock']
-	return render_template('generic_table.html', rows = info, head = head, title = 'Work In Progress', body = "Value of jobs on the floor, does not include 'Pull From' jobs under Customer. Total job value: ${0}".format(total_value)])
+	return render_template('generic_table.html', rows = info, head = head, title = 'Work In Progress', body = "Value of jobs on the floor, does not include 'Pull From' jobs under Customer. Total job value: ${0}".format(total_value))
 
 @app.route('/report/routing_changes')
 def routing_changes(name=None):

@@ -530,6 +530,7 @@ def wip(name=None):
 
     #===============================================
     cursor.execute("select sum(cast(material_location.on_hand_qty as int) * material.selling_price) from material left join material_location on material.material = material_location.material where material.material not like '%[a-zA-Z]%' and len(material.material) = 4 and material.material like '[1-3]%' and cast(material_location.on_hand_qty as int) > 0 and material_location.location_id in ('BUFFALO', 'SHOP') and material.selling_price != 0")
+    
     stock_value = cursor.fetchall()[0][0]
     info = [[total_stock, cvalue, pvalue, stock_value]]
 

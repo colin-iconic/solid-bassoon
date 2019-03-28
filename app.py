@@ -39,9 +39,10 @@ class Material(db.Model):
     thickness = db.Column(db.Float, nullable=False)
     sheet_x = db.Column(db.Float, nullable=False)
     sheet_y = db.Column(db.Float, nullable=False)
-    type = db.Column(db.String(80))
+    type = db.Column(db.String(80), nullable=False)
     metal = db.Column(db.String(80), nullable=False)
     finish = db.Column(db.String(80), nullable=False)
+    status = db.Column(db.String(80), nullable=False)
 
 class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -2365,7 +2366,7 @@ def update_viewer():
 
 	cursor = connection.cursor()
 
-	cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None'")
+	cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations from user_values left join job on user_values.user_values = job.user_values where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None' and job.job not like '%-%' and job.open_operations != 0")
 	data = [list(x) for x in cursor.fetchall()]
 
 	return render_template('update_viewer.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')

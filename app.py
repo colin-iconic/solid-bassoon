@@ -2375,7 +2375,7 @@ def update_viewer():
 	data = [list(x) for x in cursor.fetchall()]
 
 	return render_template('update_viewer.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')
-
+'''
 @app.route("/sales_analytics")
 def sales_analytics():
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
@@ -2390,6 +2390,6 @@ def sales_analytics():
 
 
     return render_template('sales_analytics.html', rows = data)
-
+'''
 if __name__ == '__main__':
 	app.run()

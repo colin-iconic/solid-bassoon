@@ -69,7 +69,6 @@ class Drop(db.Model):
 
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
 
 with open('gmail.txt', 'r') as f:

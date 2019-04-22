@@ -67,6 +67,11 @@ class Drop(db.Model):
     status = db.Column(db.String(80), nullable=False)
     origin = db.Column(db.Integer, db.ForeignKey('nest.id'), nullable=False)
 
+class History(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+
 with open('gmail.txt', 'r') as f:
 	gmailpass = f.readline()
 
@@ -960,7 +965,7 @@ def wsop():
 	values_trend2 = np.polyfit(d2.week, d2.value, 1)
 	r_x2, r_y2 = zip(*((i, i*values_trend2[0] + values_trend2[1]) for i in d2.week))
 
-	cursor.execute("SELECT cast(po_header.order_date as date), po_detail.order_quantity, po_detail.unit_cost, po_header.trade_currency from po_header inner join po_detail on po_header.po = po_detail.po where po_header.status not like 'unissued' and po_header.order_date > Dateadd(year, -1, getdate()) order by po_header.order_date desc")
+	cursor.execute("SELECT cast(po_header.order_date as date), po_detail.order_quantity, po_detail.unit_cost, po_header.trade_currency from po_header inner join po_detail on po_header.po = po_detail.po where po_header.status not like 'unissued' and po_detail.po not like '19981' and po_header.order_date > Dateadd(year, -1, getdate()) order by po_header.order_date desc")
 
 	data = cursor.fetchall()
 
@@ -2370,6 +2375,21 @@ def update_viewer():
 	data = [list(x) for x in cursor.fetchall()]
 
 	return render_template('update_viewer.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')
+
+@app.route("/sales_analytics")
+def sales_analytics():
+	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+
+	cursor = connection.cursor()
+
+	cursor.execute("select cast(order_date as date), total_price from job where Order_Date > Dateadd(Month, Datediff(Month, 0, DATEADD(m, -1, current_timestamp)), 0) and total_price > 0 and job not like '%-%' and customer not like 'I-H%'")
+    job_data = [list(x) for x in cursor.fetchall()]
+
+    cursor.execute("select cast(rfq.quote_date as date), quote_qty.total_price from (quote inner join rfq on quote.rfq = rfq.rfq) left join quote_qty on quote.quote = quote_qty.quote where rfq.quote_date > Dateadd(Month, Datediff(Month, 0, DATEADD(m, -1, current_timestamp)), 0)")
+    quote_data = [list(x) for x in cursor.fetchall()]
+
+
+    return render_template('sales_analytics.html', rows = data)
 
 if __name__ == '__main__':
 	app.run()

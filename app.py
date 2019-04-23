@@ -1981,16 +1981,13 @@ def saw_packages(name=None):
 		for sjob in saw_jobs:
 			if job[0] == sjob[0][:-2]:
 				if sjob[1] == 'Active':
-					job.append('At Saw')
-                    job.append(sjob[2])
+					job.extend(['At Saw', sjob[2]])
 				else:
-					job.append('Saw Complete')
-                    job.append(sjob[2])
+					job.extend(['Saw Complete', sjob[2]])
 
 	for job in need_saw:
 		if len(job) == 2:
-			job.append('Missing Saw')
-            job.append(0)
+			job.extend(['Missing Saw', 0])
 
 	return render_template('saw_packages.html', rows = need_saw, title = 'Saw Packages')
 

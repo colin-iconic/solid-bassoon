@@ -1954,10 +1954,10 @@ def saw_packages(name=None):
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
-	cursor.execute("select job.job, job.part_number, job.total_price from job inner join job_operation on job.job = job_operation.job where job.status = 'Active' and job.make_quantity > 0 and job.job not like '%-%' and job_operation.work_center = 'DESIGN' and job_operation.status = 'c'")
+	cursor.execute("select job.job, job.part_number from job inner join job_operation on job.job = job_operation.job where job.status = 'Active' and job.make_quantity > 0 and job.job not like '%-%' and job_operation.work_center = 'DESIGN' and job_operation.status = 'c'")
 	data = [list(x) for x in cursor.fetchall()]
 
-	cursor.execute("select job, status from job where job like '%-S%'")
+	cursor.execute("select job, status, total_price from job where job like '%-S%'")
 	saw_jobs = [list(x) for x in cursor.fetchall()]
 
 	need_saw = []
@@ -1982,12 +1982,15 @@ def saw_packages(name=None):
 			if job[0] == sjob[0][:-2]:
 				if sjob[1] == 'Active':
 					job.append('At Saw')
+                    job.append(sjob[2])
 				else:
 					job.append('Saw Complete')
+                    job.append(sjob[2])
 
 	for job in need_saw:
 		if len(job) == 2:
 			job.append('Missing Saw')
+            job.append(0)
 
 	return render_template('saw_packages.html', rows = need_saw, title = 'Saw Packages')
 

@@ -231,11 +231,11 @@
   </table>
   <br />
 	<div>
-		Part Number: <input name="part">
+		Part Number: <input id="part_number">
 		<button id="part_submit">Submit</button>
 	</div>
 	<div>
-		Customer: <input name="customer">
+		Customer: <input id="customer">
 		<button id="customer_submit">Submit</button>
 	</div>
   <br />
@@ -276,11 +276,17 @@
 </div>
 <script>
 	function redirect(target) {
-		url = "192.168.2.81/reports/part_quotes/" + part + "/7";
+		if target == 1 {
+			var t = document.getElementById("part_number").value;
+		}
+		if target == 2 {
+			var t = document.getElementById("customer").value;
+		}
+		url = "192.168.2.81/reports/part_quotes/" + t + "/7";
 		window.location.replace(url);
 	}
-	document.getElementById('part_submit').onclick = redirect(part);
-	document.getElementById('customer_submit').onclick = redirect(customer);
+	document.getElementById('part_submit').onclick = redirect(1);
+	document.getElementById('customer_submit').onclick = redirect(2);
 </script>
 <script>
 	new Tablesort(document.getElementById('table-id'));

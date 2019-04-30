@@ -276,13 +276,13 @@
 </div>
 <script>
 	function redirect(target) {
-		if target == 1 {
+		if (target == 1) {
 			var t = document.getElementById("part_number").value;
 		}
-		if target == 2 {
+		if (target == 2) {
 			var t = document.getElementById("customer").value;
 		}
-		url = "192.168.2.81/reports/part_quotes/" + t + "/7";
+		var url = "192.168.2.81/reports/part_quotes/" + t + "/7";
 		window.location.replace(url);
 	}
 	document.getElementById('part_submit').onclick = redirect(1);

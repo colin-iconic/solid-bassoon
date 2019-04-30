@@ -275,10 +275,17 @@
   </table>
 </div>
 <script>
-	document.getElementById('part_submit').onclick = f_redirect;
-	document.getElementById('customer_submit').onclick = f_redirect;
-	function f_redirect(q) {
-		var url = "192.168.2.81/reports/part_quotes/" + q.value + "/7";
+	document.getElementById('part_submit').onclick = part_redirect;
+	document.getElementById('customer_submit').onclick = customer_redirect;
+	function part_redirect() {
+		var q = document.getElementById('part_number').value;
+		var url = "192.168.2.81/reports/part_quotes/" + q + "/7";
+		console.log(url);
+		//window.location.replace(url);
+	}
+	function customer_redirect() {
+		var q = document.getElementById('customer_name').value;
+		var url = "192.168.2.81/reports/customer_quotes/" + q + "/7";
 		console.log(url);
 		//window.location.replace(url);
 	}

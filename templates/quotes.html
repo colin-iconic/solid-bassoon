@@ -275,7 +275,9 @@
   </table>
 </div>
 <script>
-	function redirect(target) {
+	document.getElementById('part_submit').onclick = f_redirect(1);
+	document.getElementById('customer_submit').onclick = f_redirect(2);
+	function f_redirect(target) {
 		if (target == 1) {
 			var q = document.getElementById("part_number").value;
 		}
@@ -283,10 +285,8 @@
 			var q = document.getElementById("customer_name").value;
 		}
 		var url = "192.168.2.81/reports/part_quotes/" + q + "/7";
-		//window.location.replace(url);
+		window.location.replace(url);
 	}
-	document.getElementById('part_submit').onclick = redirect(1);
-	document.getElementById('customer_submit').onclick = redirect(2);
 </script>
 <script>
 	new Tablesort(document.getElementById('table-id'));

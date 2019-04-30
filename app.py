@@ -1966,9 +1966,9 @@ def saw_packages(name=None):
 		if job[1] in [
 				'103','1203','1204','1209','1300','1301','1302','1303','1304',
                 '1307','1308','1310','1312','1315','1317','1320','1322','1352',
-                '1356','1359','1360','1361','1364','','1365','1366','1367',
+                '1364','1365','1366','1367',
                 '1368','1369','1370','1371','1372','1373','1374','1396','1397',
-                '1398','1400','1404','1414','1415','1417','1433','1525','1529',
+                '1398','1400','1404','1414','1415','1417','1433','1529',
                 '1603','1705','1800','1801',
                 '1802','1803','1809','1810','1811','1813','227','3002','3004',
                 '3006','3011','3013','3017','3018','3019','3024','3027','3028',
@@ -2153,9 +2153,10 @@ def quotes_length(length):
 	head = ['Customer', '# of Quotes', '$ Quoted', '% of Total $', 'Win %']
 	return render_template('quotes.html', quotes = quotes, head = head, length = length, title = 'Quotes', chart_data = chart_data)
 
-@app.route('/reports/customer_quotes/<cust>')
-def customer_quotes(cust):
-	length = 60;
+@app.route('/reports/customer_quotes/<cust>/<length>')
+def customer_quotes(cust, length):
+	if not length:
+		length = 60;
 
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()

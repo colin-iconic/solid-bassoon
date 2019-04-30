@@ -230,6 +230,14 @@
     </tr>
   </table>
   <br />
+	<div>
+		Part Number: <input name="part">
+		<button id="part_submit">Submit</button>
+	</div>
+	<div>
+		Customer: <input name="customer">
+		<button id="customer_submit">Submit</button>
+	</div>
   <br />
   <table>
     <tr>
@@ -266,6 +274,14 @@
 		</tr>
   </table>
 </div>
+<script>
+	function redirect(target) {
+		url = "192.168.2.81/reports/part_quotes/" + part + "/7";
+		window.location.replace(url);
+	}
+	document.getElementById('part_submit').onclick = redirect(part);
+	document.getElementById('customer_submit').onclick = redirect(customer);
+</script>
 <script>
 	new Tablesort(document.getElementById('table-id'));
 </script>

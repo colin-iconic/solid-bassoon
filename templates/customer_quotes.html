@@ -247,7 +247,7 @@
         		<td>{{ quote['quote'] }}</td>
             <td>{{ quote['date'] }}</td>
             <td>{{ quote['reference'] }}</td>
-            <td>{{ quote['part_number'] }}</td>
+            <td><a href="/reports/part_quotes/{{ quote['part_number'] }}/{{ length }}">{{ quote['part_number'] }}</a></td>
             <td>{{ quote['quantity'] }}</td>
             <td align="right">{{  "${:,.2f}".format(quote['total_price']) }}</td>
             <td>{{ quote['status'] }}</td>

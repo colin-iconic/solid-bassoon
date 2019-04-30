@@ -2251,7 +2251,7 @@ def part_quotes(part, length):
 		if quote[9] == 2: #if currency is CAD do nothing
 			pass
 		elif quote[9] == 1: #if currency is USD convert to CAD
-			quote[10] = Decimal(quote[10])*Decimal(1.3)
+			quote[11] = Decimal(quote[11])*Decimal(1.3)
 
 	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}, 'quotes': []}
 

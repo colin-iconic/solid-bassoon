@@ -224,7 +224,7 @@
       </tr>
     </thead>
     <tr>
-      <td>{{ quotes['quotes_per_week'] }}</td>
+      <td>{{ quotes['quotes_per_week']-1 }}</td>
       <td>{{ "${:,.2f}".format(quotes['total_value']) }}</td>
       <td>{{ ((quotes['total_win']/quotes['quotes_per_week'])*100)|round|int }}%</td>
     </tr>

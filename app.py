@@ -2260,7 +2260,7 @@ def part_quotes(part, length):
 		quotes['total_value'] += quote[11]
 
 		if quote[3] == 'Won':
-			quotes['total_win'] += 1
+			quotes['total_win'] += quote[10]
 
 		if quote[5] not in quotes['customers']:
 			quotes['customers'].append(quote[5])

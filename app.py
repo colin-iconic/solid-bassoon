@@ -2251,13 +2251,13 @@ def part_quotes(part, length):
 		if quote[9] == 2: #if currency is CAD do nothing
 			pass
 		elif quote[9] == 1: #if currency is USD convert to CAD
-			quote[11] = Decimal(quote[11])*Decimal(1.3)
+			quote[10] = Decimal(quote[10])*Decimal(1.3)
 
 	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}, 'quotes': []}
 
 	for quote in data:
 		quotes['quotes_per_week'] += 1
-		quotes['total_value'] += quote[11]
+		quotes['total_value'] += quote[10]
 
 		if quote[3] == 'Won':
 			quotes['total_win'] += 1
@@ -2265,18 +2265,18 @@ def part_quotes(part, length):
 		if quote[5] not in quotes['customers']:
 			quotes['customers'].append(quote[5])
 			quotes['customer_counts'][quote[5]] = 1
-			quotes['customer_total'][quote[5]] = quote[11]
+			quotes['customer_total'][quote[5]] = quote[10]
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] = 1
 			else:
 				quotes['customer_wins'][quote[5]] = 0
 		else:
 			quotes['customer_counts'][quote[5]] += 1
-			quotes['customer_total'][quote[5]] += quote[11]
+			quotes['customer_total'][quote[5]] += quote[10]
 			if quote[3] == 'Won':
 				quotes['customer_wins'][quote[5]] += 1
 
-		quotes['quotes'].append({'part_number': quote[2], 'quantity': quote[10], 'total_price': Decimal(quote[11]), 'quote': quote[4], 'status': quote[3], 'quoted_by': quote[1], 'date': quote[7], 'reference': quote[8]})
+		quotes['quotes'].append({'part_number': quote[2], 'quantity': quote[10], 'total_price': Decimal(quote[10]), 'quote': quote[4], 'status': quote[3], 'quoted_by': quote[1], 'date': quote[7], 'reference': quote[8]})
 
 	cursor.execute("select quote.quote, quote.rfq, cast(rfq.quote_date as date), rfq.trade_currency, quote.status from quote inner join rfq on quote.rfq = rfq.rfq where rfq.quote_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 365), 0) and quote.part_number = '{0}'".format(part))
 	data = [list(x) for x in cursor.fetchall()]

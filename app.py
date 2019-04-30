@@ -2301,7 +2301,7 @@ def part_quotes(part, length):
 	chart_data = {'weekly_quotes': data_json}
 
 	head = ['Quote', 'Date', 'Reference', 'Part Number', 'Quantity', 'Total Price', 'Status']
-	return render_template('customer_quotes.html', customer = part, quotes = quotes, head = head, length = length, title = '{0} Quotes'.format(part), chart_data = chart_data)
+	return render_template('parts_quotes.html', customer = part, quotes = quotes, head = head, length = length, title = '{0} Quotes'.format(part), chart_data = chart_data)
 
 @app.route("/job_progress")
 def job_progress(name=None):

@@ -275,18 +275,10 @@
   </table>
 </div>
 <script>
-	document.getElementById('part_submit').onclick = f_redirect(1);
-	document.getElementById('customer_submit').onclick = f_redirect(2);
-	function f_redirect(target) {
-		if (target == 1) {
-			var q = document.getElementById("part_number").value;
-		} else if (target == 2) {
-			var q = document.getElementById("customer_name").value;
-		} else {
-			return false;
-		}
-
-		var url = "192.168.2.81/reports/part_quotes/" + q + "/7";
+	document.getElementById('part_submit').onclick = f_redirect;
+	document.getElementById('customer_submit').onclick = f_redirect;
+	function f_redirect(q) {
+		var url = "192.168.2.81/reports/part_quotes/" + q.value + "/7";
 		console.log(url);
 		//window.location.replace(url);
 	}

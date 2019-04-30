@@ -279,13 +279,13 @@
 	document.getElementById('customer_submit').onclick = customer_redirect;
 	function part_redirect() {
 		var q = document.getElementById('part_number').value;
-		var url = "192.168.2.81/reports/part_quotes/" + q + "/7";
+		var url = "http://192.168.2.81/reports/part_quotes/" + q + "/7";
 		console.log(url);
 		window.location.href = url;
 	}
 	function customer_redirect() {
 		var q = document.getElementById('customer_name').value;
-		var url = "192.168.2.81/reports/customer_quotes/" + q + "/7";
+		var url = "http://192.168.2.81/reports/customer_quotes/" + q + "/7";
 		console.log(url);
 		window.location.href = url;
 	}

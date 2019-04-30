@@ -2256,7 +2256,7 @@ def part_quotes(part, length):
 	quotes = {'quotes_per_week': 0, 'total_value': 0, 'total_win': 0, 'customers': [], 'customer_counts': {}, 'customer_total': {}, 'customer_wins': {}, 'quotes': []}
 
 	for quote in data:
-		quotes['quotes_per_week'] += 1
+		quotes['quotes_per_week'] += quote[10]
 		quotes['total_value'] += quote[11]
 
 		if quote[3] == 'Won':

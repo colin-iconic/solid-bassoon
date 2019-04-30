@@ -280,10 +280,12 @@
 	function f_redirect(target) {
 		if (target == 1) {
 			var q = document.getElementById("part_number").value;
-		}
-		if (target == 2) {
+		} else if (target == 2) {
 			var q = document.getElementById("customer_name").value;
+		} else {
+			return false;
 		}
+
 		var url = "192.168.2.81/reports/part_quotes/" + q + "/7";
 		window.location.replace(url);
 	}

@@ -1887,9 +1887,7 @@ def part_viewer(name=None):
 		job_data.sort(key=itemgetter(1))
 		try:
             job.append(job_data[0][0])
-        except:
-            continue
-
+            
 	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Part Viewer - {0}'.format(part))
 
 @app.route("/po_viewer")

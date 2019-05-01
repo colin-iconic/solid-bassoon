@@ -1885,7 +1885,10 @@ def part_viewer(name=None):
 		cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[0]))
 		job_data = [list(x) for x in cursor.fetchall()]
 		job_data.sort(key=itemgetter(1))
-        if job_data[0][0] is True: job.append(job_data[0][0])
+        if len(job_data[0]) > 0:
+            job.append(job_data[0][0])
+        else:
+            job.append('None')
 
 	return render_template('part_viewer.html', rows = data, head = ['Job', 'Customer', 'Customer PO', 'Description', 'Order Date', 'Order Quantity', 'Current WC'], title = 'Part Viewer - {0}'.format(part))
 

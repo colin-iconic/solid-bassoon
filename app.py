@@ -2401,6 +2401,7 @@ def update_mailer():
 		data.append(query[-1])
 
 	update_jobs = []
+
 	for job in data:
         job[6] = job[6].replace('\n', '<br />')
 		job[3] = int(job[3]) - 1

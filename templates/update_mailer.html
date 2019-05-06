@@ -5,8 +5,10 @@
 	<p>JOB# {{ job[0] }} <br />
 	PO# {{ job[7] }}</p>
   Part#: {{ job[4] }}<br />
+	Quantity: {{ job[7] }}<br />
 	Description: {{ job[5] }}<br />
-	Quantity: {{ job[6] }}<br />
+	Extended Description:<br />
+	<p>{{ job[6]|truncate }}</p>
   <br>
 {% endfor %}
 Best regards,<br />

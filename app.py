@@ -2464,8 +2464,7 @@ def ato():
 	cursor.execute("select job.job, job.total_price, cast(job.order_date as date) from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND Job.Job Not Like '%-%'")
 	query = [list(x) for x in cursor.fetchall()]
     weekly_hours_data = []
-
-	for job in query:
+    for job in query:
 		if job[2] < datetime.datetime.now().date():
 			job[2] = datetime.datetime.now().date()
 		job.append(job[2])

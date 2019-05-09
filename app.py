@@ -2476,8 +2476,7 @@ def ato():
 				if d['date'] == job[2]:
 					d['count'] += job[1]
 					d['jlist'].append(str(job[0]))
-
-	weekly_hours_data.sort(key=itemgetter('date'))
+    weekly_hours_data.sort(key=itemgetter('date'))
 	for each in weekly_hours_data:
 		each['date'] = each['fdate']
 		del each['fdate']

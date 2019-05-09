@@ -2463,9 +2463,8 @@ def ato():
 
 	cursor.execute("select job.job, job.total_price, cast(job.order_date as date) from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND Job.Job Not Like '%-%'")
 	query = [list(x) for x in cursor.fetchall()]
-
     data = []
-	weekly_hours_data = []
+    weekly_hours_data = []
 
 	for job in query:
 		if job[2] < datetime.datetime.now().date():
@@ -2484,7 +2483,7 @@ def ato():
 	for each in weekly_hours_data:
 		each['date'] = each['fdate']
 		del each['fdate']
-        
+
 	data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
     return render_template('all_time_orders.html', data = data)
 

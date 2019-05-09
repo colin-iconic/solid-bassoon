@@ -2465,7 +2465,7 @@ def ato():
 	query = [list(x) for x in cursor.fetchall()]
 
     data = []
-    
+
 	weekly_hours_data = []
 
 	for job in query:
@@ -2489,7 +2489,7 @@ def ato():
 	data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
 
     return render_template('all_time_orders.html', data = data)
-
+    
 '''
 @app.route("/sales_analytics")
 def sales_analytics():

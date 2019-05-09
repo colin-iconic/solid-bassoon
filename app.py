@@ -2456,8 +2456,8 @@ def update_viewer():
 
 	return render_template('update_viewer.html', rows = data, head = ['Job', 'Frequency', 'Mail To', 'Remaining Operations'], title = 'Update Viewer')
 
-@app.route("/chart/all_time_s&o&po") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.
-def atsop():
+@app.route("/chart/all_time_orders") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.
+def ato():
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
 
@@ -2487,7 +2487,7 @@ def atsop():
 	data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
 
     return render_template('all_time_orders.html', data = data)
-    
+
 '''
 @app.route("/sales_analytics")
 def sales_analytics():

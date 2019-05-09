@@ -2460,10 +2460,13 @@ def update_viewer():
 def ato():
 	connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
 	cursor = connection.cursor()
+
 	cursor.execute("select job.job, job.total_price, cast(job.order_date as date) from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND Job.Job Not Like '%-%'")
 	query = [list(x) for x in cursor.fetchall()]
+
     data = []
 	weekly_hours_data = []
+
 	for job in query:
 		if job[2] < datetime.datetime.now().date():
 			job[2] = datetime.datetime.now().date()
@@ -2476,10 +2479,12 @@ def ato():
 				if d['date'] == job[2]:
 					d['count'] += job[1]
 					d['jlist'].append(str(job[0]))
+
 	weekly_hours_data.sort(key=itemgetter('date'))
 	for each in weekly_hours_data:
 		each['date'] = each['fdate']
 		del each['fdate']
+        
 	data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
     return render_template('all_time_orders.html', data = data)
 

@@ -2480,7 +2480,7 @@ def ato():
     for each in weekly_hours_data:
         each['date'] = each['fdate']
         del each['fdate']
-    data = []
+    data = {}}
     data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
     return render_template('all_time_orders.html', data = data)
 

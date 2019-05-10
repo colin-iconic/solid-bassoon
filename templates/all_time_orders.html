@@ -11,6 +11,9 @@
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
+  // parse the date / time
+  var parseTime = d3.timeParse("%d-%b-%y");
+
   // set the ranges
   var x = d3.scaleTime().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
@@ -32,6 +35,7 @@
 
   // format the data
   data.forEach(function(d) {
+      d.date = parseTime(d.date);
       d.close = +d.close;
   });
 

@@ -2461,7 +2461,7 @@ def ato():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select job.job, job.total_price, cast(job.order_date as date) from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND Job.Job Not Like '%-%'")
+    cursor.execute("select job.job, job.total_price, cast(job.order_date as date) from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND Job.Job Not Like '%-%' and job.order_date > DATEADD(DAY, DATEDIFF(year, 0, getDate() - 3), 0)")
     query = [list(x) for x in cursor.fetchall()]
     weekly_hours_data = []
     for job in query:

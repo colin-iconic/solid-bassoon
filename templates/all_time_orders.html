@@ -120,6 +120,14 @@
   x.domain(d3.extent(data, function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.close; })]);
 
+  var line = d3.line()
+        .x(function(d, i) {
+          return x(i);
+        })
+        .y(function(d, i) {
+          return y(d);
+        });
+        
   // Add the valueline path.
   svg.append("path")
       .data([data])

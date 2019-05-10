@@ -127,7 +127,7 @@
         .y(function(d, i) {
           return y(d);
         });
-        
+
   // Add the valueline path.
   svg.append("path")
       .data([data])
@@ -135,7 +135,7 @@
       .attr("d", valueline);
 
   svg.append("path")
-        .datum([data])
+        .data([data])
         .attr("d", line.curve(curveNMoveAge.N(3)))
         .style("fill", "none")
         .style("stroke", "purple");

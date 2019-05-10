@@ -4,121 +4,129 @@
 <div class="tooltip"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-  // set the dimensions of the canvas
+  var graphData = {{ data.all_time_orders | safe }};
   var margin = {top: 50, right: 160, bottom: 100, left: 150};
+  var svgWidth = 1500;
+  var svgHeight = 750;
+  var graphWidth = svgWidth - margin.left - margin.right;
+  var graphHeight = svgHeight - margin.top - margin.bottom;
 
-  var width = 1600 - margin.left - margin.right,
-      height = 750 - margin.top - margin.bottom;
+  var parseDate = d3.time.format("%Y-%m-%d").parse;
+  var formatTime = d3.time.format("%B %Y");
 
+  var x = d3.time.scale().range([0, graphWidth]);
+  var y = d3.scale.linear().range([graphHeight, 0]);
 
-  // set the ranges
-  var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+  var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(12);
+  var yAxis = d3.svg.axis().scale(y)
+    .orient("left")
+    .ticks(10)
+    .tickSize(-graphWidth, 0, 0)
+    .tickFormat( function(d) { return d } );
 
-  var y = d3.scale.linear().range([height, 0]);
+  var priceLine = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.price); });
+  // Define the div for the tooltip
+  var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
-  // define the axis
-
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom")
-
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left")
-      .ticks(10);
-
-
-  // add the SVG element
-  var svg = d3.select("#all_time_orders").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+  var svg = d3.select("#osp")
+    .append("svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight)
     .append("g")
       .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-  svg.append("rect")
-      .attr("width", "100%")
-      .attr("height", "100%")
-      .attr("fill", "white");
+      "translate(" + margin.left + "," + margin.top + ")")
 
-  var data = {{ data.all_time_orders | safe }};
+  var formatDecimalComma = d3.format(",.2f"),
+      formatMoney = function(d) { return "$" + formatDecimalComma(d); };
 
-  // load the data
 
-  data.forEach(function(d) {
-      d.date = d.date;
-      d.count = +d.count;
-      d.jlist = d.jlist;
-  });
+  function drawGraph(data) {
+    var ordersByMonth = d3.nest()
+      .key(function(d) { return d.date.substring(0,7); })
+      .rollup(function(v) { return d3.sum(v, function(d) { return d.price; }); })
+      .entries(data);
 
-  // scale the range of the data
-  x.domain(data.map(function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.count; })]);
-
-  // add axis
-  svg.append("g")
+    console.log(JSON.stringify(ordersByMonth));
+    data = ordersByMonth
+    // For each row in the data, parse the date
+    // and use + to make sure data is numerical
+    data.forEach(function(d) {
+      d.date = parseDate(d.key + "-01");
+      d.price = +d.values;
+    });
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([d3.min(data, function(d) {
+      return 0 }),
+      d3.max(data, function(d) {
+      return Math.max(d.price) })]);
+    // Add the priceLine as a green line
+    svg.append("path")
+      .style("stroke", "green")
+      .style("fill", "none")
+      .attr("class", "line")
+      .attr("d", priceLine(data));
+    // Add the X Axis
+    svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-    .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", "-.55em")
-      .attr("transform", "rotate(-90)" );
+      .attr("transform", "translate(0," + graphHeight + ")")
+        .call(xAxis);
 
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 5)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Hours of Work");
-
-
-  // Add bar chart
-  svg.selectAll("bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.date); })
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.count); })
-      .attr("height", function(d) { return height - y(d.count); })
-      .on("mouseover", function() { tooltip3.style("display", "none"); }) //("display", null) to show tooltips
-      .on("mouseout", function() { tooltip3.style("display", "none"); })
-      .on("mousemove", function(d) {
-        var xPosition = d3.mouse(this)[0] - width/2;
-        var yPosition = d3.mouse(this)[1] - 50;
-        tooltip3.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-        tooltip3.select("text").text(d.jlist.toString());
-      });
-
-    var tooltip3 = svg.append("g")
-      .attr("class", "tooltip3")
-      .style("display", "none");
-
-    tooltip3.append("rect")
-      .attr("width", width)
-      .attr("height", 20)
-      .attr("fill", "white")
-      .style("opacity", .9);
-
-    tooltip3.append("text")
-      .attr("x", width/2)
-      .attr("dy", "1.2em")
+    // text label for the x axis
+    svg.append("text")
+      .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + 20) + ")")
       .style("text-anchor", "middle")
-      .attr("font-size", "16px")
-      .attr("font-weight", "bold");
+      .text("Date");
+
+    // Add the Y Axis
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+    // text label for the y axis
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (graphHeight / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Total Value of Orders Entered");
 
     // title
     svg.append("text")
-      .attr("x", (width / 2))
+      .attr("x", (graphWidth / 2))
       .attr("y", 0 - (margin.top / 2))
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("text-decoration", "underline")
-      .text("Total Remaining Hours for Jobs Due per Week");
+      .text("Monthly Order Value vs Date Graph");
+
+    // add the dots with tooltips
+    svg.selectAll("dot")
+      .data(data)
+      .enter().append("circle")
+        .attr("r", 3)
+        .attr("cx", function(d) { return x(d.date); })
+        .attr("cy", function(d) { return y(d.price); })
+        .on("mouseover", function(d) {
+          div.transition()
+            .duration(100)
+            .style("opacity", .9);
+          div.html(formatTime(d.date) + "<br/>" + formatMoney(d.price))
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 42) + "px");
+        })
+        .on("mouseout", function(d) {
+          div.transition()
+            .duration(100)
+            .style("opacity", 0);
+        });
+  };
+  drawGraph(graphData);
 </script>
 {% endblock %}

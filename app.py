@@ -2465,9 +2465,6 @@ def ato():
     query = [list(x) for x in cursor.fetchall()]
     weekly_hours_data = []
     for job in query:
-        if job[2] < datetime.datetime.now().date():
-            job[2] = datetime.datetime.now().date()
-        job.append(job[2])
         job[2] = job[2].strftime('%Y-%V')
         if not any(j['date'] == job[2] for j in weekly_hours_data):
             weekly_hours_data.append({'date': job[2], 'count': job[1], 'fdate': job[3], 'jlist': [str(job[0])]})

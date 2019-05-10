@@ -47,13 +47,8 @@
 
 
   function drawGraph(data) {
-    var ordersByMonth = d3.nest()
-      .key(function(d) { return d.date; })
-      .rollup(function(v) { return d3.sum(v, function(d) { return d.price; }); })
-      .entries(data);
-
-    console.log(JSON.stringify(ordersByMonth));
-    data = ordersByMonth
+    console.log(JSON.stringify(graphData));
+    data = graphData
     // For each row in the data, parse the date
     // and use + to make sure data is numerical
     data.forEach(function(d) {

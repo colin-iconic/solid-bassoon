@@ -31,6 +31,10 @@
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.close); });
 
+  var smoothline = d3.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.sm_close); });
+
   // append the svg obgect to the body of the page
   // appends a 'group' element to 'svg'
   // moves the 'group' element to the top left margin
@@ -45,12 +49,9 @@
   data.forEach(function(d) {
       d.date = parseTime(d.date);
       d.close = +d.close;
-  });
-
-  smooth_data.forEach(function(d) {
-      d.date = parseTime(d.date);
       d.sm_close = +d.sm_close;
   });
+
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.close; })]);
@@ -62,9 +63,9 @@
       .attr("d", valueline);
 
   svg.append("path")
-      .data([smooth_data])
+      .data([data])
       .attr("class", "line")
-      .attr("d", valueline);
+      .attr("d", smoothline);
       .style("stroke", "purple");
 
   // Add the X Axis

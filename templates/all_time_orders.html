@@ -6,123 +6,63 @@
 <script>
   var graphData = {{ data.all_time_orders | safe }};
 
-  var margin = {top: 50, right: 160, bottom: 100, left: 150};
-  var svgWidth = 1500;
-  var svgHeight = 750;
-  var graphWidth = svgWidth - margin.left - margin.right;
-  var graphHeight = svgHeight - margin.top - margin.bottom;
+  // set the dimensions and margins of the graph
+  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
-  var parseDate = d3.time.format("%Y-%m-%d").parse;
-  var formatTime = d3.time.format("%Y-%m-%d");
+  // parse the date / time
+  var parseTime = d3.timeParse("%d-%b-%y");
 
-  var x = d3.time.scale().range([0, graphWidth]);
-  var y = d3.scale.linear().range([graphHeight, 0]);
+  // set the ranges
+  var x = d3.scaleTime().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
 
-  var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(12);
-  var yAxis = d3.svg.axis().scale(y)
-    .orient("left")
-    .ticks(10)
-    .tickSize(-graphWidth, 0, 0)
-    .tickFormat( function(d) { return d } );
+  // define the line
+  var valueline = d3.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.close); });
 
-  var priceLine = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.price); });
-  // Define the div for the tooltip
-  var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
-  var svg = d3.select("#all_time_orders")
-    .append("svg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight)
+  // append the svg obgect to the body of the page
+  // appends a 'group' element to 'svg'
+  // moves the 'group' element to the top left margin
+  var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform",
-      "translate(" + margin.left + "," + margin.top + ")")
+            "translate(" + margin.left + "," + margin.top + ")");
 
-  var formatDecimalComma = d3.format(",.2f"),
-      formatMoney = function(d) { return "$" + formatDecimalComma(d); };
+  // Get the data
+  d3.csv("data.csv", function(error, data) {
+    if (error) throw error;
 
-
-  function drawGraph(data) {
-    console.log(JSON.stringify(graphData));
-    data = graphData
-    // For each row in the data, parse the date
-    // and use + to make sure data is numerical
+    // format the data
     data.forEach(function(d) {
-      d.date = parseDate(d.key);
-      d.price = +d.values;
+        d.date = parseTime(d.date);
+        d.close = +d.close;
     });
+
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([d3.min(data, function(d) {
-      return 0 }),
-      d3.max(data, function(d) {
-      return Math.max(d.price) })]);
-    // Add the priceLine as a green line
+    y.domain([0, d3.max(data, function(d) { return d.close; })]);
+
+    // Add the valueline path.
     svg.append("path")
-      .style("stroke", "green")
-      .style("fill", "none")
-      .attr("class", "line")
-      .attr("d", priceLine(data));
+        .data([data])
+        .attr("class", "line")
+        .attr("d", valueline);
+
     // Add the X Axis
     svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + graphHeight + ")")
-        .call(xAxis);
-
-    // text label for the x axis
-    svg.append("text")
-      .attr("transform", "translate(" + (graphWidth/2) + " ," + (graphHeight + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .text("Date");
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
 
     // Add the Y Axis
     svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
+        .call(d3.axisLeft(y));
 
-    // text label for the y axis
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x",0 - (graphHeight / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Total Value of Orders Entered");
+  });
 
-    // title
-    svg.append("text")
-      .attr("x", (graphWidth / 2))
-      .attr("y", 0 - (margin.top / 2))
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("text-decoration", "underline")
-      .text("Monthly Order Value vs Date Graph");
-
-    // add the dots with tooltips
-    svg.selectAll("dot")
-      .data(data)
-      .enter().append("circle")
-        .attr("r", 3)
-        .attr("cx", function(d) { return x(d.date); })
-        .attr("cy", function(d) { return y(d.price); })
-        .on("mouseover", function(d) {
-          div.transition()
-            .duration(100)
-            .style("opacity", .9);
-          div.html(formatTime(d.date) + "<br/>" + formatMoney(d.price))
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY - 42) + "px");
-        })
-        .on("mouseout", function(d) {
-          div.transition()
-            .duration(100)
-            .style("opacity", 0);
-        });
-  };
-  drawGraph(graphData);
-</script>
+  </script>
 {% endblock %}

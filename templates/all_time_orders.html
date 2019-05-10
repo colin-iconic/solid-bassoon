@@ -49,6 +49,12 @@
   function drawGraph(data) {
     console.log(JSON.stringify(graphData));
     data = graphData
+    // For each row in the data, parse the date
+    // and use + to make sure data is numerical
+    data.forEach(function(d) {
+      d.date = parseDate(d.key);
+      d.price = +d.values;
+    });
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([d3.min(data, function(d) {

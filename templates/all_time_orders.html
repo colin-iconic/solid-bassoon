@@ -1,6 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
 <div id="all_time_orders"></div>
+<style> /* set the CSS */
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+</style>
 <script src="http://d3js.org/d3.v4.min.js"></script>
 <script>
   var data = {{ data.all_time_orders | safe }};

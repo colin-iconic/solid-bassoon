@@ -5,6 +5,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
   var graphData = {{ data.all_time_orders | safe }};
+
   var margin = {top: 50, right: 160, bottom: 100, left: 150};
   var svgWidth = 1500;
   var svgHeight = 750;
@@ -33,7 +34,7 @@
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-  var svg = d3.select("#osp")
+  var svg = d3.select("#all_time_orders")
     .append("svg")
       .attr("width", svgWidth)
       .attr("height", svgHeight)

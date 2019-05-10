@@ -2474,7 +2474,11 @@ def ato():
                 if d['date'] == job[2]:
                     d['close'] += job[1]
     weekly_hours_data.sort(key=itemgetter('date'))
+    prev = [0,0]
     for each in weekly_hours_data:
+        prev.append(each['close'])
+        each['sm_close'] = sum(prev)/3
+        prev.pop(0)
         each['date'] = each['fdate']
         del each['fdate']
     data = {}

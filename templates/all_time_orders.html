@@ -14,75 +14,6 @@
 <script>
   var data = {{ data.all_time_orders | safe }};
 
-  //Calculate Moving averages
-  function NMoveAvg(context, N) {
-    this._context = context;
-    this._points = {
-      x: [],
-      y: []
-    };
-    this._N = N;
-  }
-
-  NMoveAvg.prototype = {
-    areaStart: function() {
-      this._line = 0;
-    },
-    areaEnd: function() {
-      this._line = NaN;
-    },
-    lineStart: function() {
-      this._point = 0;
-    },
-    lineEnd: function() {
-      if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
-      this._line = 1 - this._line;
-    },
-    point: function(x, y) {
-      x = +x, y = +y;
-
-      this._points.x.push(x);
-      this._points.y.push(y);
-
-      if (this._points.x.length < this._N) return;
-
-      var aX = this._points.x.reduce(function(a, b) {
-          return a + b;
-        }, 0) / this._N,
-        aY = this._points.y.reduce(function(a, b) {
-          return a + b;
-        }, 0) / this._N;
-
-      this._points.x.shift();
-      this._points.y.shift();
-
-      switch (this._point) {
-        case 0:
-          this._point = 1;
-          this._line ? this._context.lineTo(aX, aY) : this._context.moveTo(aX, aY);
-          break;
-        case 1:
-          this._point = 2; // proceed
-        default:
-          this._context.lineTo(aX, aY);
-          break;
-      }
-    }
-  };
-
-  var curveNMoveAge = (function custom(N) {
-
-    function nMoveAge(context) {
-      return new NMoveAvg(context, N);
-    }
-
-    nMoveAge.N = function(N) {
-      return custom(+N);
-    };
-
-    return nMoveAge;
-  })(0);
-
   // set the dimensions and margins of the graph
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
       width = 960 - margin.left - margin.right,
@@ -116,17 +47,13 @@
       d.close = +d.close;
   });
 
+  smooth_data.forEach(function(d) {
+      d.date = parseTime(d.date);
+      d.sm_close = +d.sm_close;
+  });
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-  var line = d3.line()
-        .x(function(d, i) {
-          return x(i);
-        })
-        .y(function(d, i) {
-          return y(d);
-        });
 
   // Add the valueline path.
   svg.append("path")
@@ -135,10 +62,10 @@
       .attr("d", valueline);
 
   svg.append("path")
-        .data([data])
-        .attr("d", line.curve(curveNMoveAge.N(3)))
-        .style("fill", "none")
-        .style("stroke", "purple");
+      .data([smooth_data])
+      .attr("class", "line")
+      .attr("d", valueline);
+      .style("stroke", "purple");
 
   // Add the X Axis
   svg.append("g")

@@ -4,7 +4,7 @@
 <div class="tooltip"></div>
 <script src="http://d3js.org/d3.v4.min.js"></script>
 <script>
-  var graphData = {{ data.all_time_orders | safe }};
+  var data = {{ data.all_time_orders | safe }};
 
   // set the dimensions and margins of the graph
   var margin = {top: 20, right: 20, bottom: 30, left: 50},

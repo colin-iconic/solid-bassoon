@@ -13,6 +13,7 @@
   var graphHeight = svgHeight - margin.top - margin.bottom;
 
   var parseDate = d3.time.format("%Y-%m-%d").parse;
+  var formatTime = d3.time.format("%Y-%m-%d");
 
   var x = d3.time.scale().range([0, graphWidth]);
   var y = d3.scale.linear().range([graphHeight, 0]);
@@ -48,7 +49,6 @@
   function drawGraph(data) {
     var ordersByMonth = d3.nest()
       .key(function(d) { return d.date.substring(0,7); })
-      .rollup(function(v) { return d3.sum(v, function(d) { return d.price; }); })
       .entries(data);
 
     console.log(JSON.stringify(ordersByMonth));
@@ -117,7 +117,7 @@
           div.transition()
             .duration(100)
             .style("opacity", .9);
-          div.html(d.date + "<br/>" + formatMoney(d.price))
+          div.html(formatTime(d.date) + "<br/>" + formatMoney(d.price))
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 42) + "px");
         })

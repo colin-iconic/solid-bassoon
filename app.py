@@ -2511,6 +2511,7 @@ def orders_report():
             pass
         price = round(each[1] * each[2], 2)
         each.append(price)
+        each[0] = each[0].strftime('%d-%b-%y')
 
     prev = [0,0,0,0]
     for each in data:

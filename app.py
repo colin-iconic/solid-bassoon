@@ -2502,7 +2502,6 @@ def orders_report():
     data = [list(x) for x in cursor.fetchall()]
 
     for each in data:
-        print(each)
         try:
             if each[3] == 1: #if currency is USD convert to CAD
                 each[1] = Decimal(each[1])*Decimal(1.27)
@@ -2511,7 +2510,7 @@ def orders_report():
         except:
             pass
         price = round(each[1] * each[2], 2)
-        data.append(price)
+        each.append(price)
 
     prev = [0,0,0,0]
     for each in data:

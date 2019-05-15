@@ -2518,9 +2518,9 @@ def orders_report():
         each.append(sum(prev)/4)
         prev.pop(0)
 
-    data = {}
-    data['orders'] = json.dumps(data, indent=2, default=str)
-    return render_template('orders_report.html', data = data)
+    chart_data = {}
+    chart_data['orders'] = json.dumps(data, indent=2, default=str)
+    return render_template('orders_report.html', data = chart_data)
 
 '''
 @app.route("/sales_analytics")

@@ -2502,9 +2502,9 @@ def orders_report():
     data = cursor.fetchall()
 
     for each in data:
-        if each[4] == 2: #if currency is CAD do nothing
+        if each[3] == 2: #if currency is CAD do nothing
             pass
-        elif each[4] == 1: #if currency is USD convert to CAD
+        elif each[3] == 1: #if currency is USD convert to CAD
             each[1] = Decimal(each[1])*Decimal(1.27)
         else:
             pass
@@ -2514,7 +2514,7 @@ def orders_report():
     prev = [0,0,0,0]
     for each in data:
         prev.append(each[-1])
-        each.append(sum(prev)/5)
+        each.append(sum(prev)/4)
         prev.pop(0)
 
     data = {}

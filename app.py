@@ -2502,9 +2502,7 @@ def orders_report():
     data = cursor.fetchall()
 
     for each in data:
-        if each[3] == 2: #if currency is CAD do nothing
-            pass
-        elif each[3] == 1: #if currency is USD convert to CAD
+        if each[3] == 1: #if currency is USD convert to CAD
             each[1] = Decimal(each[1])*Decimal(1.27)
         else:
             pass

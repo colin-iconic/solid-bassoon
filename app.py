@@ -2500,7 +2500,7 @@ def orders_report():
     cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -4, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
 
     data = cursor.fetchall()
-    for each in data: print(type(each[3]))
+
     for each in data:
         try:
             if each[3] == 1: #if currency is USD convert to CAD
@@ -2509,7 +2509,7 @@ def orders_report():
                 pass
         except:
             pass
-        price = round(each[1] * each[2], 2)
+        price = round(Decimal(each[1]) * Decimal(each[2]), 2)
         data.append(price)
 
     prev = [0,0,0,0]

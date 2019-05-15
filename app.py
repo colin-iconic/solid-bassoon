@@ -2479,8 +2479,15 @@ def ato():
         prev.append(each['close'])
         each['sm_close'] = sum(prev)/5
         prev.pop(0)
+
+    prev = [0,0,0,0,0,0,0,0,0,0,0,0]
+    for each in weekly_hours_data:
+        prev.append(each['close'])
+        each['long_close'] = sum(prev)/12
+        prev.pop(0)
         each['date'] = each['fdate']
         del each['fdate']
+
     data = {}
     data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
     return render_template('all_time_orders.html', data = data)
@@ -2490,7 +2497,7 @@ def orders_report():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%''")
 
     data = cursor.fetchall()
     for each in data:
@@ -2502,6 +2509,7 @@ def orders_report():
             pass
         price = round(each[1] * each[2], 2)
         data.append(price)
+
     prev = [0,0,0,0]
     for each in data:
         prev.append(each[-1])

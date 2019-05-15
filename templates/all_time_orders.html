@@ -13,6 +13,11 @@
   stroke: #6B7E95;
   stroke-width: 3px;
 }
+.long_sm_line {
+  fill: none;
+  stroke: #6B7E95;
+  stroke-width: 3px;
+}
 
 </style>
 <script src="http://d3js.org/d3.v4.min.js"></script>
@@ -55,6 +60,7 @@
       d.date = parseTime(d.date);
       d.close = +d.close;
       d.sm_close = +d.sm_close;
+      d.long_close = +d.long_close;
   });
 
   // Scale the range of the data
@@ -71,6 +77,11 @@
       .data([data])
       .attr("class", "sm_line")
       .attr("d", smoothline);
+
+  svg.append("path")
+      .data([data])
+      .attr("class", "long_sm_line")
+      .attr("d", longline);
 
   // Add the X Axis
   svg.append("g")

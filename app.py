@@ -2518,8 +2518,12 @@ def orders_report():
         each.append(sum(prev)/4)
         prev.pop(0)
 
+    data_dict = []
+    for each in data:
+        data_dict.append({'date': each[0], 'value': each[-2], 'sm_value': each[-1]})
+
     chart_data = {}
-    chart_data['orders'] = json.dumps(data, indent=2, default=str)
+    chart_data['orders'] = json.dumps(data_dict, indent=2, default=str)
     return render_template('orders_report.html', data = chart_data)
 
 '''

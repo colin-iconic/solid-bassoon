@@ -33,11 +33,11 @@
   // define the line
   var valueline = d3.line()
       .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.close); });
+      .y(function(d) { return y(d.value); });
 
   var smoothline = d3.line()
       .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.sm_close); });
+      .y(function(d) { return y(d.sm_value); });
 
   // append the svg obgect to the body of the page
   // appends a 'group' element to 'svg'
@@ -52,13 +52,13 @@
   // format the data
   data.forEach(function(d) {
       d.date = parseTime(d.date);
-      d.close = +d.close;
-      d.sm_close = +d.sm_close;
+      d.value = +d.value;
+      d.sm_value = +d.sm_value;
   });
 
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.close; })]);
+  y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
   // Add the valueline path.
   svg.append("path")
@@ -105,7 +105,7 @@
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Weekly Order Value");
+    .text("Daily Order Value");
 
   // title
   svg.append("text")
@@ -114,7 +114,7 @@
     .attr("text-anchor", "middle")
     .style("font-size", "16px")
     .style("text-decoration", "underline")
-    .text("Weekly Order Values with 5 Week Moving Average");
+    .text("Daily Order Values with 5 Day Moving Average");
 
 </script>
 {% endblock %}

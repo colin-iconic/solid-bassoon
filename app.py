@@ -2485,6 +2485,33 @@ def ato():
     data['all_time_orders'] = json.dumps(weekly_hours_data, indent=2, default=str)
     return render_template('all_time_orders.html', data = data)
 
+@app.route("/orders_report") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.
+def orders_report():
+    connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+
+    data = cursor.fetchall()
+    for each in data:
+        if each[4] == 2: #if currency is CAD do nothing
+            pass
+        elif each[4] == 1: #if currency is USD convert to CAD
+            each[1] = Decimal(each[1])*Decimal(1.27)
+        else:
+            pass
+        price = round(each[1] * each[2], 2)
+        data.append(price)
+    prev = [0,0,0,0]
+    for each in data:
+        prev.append(each[-1])
+        each.append(sum(prev)/5)
+        prev.pop(0)
+
+    data = {}
+    data['orders'] = json.dumps(data, indent=2, default=str)
+    return render_template('orders_report.html', data = data)
+
 '''
 @app.route("/sales_analytics")
 def sales_analytics():

@@ -2497,7 +2497,7 @@ def orders_report():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -4, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+    cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -4, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
 
     data = cursor.fetchall()
 

@@ -2480,10 +2480,10 @@ def ato():
         each['sm_close'] = sum(prev)/5
         prev.pop(0)
 
-    prev = [0,0,0,0,0,0,0,0,0,0,0,0]
+    prev = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for each in weekly_hours_data:
         prev.append(each['close'])
-        each['long_close'] = sum(prev)/12
+        each['long_close'] = sum(prev)/20
         prev.pop(0)
         each['date'] = each['fdate']
         del each['fdate']
@@ -2498,8 +2498,9 @@ def orders_report():
     cursor = connection.cursor()
 
     cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
-    
+
     data = cursor.fetchall()
+
     for each in data:
         if each[4] == 2: #if currency is CAD do nothing
             pass

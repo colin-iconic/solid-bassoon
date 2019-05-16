@@ -605,7 +605,7 @@ def wk_items():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("SELECT cast(job.order_date as date), job.order_quantity FROM job WHERE job.customer Not Like '%I-H%' AND (Job.Order_Date > Dateadd(Month, Datediff(Month, 0, DATEADD(d, -365, current_timestamp)), 0)) AND (Job.Job Not Like '%-%') and job.part_number in ('1100', '1101', '1102', '1103', '1104', '1105', '1106', '1107', '1108', '1109', '1110', '1111', '1112', '1113', '1114', '1115', '1116', '1117', '1118', '1119', '1120', '1121', '1122', '1123', '1150', '1151', '1152', '1153', '1154', '1155', '1156', '1157', '1158', '1159', '1160', '1161', '1162', '1163', '1164', '1165', '1166', '1167', '1168', '1169', '1170', '1171', '1172', '1173', '1174', '1175', '1500', '1501', '1502', '1503', '1504', '1505', '1506', '1507', '1508', '1509', '1510', '1511', '1512', '1513', '1514', '1515', '1516', '1517', '1518', '1519', '1520', '1521', '1522', '1523', '1524', '1525', '1526', '1527') order by job.order_date")
+    cursor.execute("SELECT cast(job.order_date as date), job.order_quantity FROM job WHERE job.customer Not Like '%I-H%' AND (Job.Order_Date > Dateadd(Month, Datediff(Month, 0, DATEADD(d, -365, current_timestamp)), 0)) AND (Job.Job Not Like '%-%') and job.part_number in ('1100', '1101', '1102', '1103', '1104', '1105', '1106', '1107', '1108', '1109', '1110', '1111', '1112', '1113', '1114', '1115', '1116', '1117', '1118', '1119', '1120', '1121', '1122', '1123', '1150', '1151', '1152', '1153', '1154', '1155', '1156', '1157', '1158', '1159', '1160', '1161', '1162', '1163', '1164', '1165', '1166', '1167', '1168', '1169', '1170', '1171', '1172', '1173', '1174', '1175', '1500', '1501', '1502', '1503', '1504', '1505', '1506', '1507', '1508', '1509', '1510', '1511', '1512', '1513', '1514', '1515', '1516', '1517', '1518', '1519', '1520', '1521', '1522', '1523', '1524', '1525', '1526', '1.34') order by job.order_date")
 
     data = cursor.fetchall()
     data_wk = []
@@ -892,7 +892,7 @@ def wsop():
         if each[3] == 2: #if currency is CAD do nothing
             pass
         elif each[3] == 1: #if currency is USD convert to CAD
-            each[2] = Decimal(each[2])*Decimal(1.27)
+            each[2] = Decimal(each[2])*Decimal(1.34)
         else:
             pass
         data_wk1.append(each[1:])
@@ -936,7 +936,7 @@ def wsop():
         if each[4] == 2: #if currency is CAD do nothing
             pass
         elif each[4] == 1: #if currency is USD convert to CAD
-            each[1] = Decimal(each[1])*Decimal(1.27)
+            each[1] = Decimal(each[1])*Decimal(1.34)
         else:
             pass
         price = round(each[1] * each[2], 2)
@@ -977,7 +977,7 @@ def wsop():
         except ValueError:
             pass
         if each[3] == 1:
-            cost = each[2] * 1.27
+            cost = each[2] * 1.34
         else:
             cost = each[2]
         price = round(each[1] * cost, 2)
@@ -1364,7 +1364,7 @@ def analytics(name=None):
         if job[2] == 2: #if currency is CAD do nothing
             pass
         elif job[2] == 1: #if currency is USD convert to CAD
-            job[1] = Decimal(job[1])*Decimal(1.27)
+            job[1] = Decimal(job[1])*Decimal(1.34)
 
     query = [{'date': x[0], 'price': x[1]} for x in query]
 
@@ -1417,7 +1417,7 @@ def analytics(name=None):
             job.append('rack')
             next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['rack'] += job[3]
 
-        elif job[2] in ['1500','1501','1502','1503','1504','1505','1506','1507','1508','1509','1510','1511','1512','1513','1526','1527','1514','1515','1516','1517','1518','1525','1519','1520','1521','1522','1523','1524']:
+        elif job[2] in ['1500','1501','1502','1503','1504','1505','1506','1507','1508','1509','1510','1511','1512','1513','1526','1.34','1514','1515','1516','1517','1518','1525','1519','1520','1521','1522','1523','1524']:
             job.append('stepbox')
             next((item for item in monthly_sales if item['month'] == job[1].strftime('%m')), None)['stepbox'] += job[3]
 
@@ -1551,7 +1551,7 @@ def in_stock(name=None):
     'enclosed':
     [1303,1304,1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1317,1367,1368,1369,1370,1371,1372,1373,1318,1374],
     'topstep':
-    [1500,1501,1502,1503,1504,1505,1506,1507,1508,1509,1510,1511,1512,1513,1526,1527],
+    [1500,1501,1502,1503,1504,1505,1506,1507,1508,1509,1510,1511,1512,1513,1526,1.34],
     'bigmouth':
     [1514,1515,1516,1517,1518,1525,1519,1520,1521,1522,1523,1524],
     'loadleveler':
@@ -2506,7 +2506,7 @@ def orders_report():
     for each in data:
         try:
             if each[2] == 1: #if currency is USD convert to CAD
-                each[1] = Decimal(each[1])*Decimal(1.27)
+                each[1] = Decimal(each[1])*Decimal(1.34)
             else:
                 pass
         except:
@@ -2538,7 +2538,7 @@ def orders_report():
     for each in data:
         try:
             if each[3] == 1: #if currency is USD convert to CAD
-                each[1] = Decimal(each[1])*Decimal(1.27)
+                each[1] = Decimal(each[1])*Decimal(1.34)
             else:
                 pass
         except:
@@ -2568,7 +2568,7 @@ def orders_report():
     for each in data:
         try:
             if each[2] == 1: #if currency is USD convert to CAD
-                each[0] = Decimal(each[0])*Decimal(1.27)
+                each[0] = Decimal(each[0])*Decimal(1.34)
             else:
                 pass
         except:
@@ -2586,7 +2586,7 @@ def orders_report():
     for each in data:
         try:
             if each[2] == 1: #if currency is USD convert to CAD
-                each[0] = Decimal(each[0])*Decimal(1.27)
+                each[0] = Decimal(each[0])*Decimal(1.34)
             else:
                 pass
         except:

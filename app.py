@@ -2516,11 +2516,11 @@ def orders_report():
         each.append(price)
         each[0] = each[0].strftime('%d-%b-%y')
         if not any(j['date'] == each[0] for j in data_dict):
-            data_dict.append({'date': each[0], 'value': each[-2]})
+            data_dict.append({'date': each[0], 'value': each[-1]})
         else:
             for d in data_dict:
-                if d['date'] == job[2]:
-                    d['value'] += job[1]
+                if d['date'] == each[-1]:
+                    d['value'] += each[0]
 
     data_dict.sort(key=itemgetter('date'))
 

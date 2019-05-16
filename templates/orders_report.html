@@ -3,34 +3,33 @@
 <div id="orders"></div>
 <div id="shipments"></div>
 <style> /* set the CSS */
-
-#orders .line {
-  fill: none;
-  stroke: #71CBAB;
-  stroke-width: 2px;
-}
-#orders .sm_line {
-  fill: none;
-  stroke: #6B7E95;
-  stroke-width: 3px;
-}
-#shipments .line {
-  fill: none;
-  stroke: #c68136;
-  stroke-width: 2px;
-}
-#shipments .sm_line {
-  fill: none;
-  stroke: #750e3d;
-  stroke-width: 3px;
-}
+  #orders .line {
+    fill: none;
+    stroke: #71CBAB;
+    stroke-width: 2px;
+  }
+  #orders .sm_line {
+    fill: none;
+    stroke: #6B7E95;
+    stroke-width: 3px;
+  }
+  #shipments .line {
+    fill: none;
+    stroke: #c68136;
+    stroke-width: 2px;
+  }
+  #shipments .sm_line {
+    fill: none;
+    stroke: #750e3d;
+    stroke-width: 3px;
+  }
 </style>
 <script src="http://d3js.org/d3.v4.min.js"></script>
 <script>
   var data = {{ data.orders | safe }};
 
   // set the dimensions and margins of the graph
-  var margin = {top: 20, right: 20, bottom: 30, left: 70},
+  var margin = {top: 40, right: 20, bottom: 50, left: 80},
       width = 1200 - margin.left - margin.right,
       height = 700 - margin.top - margin.bottom;
 
@@ -123,7 +122,7 @@
     .attr("x", (width / 2))
     .attr("y", 0 - (margin.top / 2))
     .attr("text-anchor", "middle")
-    .style("font-size", "16px")
+    .style("font-size", "20px")
     .style("text-decoration", "underline")
     .text("Daily Order Values with 10 Day Moving Average");
 
@@ -132,7 +131,7 @@
   var data = {{ data.shipments | safe }};
 
   // set the dimensions and margins of the graph
-  var margin = {top: 20, right: 20, bottom: 30, left: 70},
+  var margin = {top: 40, right: 20, bottom: 50, left: 80},
       width = 1200 - margin.left - margin.right,
       height = 700 - margin.top - margin.bottom;
 
@@ -225,7 +224,7 @@
     .attr("x", (width / 2))
     .attr("y", 0 - (margin.top / 2))
     .attr("text-anchor", "middle")
-    .style("font-size", "16px")
+    .style("font-size", "20px")
     .style("text-decoration", "underline")
     .text("Daily Shipment Values with 10 Day Moving Average");
 

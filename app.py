@@ -2576,7 +2576,7 @@ def orders_report():
         except:
             each[1] = 0
 
-        price = round(each[1] * each[2], 2)
+        price = round(each[0] * each[1], 2)
         top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
 
     top_shipments = top_shipments.sort(key=itemgetter('price'))
@@ -2593,7 +2593,7 @@ def orders_report():
                 pass
         except:
             pass
-        price = round(each[1] * each[2], 2)
+        price = each[1]
         top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
 
     top_orders = top_orders.sort(key=itemgetter('price'))

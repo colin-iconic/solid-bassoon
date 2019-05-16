@@ -2525,8 +2525,8 @@ def orders_report():
     prev = []
     for each in data_dict:
         prev.append(each['value'])
+        each['sm_value'] = sum(prev)/len(prev)
         if len(prev) >= 10:
-            each['sm_value'] = sum(prev)/10
             prev.pop(0)
 
     chart_data = {}

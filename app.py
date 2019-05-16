@@ -2522,8 +2522,6 @@ def orders_report():
                 if d['date'] == each[-1]:
                     d['value'] += each[0]
 
-    data_dict.sort(key=itemgetter('date'))
-
     prev = [0,0,0,0]
     for each in data_dict:
         prev.append(each['value'])

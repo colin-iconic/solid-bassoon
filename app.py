@@ -2474,6 +2474,7 @@ def ato():
                 if d['date'] == job[2]:
                     d['close'] += job[1]
     weekly_hours_data.sort(key=itemgetter('date'))
+
     prev = [0,0,0,0]
     for each in weekly_hours_data:
         prev.append(each['close'])
@@ -2501,6 +2502,8 @@ def orders_report():
 
     data = [list(x) for x in cursor.fetchall()]
 
+    data_dict = []
+
     for each in data:
         try:
             if each[3] == 1: #if currency is USD convert to CAD
@@ -2512,16 +2515,20 @@ def orders_report():
         price = round(each[1] * each[2], 2)
         each.append(price)
         each[0] = each[0].strftime('%d-%b-%y')
+        if not any(j['date'] == each[0] for j in data_dict):
+            data_dict.append({'date': each[0], 'value': each[-2]})
+        else:
+            for d in data_dict:
+                if d['date'] == job[2]:
+                    d['value'] += job[1]
+
+    data_dict.sort(key=itemgetter('date'))
 
     prev = [0,0,0,0]
-    for each in data:
-        prev.append(each[-1])
-        each.append(sum(prev)/4)
+    for each in data_dict:
+        prev.append(each['value'])
+        each['sm_value'] = sum(prev)/4
         prev.pop(0)
-
-    data_dict = []
-    for each in data:
-        data_dict.append({'date': each[0], 'value': each[-2], 'sm_value': each[-1]})
 
     chart_data = {}
     chart_data['orders'] = json.dumps(data_dict, indent=2, default=str)

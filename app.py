@@ -2574,7 +2574,8 @@ def orders_report():
             else:
                 pass
         except:
-            pass
+            each[1] = 0
+            
         price = round(each[1] * each[2], 2)
         top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
 

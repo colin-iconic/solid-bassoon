@@ -2564,6 +2564,40 @@ def orders_report():
 
     chart_data['shipments'] = json.dumps(data_dict, indent=2, default=str)
 
+    cursor.execute("select packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
+    top_shipments = []
+    data = [list(x) for x in cursor.fetchall()]
+    for each in data:
+        try:
+            if each[3] == 1: #if currency is USD convert to CAD
+                each[1] = Decimal(each[1])*Decimal(1.27)
+            else:
+                pass
+        except:
+            pass
+        price = round(each[1] * each[2], 2)
+        top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
+
+    top_shipments = top_shipments.sort(key=itemgetter('price'))[:4]
+    chart_data['top_shipments'] = top_shipments
+
+    cursor.execute("select job.total_price, job.quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
+    top_orders = []
+    data = [list(x) for x in cursor.fetchall()]
+    for each in data:
+        try:
+            if each[3] == 1: #if currency is USD convert to CAD
+                each[1] = Decimal(each[1])*Decimal(1.27)
+            else:
+                pass
+        except:
+            pass
+        price = round(each[1] * each[2], 2)
+        top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
+
+    top_orders = top_orders.sort(key=itemgetter('price'))[:4]
+    chart_data['top_orders'] = top_orders
+
     return render_template('orders_report.html', data = chart_data)
 
 '''

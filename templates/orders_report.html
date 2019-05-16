@@ -16,12 +16,12 @@
 }
 #shipments .line {
   fill: none;
-  stroke: #750e3d;
+  stroke: #c68136;
   stroke-width: 2px;
 }
 #shipments .sm_line {
   fill: none;
-  stroke: #c68136;
+  stroke: #750e3d;
   stroke-width: 3px;
 }
 </style>
@@ -218,7 +218,7 @@
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Daily Order Value");
+    .text("Daily Shipment Value");
 
   // title
   svg.append("text")
@@ -227,7 +227,7 @@
     .attr("text-anchor", "middle")
     .style("font-size", "16px")
     .style("text-decoration", "underline")
-    .text("Daily Order Values with 10 Day Moving Average");
+    .text("Daily Shipment Values with 10 Day Moving Average");
 
 </script>
 {% endblock %}

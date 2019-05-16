@@ -1020,7 +1020,6 @@ def wsop():
 @app.route("/chart/parts_charts")
 def parts_charts():
     part_number = request.args.get('part', default = '%', type = str)
-    print(part_number)
 
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
@@ -1043,7 +1042,6 @@ def parts_charts():
         cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.order_quantity FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and job.part_number like '" + part_number + "' order by job.order_date desc")
 
     data = cursor.fetchall()
-    print(data[0])
     data_wk1 = []
     weeks = [x for x in range(1,53)]
     for each in data:
@@ -1113,7 +1111,7 @@ def parts_charts_post():
         cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.order_quantity FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and job.part_number like '" + part_number + "' order by job.order_date desc")
 
     data = cursor.fetchall()
-    print(data[0])
+
     data_wk1 = []
     weeks = [x for x in range(1,53)]
     for each in data:
@@ -2581,7 +2579,7 @@ def orders_report():
 
     print(top_shipments[:3])
     print(data[:3])
-    
+
     top_shipments = top_shipments.sort(key=itemgetter('price'))
     chart_data['top_shipments'] = top_shipments[:4]
 

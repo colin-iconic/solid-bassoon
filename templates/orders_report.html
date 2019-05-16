@@ -24,6 +24,9 @@
 <div id="orders"></div>
 <div id="shipments"></div>
 <style> /* set the CSS */
+  .highlight {
+    fill: #e0e0e0;
+  }
   #orders .line {
     fill: none;
     stroke: #71CBAB;
@@ -110,6 +113,16 @@
   // Add the Y Axis
   svg.append("g")
       .call(d3.axisLeft(y));
+
+  // Highlight Most Recent 2 Weeks
+  var left = x(d3.max(data, function(d) { return d.date; }) - 10));
+  var right = x(d3.max(data, function(d) { return d.date; }));
+  var wid = right - left;
+  svg.append("rect")
+    .attr("x", left)
+    .attr("width", wid)
+    .attr("height", height)
+    .attr("class", "highlight")
 
   // gridlines in y axis function
   function make_y_gridlines() {

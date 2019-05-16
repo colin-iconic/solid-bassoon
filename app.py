@@ -2519,8 +2519,8 @@ def orders_report():
             data_dict.append({'date': each[0], 'value': each[-1]})
         else:
             for d in data_dict:
-                if d['date'] == each[-1]:
-                    d['value'] += each[0]
+                if d['date'] == each[0]:
+                    d['value'] += each[-1]
 
     prev = [0,0,0,0,0]
     for each in data_dict:

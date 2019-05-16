@@ -2577,9 +2577,6 @@ def orders_report():
         price = round(each[0] * each[1], 2)
         top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
 
-    print(top_shipments[:3])
-    print(data[:3])
-
     top_shipments.sort(key=itemgetter('price'))
     chart_data['top_shipments'] = top_shipments[:4]
 
@@ -2597,7 +2594,7 @@ def orders_report():
         price = each[1]
         top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
 
-    top_orders = top_orders.sort(key=itemgetter('price'))
+    top_orders.sort(key=itemgetter('price'))
     chart_data['top_orders'] = top_orders[:4]
 
     return render_template('orders_report.html', data = chart_data)

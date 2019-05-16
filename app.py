@@ -2570,7 +2570,7 @@ def orders_report():
     for each in data:
         try:
             if each[2] == 1: #if currency is USD convert to CAD
-                each[1] = Decimal(each[1])*Decimal(1.27)
+                each[0] = Decimal(each[0])*Decimal(1.27)
             else:
                 pass
         except:
@@ -2588,7 +2588,7 @@ def orders_report():
     for each in data:
         try:
             if each[2] == 1: #if currency is USD convert to CAD
-                each[1] = Decimal(each[1])*Decimal(1.27)
+                each[0] = Decimal(each[0])*Decimal(1.27)
             else:
                 pass
         except:

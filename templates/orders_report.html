@@ -6,7 +6,7 @@
       <h3>Top 5 Orders</h3>
       <ul>
       {% for order in data['top_orders'] %}
-        <li>{{ order['price'] }} - {{ order['customer'] }}: <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a></li>
+        <li>${{ order['price'] }} - {{ order['customer'] }}: <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a></li>
       {% endfor %}
       </ul>
     </td>
@@ -14,7 +14,7 @@
       <h3>Top 5 Shipments</h3>
       <ul>
       {% for shipment in data['top_shipments'] %}
-        <li>{{ shipment['price'] }} - {{ shipment['customer'] }}: <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a></li>
+        <li>${{ shipment['price'] }} - {{ shipment['customer'] }}: <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a></li>
       {% endfor %}
       </ul>
     </td>

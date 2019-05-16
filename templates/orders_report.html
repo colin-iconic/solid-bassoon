@@ -115,8 +115,8 @@
       .call(d3.axisLeft(y));
 
   // Highlight Most Recent 2 Weeks
-  var left = x(d3.max(data, function(d) { return d.date; }) - 10);
-  var right = x(d3.max(data, function(d) { return d.date; }));
+  var right = x(new Date d3.max(data, function(d) { return d.date; }));
+  var left = right(d3.time.day.offset(new Date, 10));
   var wid = right - left;
   svg.append("rect")
     .attr("x", left)

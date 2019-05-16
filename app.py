@@ -2522,11 +2522,12 @@ def orders_report():
                 if d['date'] == each[0]:
                     d['value'] += each[-1]
 
-    prev = [0,0,0,0,0,0,0,0,0,0]
+    prev = []
     for each in data_dict:
         prev.append(each['value'])
-        each['sm_value'] = sum(prev)/10
-        prev.pop(0)
+        if len(prev) >= 10:
+            each['sm_value'] = sum(prev)/10
+            prev.pop(0)
 
     chart_data = {}
     chart_data['orders'] = json.dumps(data_dict, indent=2, default=str)

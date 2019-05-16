@@ -2481,11 +2481,12 @@ def ato():
         each['sm_close'] = sum(prev)/5
         prev.pop(0)
 
-    prev = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    prev = []
     for each in weekly_hours_data:
         prev.append(each['close'])
-        each['long_close'] = sum(prev)/20
-        prev.pop(0)
+        each['long_close'] = sum(prev)/len(prev)
+        if len(prev) >= 20:
+            prev.pop(0)
         each['date'] = each['fdate']
         del each['fdate']
 
@@ -2498,7 +2499,7 @@ def orders_report():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date asc")
+    cursor.execute("select cast(job.order_date as date), job.total_price, job.trade_currency from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by job.order_date asc")
 
     data = [list(x) for x in cursor.fetchall()]
 
@@ -2506,21 +2507,19 @@ def orders_report():
 
     for each in data:
         try:
-            if each[3] == 1: #if currency is USD convert to CAD
+            if each[2] == 1: #if currency is USD convert to CAD
                 each[1] = Decimal(each[1])*Decimal(1.27)
             else:
                 pass
         except:
             pass
-        price = round(each[1] * each[2], 2)
-        each.append(price)
         each[0] = each[0].strftime('%d-%b-%y')
         if not any(j['date'] == each[0] for j in data_dict):
-            data_dict.append({'date': each[0], 'value': each[-1]})
+            data_dict.append({'date': each[0], 'value': each[1]})
         else:
             for d in data_dict:
                 if d['date'] == each[0]:
-                    d['value'] += each[-1]
+                    d['value'] += each[1]
 
     prev = []
     for each in data_dict:
@@ -2531,6 +2530,44 @@ def orders_report():
 
     chart_data = {}
     chart_data['orders'] = json.dumps(data_dict, indent=2, default=str)
+
+        connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+        cursor = connection.cursor()
+
+        cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date asc")
+
+        data = [list(x) for x in cursor.fetchall()]
+
+        data_dict = []
+
+        for each in data:
+            try:
+                if each[3] == 1: #if currency is USD convert to CAD
+                    each[1] = Decimal(each[1])*Decimal(1.27)
+                else:
+                    pass
+            except:
+                pass
+            price = round(each[1] * each[2], 2)
+            each.append(price)
+            each[0] = each[0].strftime('%d-%b-%y')
+            if not any(j['date'] == each[0] for j in data_dict):
+                data_dict.append({'date': each[0], 'value': each[-1]})
+            else:
+                for d in data_dict:
+                    if d['date'] == each[0]:
+                        d['value'] += each[-1]
+
+        prev = []
+        for each in data_dict:
+            prev.append(each['value'])
+            each['sm_value'] = sum(prev)/len(prev)
+            if len(prev) >= 10:
+                prev.pop(0)
+
+        chart_data = {}
+        chart_data['shipments'] = json.dumps(data_dict, indent=2, default=str)
+
     return render_template('orders_report.html', data = chart_data)
 
 '''

@@ -2562,7 +2562,6 @@ def orders_report():
         if len(prev) >= 10:
             prev.pop(0)
 
-    chart_data = {}
     chart_data['shipments'] = json.dumps(data_dict, indent=2, default=str)
 
     return render_template('orders_report.html', data = chart_data)

@@ -2522,10 +2522,10 @@ def orders_report():
                 if d['date'] == each[-1]:
                     d['value'] += each[0]
 
-    prev = [0,0,0,0]
+    prev = [0,0,0,0,0]
     for each in data_dict:
         prev.append(each['value'])
-        each['sm_value'] = sum(prev)/4
+        each['sm_value'] = sum(prev)/5
         prev.pop(0)
 
     chart_data = {}

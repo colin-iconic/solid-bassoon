@@ -2583,7 +2583,7 @@ def orders_report():
     top_shipments.sort(key=itemgetter('price'))
     chart_data['top_shipments'] = top_shipments[:4]
 
-    cursor.execute("select job.total_price, job.quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
+    cursor.execute("select job.total_price, job.order_quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
     top_orders = []
     data = [list(x) for x in cursor.fetchall()]
     for each in data:

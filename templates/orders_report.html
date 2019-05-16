@@ -114,18 +114,6 @@
   svg.append("g")
       .call(d3.axisLeft(y));
 
-  // Highlight Most Recent 2 Weeks
-  var right = x(new Date(d3.max(data, function(d) { return d.date; })));
-  console.log(right)
-  var left = x(new Date(right.getDate()-10));
-  console.log(left)
-  var wid = right - left;
-  svg.append("rect")
-    .attr("x", left)
-    .attr("width", wid)
-    .attr("height", height)
-    .attr("class", "highlight")
-
   // gridlines in y axis function
   function make_y_gridlines() {
       return d3.axisLeft(y)

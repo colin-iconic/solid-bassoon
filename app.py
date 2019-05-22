@@ -2522,9 +2522,8 @@ def orders_report():
     prev = []
     for each in data_dict:
         prev.append(each['value'])
+        each['sm_value'] = sum(prev)/len(prev)
         if len(prev) >= 10:
-            each['sm_value'] = sum(prev)/len(prev)
-            each['sm_date'] = each['date']
             prev.pop(0)
 
     chart_data = {}
@@ -2557,9 +2556,8 @@ def orders_report():
     prev = []
     for each in data_dict:
         prev.append(each['value'])
+        each['sm_value'] = sum(prev)/len(prev)
         if len(prev) >= 10:
-            each['sm_value'] = sum(prev)/len(prev)
-            each['sm_date'] = each['date']
             prev.pop(0)
 
     chart_data['shipments'] = json.dumps(data_dict, indent=2, default=str)

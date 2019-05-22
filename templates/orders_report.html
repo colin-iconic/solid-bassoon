@@ -69,7 +69,7 @@
       .y(function(d) { return y(d.value); });
 
   var smoothline = d3.line()
-      .x(function(d) { return x(d.sm_date); })
+      .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.sm_value); });
 
   // append the svg obgect to the body of the page
@@ -171,7 +171,7 @@
       .y(function(d) { return y(d.value); });
 
   var smoothline = d3.line()
-      .x(function(d) { return x(d.sm_date); })
+      .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.sm_value); });
 
   // append the svg obgect to the body of the page

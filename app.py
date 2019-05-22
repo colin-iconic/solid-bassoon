@@ -2497,7 +2497,7 @@ def orders_report():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select cast(job.order_date as date), job.total_price, job.trade_currency from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date asc")
+    cursor.execute("select cast(job.order_date as date), job.total_price, job.trade_currency from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by job.order_date asc")
 
     data = [list(x) for x in cursor.fetchall()]
 
@@ -2529,7 +2529,7 @@ def orders_report():
     chart_data = {}
     chart_data['orders'] = json.dumps(data_dict, indent=2, default=str)
 
-    cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date asc")
+    cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date asc")
 
     data = [list(x) for x in cursor.fetchall()]
 
@@ -2580,7 +2580,7 @@ def orders_report():
     top_shipments.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_shipments'] = top_shipments[:4]
 
-    cursor.execute("select job.total_price, job.order_quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
+    cursor.execute("select job.total_price, job.order_quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
     top_orders = []
     data = [list(x) for x in cursor.fetchall()]
     for each in data:
@@ -2598,9 +2598,8 @@ def orders_report():
     chart_data['top_orders'] = top_orders[:4]
 
     return render_template('orders_report.html', data = chart_data)
-
 '''
-@app.route("/reports/orders/<cust>/<length>")
+@app.route("reports/orders/<cust>/<length>")
 def customer_orders(cust):
     if not cust:
         return render_template('customer_orders.html')
@@ -2611,7 +2610,7 @@ def customer_orders(cust):
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select job.job, job.part, job.description, job.order_quantity, job.order_date, job.")
+    cursor.execute("select job.job, job.part, job.")
 
 @app.route("/sales_analytics")
 def sales_analytics():

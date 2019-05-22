@@ -2599,7 +2599,8 @@ def orders_report():
 
     return render_template('orders_report.html', data = chart_data)
 
-@app.route("reports/orders/<cust>/<length>")
+'''
+@app.route("/reports/orders/<cust>/<length>")
 def customer_orders(cust):
     if not cust:
         return render_template('customer_orders.html')
@@ -2611,7 +2612,7 @@ def customer_orders(cust):
     cursor = connection.cursor()
 
     cursor.execute("select job.job, job.part, job.description, job.order_quantity, job.order_date, job.")
-'''
+
 @app.route("/sales_analytics")
 def sales_analytics():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')

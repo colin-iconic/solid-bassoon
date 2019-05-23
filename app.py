@@ -2429,7 +2429,7 @@ def update_mailer():
                 job.append('COMPLETE')
                 update_jobs.append(job)
 
-    cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(data[0][0]))
+    cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(query[0][0])
     data = [list(x) for x in cursor.fetchall()]
     if data == []:
         progress = 9

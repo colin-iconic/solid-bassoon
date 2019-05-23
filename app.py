@@ -2407,7 +2407,7 @@ def update_mailer():
             data = [list(x) for x in cursor.fetchall()]
             if data == []:
                 job.append('COMPLETE')
-                job.append(9)
+                job.append(100)
             else:
                 data.sort(key=itemgetter(1))
                 if data[0][0] is None:
@@ -2422,9 +2422,9 @@ def update_mailer():
                     job.append(data[0][0])
 
                 if data[0][1] < 4:
-                    job.append(0)
+                    job.append(30)
                 else:
-                    job.append(data[0][1]-3)
+                    job.append((data[0][1]*10)+30)
 
             update_jobs.append(job)
 

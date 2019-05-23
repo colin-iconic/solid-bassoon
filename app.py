@@ -2407,6 +2407,7 @@ def update_mailer():
             data = [list(x) for x in cursor.fetchall()]
             if data == []:
                 job.append('COMPLETE')
+                job.append(9)
             else:
                 data.sort(key=itemgetter(1))
                 if data[0][0] is None:
@@ -2420,6 +2421,11 @@ def update_mailer():
                 else:
                     job.append(data[0][0])
 
+                if data[0][1] < 4:
+                    job.append(0)
+                else:
+                    job.append(data[0][1])
+
             update_jobs.append(job)
 
         elif job[1].lower() == 'complete':
@@ -2428,17 +2434,6 @@ def update_mailer():
             if data == []:
                 job.append('COMPLETE')
                 update_jobs.append(job)
-
-    cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(query[0][0]))
-    data = [list(x) for x in cursor.fetchall()]
-    if data == []:
-        progress = 9
-    else:
-        data.sort(key=itemgetter(1))
-        if data[0][1] < 4:
-            progress = 0
-        else:
-            progress = data[0][1]
 
     for job in update_jobs:
         msg = Message("Order Update",

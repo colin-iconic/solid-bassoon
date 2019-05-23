@@ -1,7 +1,11 @@
 <head>
 	<style>
+		#update {
+			width: 600px;
+		}
 		#progressbar {
 			background-color: black;
+			border-color: #ffbf00;
 			border-radius: 13px; /* (height of inner div) / 2 + padding */
 			padding: 3px;
 		}
@@ -15,7 +19,7 @@
 	</style>
 </head>
 <body>
-<div id="update" style="width: 450px;">
+<div id="update">
 	{% for job in update_jobs %}
 		<div id="progressbar">
 			<div></div>

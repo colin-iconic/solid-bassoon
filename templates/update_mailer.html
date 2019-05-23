@@ -1,35 +1,37 @@
-{% for job in update_jobs %}
-	<style>
-		#progressbar {
-      background-color: black;
-      border-radius: 13px; /* (height of inner div) / 2 + padding */
-      padding: 3px;
-    }
+<div id="update" style="width: 450px;">
+	{% for job in update_jobs %}
+		<style>
+			#progressbar {
+	      background-color: black;
+	      border-radius: 13px; /* (height of inner div) / 2 + padding */
+	      padding: 3px;
+	    }
 
-    #progressbar > div {
-       background-color: #41f44f;
-       width: {{ job[-1] }}%; /* Adjust with JavaScript */
-       height: 20px;
-       border-radius: 10px;
-    }
-	</style>
-	<div id="progressbar">
-		<div></div>
-	</div>
-	<h2>In Progress: {{ job[-2] }}</h2>
-	{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>
-  {% else %}<p>This job has progressed to the {{ job[-2] }} station. There are {{ job[3] }} operations remaining.</p>
-  {% endif %}
-	<p>JOB# {{ job[0] }} <br />
-	PO# {{ job[8] }}</p>
-  Part#: {{ job[4] }}<br />
-	Quantity: {{ job[7] }}<br />
-	Description: {{ job[5] }}<br />
-	Extended Description:<br />
-	<p>{{ job[6]|truncate }}</p>
-  <br>
-{% endfor %}
-Best regards,<br />
-Iconic Metalgear Team<br />
- <br />
-***This message was generated automatically***
+	    #progressbar > div {
+	       background-color: #41f44f;
+	       width: {{ job[-1] }}%; /* Adjust with JavaScript */
+	       height: 20px;
+	       border-radius: 10px;
+	    }
+		</style>
+		<div id="progressbar">
+			<div></div>
+		</div>
+		<h2>In Progress: {{ job[-2] }}</h2>
+		{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>
+	  {% else %}<p>This job has progressed to the {{ job[-2] }} station. There are {{ job[3] }} operations remaining.</p>
+	  {% endif %}
+		<p>JOB# {{ job[0] }} <br />
+		PO# {{ job[8] }}</p>
+	  Part#: {{ job[4] }}<br />
+		Quantity: {{ job[7] }}<br />
+		Description: {{ job[5] }}<br />
+		Extended Description:<br />
+		<p>{{ job[6]|truncate }}</p>
+	  <br>
+	{% endfor %}
+	Best regards,<br />
+	Iconic Metalgear Team<br />
+	<br />
+	***This message was generated automatically***
+</div>

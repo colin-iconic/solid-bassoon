@@ -2421,10 +2421,7 @@ def update_mailer():
                 else:
                     job.append(data[0][0])
 
-                if data[0][1] < 4:
-                    job.append(30)
-                else:
-                    job.append((data[0][1]*10)+30)
+                job.append((data[0][1]/data[-1][1])*100)
 
             update_jobs.append(job)
 

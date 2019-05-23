@@ -2444,13 +2444,13 @@ def update_mailer():
 #            recipients=job[2].split(', '),
 #            bcc=['colin@iconicmetalgear.com'])
 
-        msg.html = render_template('update_mailer.html', update_jobs = [job], progress = progress)
+        msg.html = render_template('update_mailer.html', update_jobs = [job])
         try:
             mail.send(msg)
         except:
             job[3] = 'FAILED TO SEND MESSAGE'
 
-    return render_template('update_mailer.html', update_jobs = update_jobs, progress = progress)
+    return render_template('update_mailer.html', update_jobs = update_jobs)
 
 @app.route("/update_viewer")
 def update_viewer():

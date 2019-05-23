@@ -7,7 +7,7 @@
     }
 
     #progressbar > div {
-       background-color: orange;
+       background-color: #41f44f;
        width: {{ job[-1] }}%; /* Adjust with JavaScript */
        height: 20px;
        border-radius: 10px;
@@ -15,8 +15,8 @@
 	</style>
 	<div id="progressbar">
 		<div></div>
-		<h2>{{ job[-2] }}</h2>
 	</div>
+	<h2>In Progress: {{ job[-2] }}</h2>
 	{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>
   {% else %}<p>This job has progressed to the {{ job[-2] }} station. There are {{ job[3] }} operations remaining.</p>
   {% endif %}

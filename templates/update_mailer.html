@@ -2,8 +2,8 @@
 {% for job in update_jobs %}
 	<div id="progress-bar">
 	</div>
-	{% if job[-1]=='COMPLETE' %}<p>This job has been completed.</p>
-  {% else %}<p>This job has progressed to the {{ job[-1] }} station. There are {{ job[3] }} operations remaining.</p>
+	{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>
+  {% else %}<p>This job has progressed to the {{ job[-2] }} station. There are {{ job[3] }} operations remaining.</p>
   {% endif %}
 	<p>JOB# {{ job[0] }} <br />
 	PO# {{ job[7] }}</p>

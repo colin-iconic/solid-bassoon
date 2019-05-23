@@ -2421,7 +2421,7 @@ def update_mailer():
                 else:
                     job.append(data[0][0])
 
-                job.append(round((float(data[0][1])/float(data[-1][1]))*100, 0))
+                job.append(round((float(data[0][1])/float(data[-1][1]))*100))
 
             update_jobs.append(job)
 

@@ -1,3 +1,4 @@
+{% for job in update_jobs %}
 <head>
 	<style>
 		#update {
@@ -20,7 +21,6 @@
 </head>
 <body>
 <div id="update">
-	{% for job in update_jobs %}
 		<div id="progressbar">
 			<div></div>
 		</div>
@@ -36,10 +36,10 @@
 		Extended Description:<br />
 		<p>{{ job[6]|truncate }}</p>
 	  <br>
-	{% endfor %}
 	Best regards,<br />
 	Iconic Metalgear Team<br />
 	<br />
 	***This message was generated automatically***
 </div>
 </body>
+{% endfor %}

@@ -2450,7 +2450,7 @@ def update_mailer():
         except:
             job[3] = 'FAILED TO SEND MESSAGE'
 
-    return render_template('update_mailer.html', update_jobs = update_jobs[0])
+    return render_template('update_mailer.html', update_jobs = [update_jobs[0]])
 
 @app.route("/update_viewer")
 def update_viewer():

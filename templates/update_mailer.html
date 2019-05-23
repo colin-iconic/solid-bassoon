@@ -24,7 +24,7 @@
 <body>
 <div id="update">
 		<div id="progressbar">
-			<div>{{ job[-1] }}% Complete</div>
+			<div>{{ job[-1]|int }}% Complete</div>
 		</div>
 		<h2>In Progress: {{ job[-2] }}</h2>
 		{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>

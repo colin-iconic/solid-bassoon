@@ -2450,7 +2450,7 @@ def update_mailer():
         except Exception, e:
             job[3] = str(e)
 
-    return render_template('update_mailer.html', update_jobs = update_jobs[0])
+    return render_template('update_mailer.html', update_jobs = [update_jobs[0]])
 
 @app.route("/update_viewer")
 def update_viewer():

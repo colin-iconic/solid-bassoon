@@ -2438,7 +2438,7 @@ def update_mailer():
     for job in update_jobs:
         msg = Message("Order Update",
             sender="no-reply@iconicmetalgear.com",
-            recipients='colin@iconicmetalgear.com')
+            recipients=['colin@iconicmetalgear.com'])
 #        msg = Message("Order Update",
 #            sender="no-reply@iconicmetalgear.com",
 #            recipients=job[2].split(', '),

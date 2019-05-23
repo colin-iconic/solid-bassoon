@@ -2447,8 +2447,8 @@ def update_mailer():
         msg.html = render_template('update_mailer.html', update_jobs = [job])
         try:
             mail.send(msg)
-        except:
-            job[3] = 'FAILED TO SEND MESSAGE'
+        except Exception, e:
+            job[3] = str(e)
 
     return render_template('update_mailer.html', update_jobs = [update_jobs[0]])
 

@@ -2429,19 +2429,30 @@ def update_mailer():
                 job.append('COMPLETE')
                 update_jobs.append(job)
 
+    cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(data[0][0]))
+    data = [list(x) for x in cursor.fetchall()]
+    if data == []:
+        progress = 9
+    else:
+        data.sort(key=itemgetter(1))
+        if data[0][1] < 4:
+            progress = 0
+        else:
+            progress = data[0][1]
+
     for job in update_jobs:
         msg = Message("Order Update",
             sender="no-reply@iconicmetalgear.com",
             recipients=job[2].split(', '),
             bcc=['colin@iconicmetalgear.com'])
 
-        msg.html = render_template('update_mailer.html', update_jobs = [job])
+#        msg.html = render_template('update_mailer.html', update_jobs = [job])
 #        try:
 #            mail.send(msg)
 #        except:
 #            job[3] = 'FAILED TO SEND MESSAGE'
 
-    return render_template('update_mailer.html', update_jobs = update_jobs)
+    return render_template('update_mailer.html', update_jobs = update_jobs, progress = progress)
 
 @app.route("/update_viewer")
 def update_viewer():

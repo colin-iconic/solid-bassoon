@@ -11,9 +11,9 @@
 			padding: 0px;
 		}
 
-		#progressbar > div {
+		#progressbar_c {
 			 background-color: #41f44f;
-			 width: {{ job[-1] }}%; /* Adjust with JavaScript */
+			 width: {{ job[-1]|int }}%;
 			 height: 20px;
 			 border: 1px solid black;
 			 border-radius: 12px;
@@ -24,7 +24,7 @@
 <body>
 <div id="update">
 		<div id="progressbar">
-			<div>{{ job[-1]|int }}% Complete</div>
+			<div id="progressbar_c">{{ job[-1]|int }}% Complete</div>
 		</div>
 		<h2>In Progress: {{ job[-2] }}</h2>
 		{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>

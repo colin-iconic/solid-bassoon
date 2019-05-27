@@ -7,9 +7,9 @@
       <h3>Top 5 Orders</h3>
       <ul>
       {% for order in data['top_orders'] %}
-        <li>{{ "${:,.2f}".format(order['price']) }} - {{ order['customer'] }}<br />
+        <li>{{ "${:,.2f}".format(order['price']) }} - <a href="/customer_jobs?customer={{ order['customer'] }}">{{ order['customer'] }}</a><br />
         <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a><br />
-        {{ order['quantity']|int }}pc {{ order['part'] }} - {{ order['description'] }}</li>
+        {{ order['quantity']|int }}pc <a href="/part_viewer?part={{ order['part'] }}">{{ order['part'] }}</a> - {{ order['description'] }}</li>
       {% endfor %}
       </ul>
     </td>
@@ -17,9 +17,9 @@
       <h3>Top 5 Shipments</h3>
       <ul>
       {% for shipment in data['top_shipments'] %}
-        <li>{{ "${:,.2f}".format(shipment['price']) }} - {{ shipment['customer'] }}<br />
+        <li>{{ "${:,.2f}".format(shipment['price']) }} - <a href="/customer_jobs?customer={{ shipment['customer'] }}">{{ shipment['customer'] }}</a><br />
         <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a><br />
-        {{ shipment['quantity']|int }}pc {{ shipment['part'] }} - {{ shipment['description'] }}</li>
+        {{ shipment['quantity']|int }}pc <a href="/part_viewer?part={{ shipment['part'] }}">{{ shipment['part'] }}</a> - {{ shipment['description'] }}</li>
       {% endfor %}
       </ul>
     </td>

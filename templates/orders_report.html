@@ -9,7 +9,7 @@
       {% for order in data['top_orders'] %}
         <li>{{ "${:,.2f}".format(order['price']) }} - {{ order['customer'] }}<br />
         <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a><br />
-        {{ order['quantity'] }}pc {{ order['part'] }} - {{ order['description'] }}</li>
+        {{ order['quantity']|int }}pc {{ order['part'] }} - {{ order['description'] }}</li>
       {% endfor %}
       </ul>
     </td>

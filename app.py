@@ -2598,7 +2598,7 @@ def orders_report():
         except:
             pass
         price = round(each[0], 2)
-        top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6]})
+        top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6], 'quantity': each[1]})
 
     top_orders.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_orders'] = top_orders[:4]

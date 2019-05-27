@@ -17,7 +17,9 @@
       <h3>Top 5 Shipments</h3>
       <ul>
       {% for shipment in data['top_shipments'] %}
-        <li>{{ "${:,.2f}".format(shipment['price']) }} - {{ shipment['customer'] }}: <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a></li>
+        <li>{{ "${:,.2f}".format(shipment['price']) }} - {{ shipment['customer'] }}<br />
+        <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a><br />
+        {{ shipment['quantity']|int }}pc {{ shipment['part'] }} - {{ shipment['description'] }}</li>
       {% endfor %}
       </ul>
     </td>

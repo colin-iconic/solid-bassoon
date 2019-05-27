@@ -7,7 +7,9 @@
       <h3>Top 5 Orders</h3>
       <ul>
       {% for order in data['top_orders'] %}
-        <li>{{ "${:,.2f}".format(order['price']) }} - {{ order['customer'] }}: <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a></li>
+        <li>{{ "${:,.2f}".format(order['price']) }} - {{ order['customer'] }}<br />
+        <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a><br />
+        {{ order['quantity'] }}pc {{ order['part'] }} - {{ order['description'] }}</li>
       {% endfor %}
       </ul>
     </td>

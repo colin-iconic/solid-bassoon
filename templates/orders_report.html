@@ -114,7 +114,8 @@
       .call(d3.axisBottom(x)
             .ticks(d3.timeDay.every(1)))
       .selectAll("text")
-        .attr("dy", ".35em")
+        .attr("y", 0)
+        .attr("x", 9)
         .attr("transform", "rotate(90)");
 
   // Add the Y Axis

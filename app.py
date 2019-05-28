@@ -2503,7 +2503,7 @@ def orders_report():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select cast(job.order_date as date), job.total_price, job.trade_currency from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by job.order_date asc")
+    cursor.execute("select cast(job.order_date as date), job.total_price, job.trade_currency from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(month, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date asc")
 
     data = [list(x) for x in cursor.fetchall()]
 
@@ -2535,7 +2535,7 @@ def orders_report():
     chart_data = {}
     chart_data['orders'] = json.dumps(data_dict, indent=2, default=str)
 
-    cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -2, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date asc")
+    cursor.execute("select cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(month, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date asc")
 
     data = [list(x) for x in cursor.fetchall()]
 

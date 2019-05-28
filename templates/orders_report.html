@@ -114,7 +114,10 @@
       .call(d3.axisBottom(x)
             .ticks(d3.timeDay.every(1)))
       .selectAll("text")
-        .attr("transform", "rotate(-90)");
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(90)");
 
   // Add the Y Axis
   svg.append("g")

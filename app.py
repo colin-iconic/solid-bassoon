@@ -2568,7 +2568,7 @@ def orders_report():
 
     chart_data['shipments'] = json.dumps(data_dict, indent=2, default=str)
 
-    cursor.execute("select packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
+    cursor.execute("select packlist_detail.unit_price, packlist_detail.quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job, cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
     top_shipments = []
     data = [list(x) for x in cursor.fetchall()]
     for each in data:
@@ -2579,9 +2579,10 @@ def orders_report():
                 pass
         except:
             each[1] = 0
-
+        lead_time = (each[7] - each[8]).days
+        each.append(lead_time)
         price = round(each[0] * each[1], 2)
-        top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6], 'quantity': each[1]})
+        top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6], 'quantity': each[1], 'lead': lead_time})
 
     top_shipments.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_shipments'] = top_shipments[:4]

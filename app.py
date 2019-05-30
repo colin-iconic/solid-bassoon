@@ -2608,8 +2608,8 @@ def orders_report():
     data = [list(x) for x in cursor.fetchall()]
     lead_times = []
     for each in data:
-        lead_time = int((each[1] - each[0]).days)/7
-        lead_times.append(lead_time)
+        lead_time = int((each[1] - each[0]).days)
+        if lead_time > 1: lead_times.append(lead_time)
 
     avg_lead_time = sum(lead_times)/len(lead_times)
 
@@ -2617,8 +2617,8 @@ def orders_report():
     data = [list(x) for x in cursor.fetchall()]
     lead_times = []
     for each in data:
-        lead_time = int((each[1] - each[0]).days)/7
-        lead_times.append(lead_time)
+        lead_time = int((each[1] - each[0]).days)
+        if lead_time > 1: lead_times.append(lead_time)
 
     prev_avg_lead_time = sum(lead_times)/len(lead_times)
 

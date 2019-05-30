@@ -2604,7 +2604,7 @@ def orders_report():
     top_orders.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_orders'] = top_orders[:4]
 
-    cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%'")
+    cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date < Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%'")
     data = [list(x) for x in cursor.fetchall()]
     lead_times = []
     for each in data:
@@ -2616,7 +2616,7 @@ def orders_report():
     med_lead_time = lead_times[int(len(lead_times)/2)]
     max_lead_time = lead_times[-1]
 
-    cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date < Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%' and packlist_header.packlist_date > Dateadd(day, -60, getdate())")
+    cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%' and packlist_header.packlist_date < Dateadd(day, -60, getdate())")
     data = [list(x) for x in cursor.fetchall()]
     lead_times = []
     for each in data:

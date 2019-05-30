@@ -121,8 +121,11 @@ def hotlist(name=None):
         cursor.execute("select work_center, sequence from job_operation where job = '{0}' and job_operation.status = 'o'".format(job[1]))
         job_data = [list(x) for x in cursor.fetchall()]
         job_data.sort(key=itemgetter(1))
-        job.append(job_data[0][0])
-
+        try:
+            job.append(job_data[0][0])
+        except:
+            pass
+            
         cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job[1]))
         try:
             job.append([list(x) for x in cursor.fetchall()][0][0])

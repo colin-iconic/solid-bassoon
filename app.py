@@ -2436,9 +2436,9 @@ def update_mailer():
                 update_jobs.append(job)
 
     for job in update_jobs:
-#        msg = Message("Order Update",
-#            sender="no-reply@iconicmetalgear.com",
-#            recipients=['colin@iconicmetalgear.com'])
+        msg = Message("Order Update",
+            sender="no-reply@iconicmetalgear.com",
+            recipients=['colin@iconicmetalgear.com'])
 #        msg = Message("Order Update",
 #            sender="no-reply@iconicmetalgear.com",
 #            recipients=job[2].split(', '),
@@ -2446,7 +2446,7 @@ def update_mailer():
 
         msg.html = render_template('update_mailer.html', update_jobs = [job])
         try:
-            mail.send(msg)
+#            mail.send(msg)
         except Exception, e:
             job[3] = str(e)
 

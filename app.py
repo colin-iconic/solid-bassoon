@@ -2604,6 +2604,27 @@ def orders_report():
     top_orders.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_orders'] = top_orders[:4]
 
+    cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%'")
+    data = [list(x) for x in cursor.fetchall()]
+    lead_times = []
+    for each in data:
+        lead_time = int((each[1] - each[0]).days)/7
+        lead_times.append(lead_time)
+
+    avg_lead_time = sum(lead_times)/len(lead_times)
+
+    cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date < Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%' and packlist_header.packlist_date > Dateadd(day, -60, getdate())")
+    data = [list(x) for x in cursor.fetchall()]
+    lead_times = []
+    for each in data:
+        lead_time = int((each[1] - each[0]).days)/7
+        lead_times.append(lead_time)
+
+    prev_avg_lead_time = sum(lead_times)/len(lead_times)
+
+    chart_data['avg_lead_time'] = avg_lead_time
+    chart_data['prev_avg_lead_time'] = prev_avg_lead_time
+
     return render_template('orders_report.html', data = chart_data)
 '''
 @app.route("reports/orders/<cust>/<length>")

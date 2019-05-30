@@ -9,7 +9,7 @@
       <ul>
       {% for order in data['top_orders'] %}
         <li>{{ "${:,.2f}".format(order['price']) }} - <a href="/customer_jobs?customer={{ order['customer'] }}">{{ order['customer'] }}</a><br />
-        <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a><br />
+        <a href="/mobile_traveler?job={{ order['job'] }}">{{ order['job'] }}</a> - PO#: <a href="/po_viewer?po={{ order['po'] }}">{{ order['po'] }}</a><br />
         {{ order['quantity']|int }}pc <a href="/part_viewer?part={{ order['part'] }}">{{ order['part'] }}</a> - {{ order['description'] }}</li>
       {% endfor %}
       </ul>
@@ -25,6 +25,9 @@
       </ul>
     </td>
 </table>
+<div style="margin-left: 80px; width: 1100px;">
+  <h3>Title</h3>
+  <
 <h3>In the last 30 days...</h3>
 <div id="orders"></div>
 <div id="shipments"></div>

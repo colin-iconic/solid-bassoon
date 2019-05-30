@@ -2587,7 +2587,7 @@ def orders_report():
     top_shipments.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_shipments'] = top_shipments[:4]
 
-    cursor.execute("select job.total_price, job.order_quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
+    cursor.execute("select job.total_price, job.order_quantity, job.trade_currency, job.customer, job.part_number, job.description, job.job, job.customer_po from job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND job.order_date > Dateadd(week, -1, getdate()) AND Job.Job Not Like '%-%'")
     top_orders = []
     data = [list(x) for x in cursor.fetchall()]
     for each in data:
@@ -2599,7 +2599,7 @@ def orders_report():
         except:
             pass
         price = round(each[0], 2)
-        top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6], 'quantity': each[1]})
+        top_orders.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6], 'quantity': each[1], 'po': each[7]})
 
     top_orders.sort(key=itemgetter('price'), reverse = True)
     chart_data['top_orders'] = top_orders[:4]

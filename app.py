@@ -2579,7 +2579,7 @@ def orders_report():
                 pass
         except:
             each[1] = 0
-        lead_time = (each[8] - each[7]).days
+        lead_time = (each[8] - each[7]).weeks
         each.append(lead_time)
         price = round(each[0] * each[1], 2)
         top_shipments.append({'customer': each[3], 'part': each[4], 'description': each[5], 'price': price, 'job': each[6], 'quantity': each[1], 'lead': lead_time})

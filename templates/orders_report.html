@@ -18,7 +18,7 @@
       <ul>
       {% for shipment in data['top_shipments'] %}
         <li>{{ "${:,.2f}".format(shipment['price']) }} - <a href="/customer_jobs?customer={{ shipment['customer'] }}">{{ shipment['customer'] }}</a><br />
-        <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a> - Lead time: {{ shipment['lead'] }} days<br />
+        <a href="/mobile_traveler?job={{ shipment['job'] }}">{{ shipment['job'] }}</a> - Lead time: {{ shipment['lead'] }} weeks<br />
         {{ shipment['quantity']|int }}pc <a href="/part_viewer?part={{ shipment['part'] }}">{{ shipment['part'] }}</a> - {{ shipment['description'] }}</li>
       {% endfor %}
       </ul>

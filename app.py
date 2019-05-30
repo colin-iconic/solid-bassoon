@@ -2445,10 +2445,10 @@ def update_mailer():
 #            bcc=['colin@iconicmetalgear.com'])
 
         msg.html = render_template('update_mailer.html', update_jobs = [job])
-        try:
+#        try:
 #            mail.send(msg)
-        except Exception, e:
-            job[3] = str(e)
+#        except Exception, e:
+#            job[3] = str(e)
 
     return render_template('update_mailer.html', update_jobs = [update_jobs[0]])
 

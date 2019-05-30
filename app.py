@@ -2612,8 +2612,9 @@ def orders_report():
         if lead_time > 1: lead_times.append(lead_time)
 
     avg_lead_time = sum(lead_times)/len(lead_times)
-    med_lead_time = np.median(lead_times)[0]
-    max_lead_time = np.max(lead_times)[0]
+    lead_times.sort()
+    med_lead_time = lead_times[int(len(lead_times)/2)]
+    max_lead_time = lead_times[0]
 
     cursor.execute("select cast(job.order_date as date), cast(packlist_header.packlist_date as date) from (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) left join job on packlist_detail.job = job.job where Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date < Dateadd(day, -30, getdate()) AND Job.Job Not Like '%-%' and packlist_header.packlist_date > Dateadd(day, -60, getdate())")
     data = [list(x) for x in cursor.fetchall()]

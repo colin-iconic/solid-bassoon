@@ -28,7 +28,7 @@
 <h3>In the last 30 days...</h3>
 <div style="margin-left: 80px; width: 1100px;">
   <p>Average Lead Time: {{ data['avg_lead_time'] }} days ({{ "{:,.1f}".format(data['avg_lead_time']/7) }} weeks) (Median: {{data['med_lead_time']}}, Max: {{data['max_lead_time']}})<br />
-     Month/Month: {{ ":+.0f".format(data['avg_lead_time'] - data['prev_avg_lead_time']) }} days</p>
+     Month/Month: {{ "{:+.0f}".format(data['avg_lead_time'] - data['prev_avg_lead_time']) }} days</p>
 </div>
 <div id="orders"></div>
 <div id="shipments"></div>

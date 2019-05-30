@@ -24,12 +24,13 @@
 <body>
 <div id="update">
 		<div id="progressbar">
-			<div id="progressbar_c">{{ job[-1]|int }}% Complete</div>
+			<div id="progressbar_c"><b>{{ job[-1]|int }}% Complete</b></div>
 		</div>
 		<h2>In Progress: {{ job[-2] }}</h2>
 		{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>
 	  {% else %}<p>This job has progressed to the {{ job[-2] }} station. There are {{ job[3] }} operations remaining.</p>
 	  {% endif %}
+		<p>{{ job[9] }}</p>
 		<p>JOB# {{ job[0] }} <br />
 		PO# {{ job[8] }}</p>
 	  Part#: {{ job[4] }}<br />

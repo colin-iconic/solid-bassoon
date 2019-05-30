@@ -125,7 +125,7 @@ def hotlist(name=None):
             job.append(job_data[0][0])
         except:
             pass
-            
+
         cursor.execute("select cast(promised_date as date) from delivery where job = '{0}'".format(job[1]))
         try:
             job.append([list(x) for x in cursor.fetchall()][0][0])
@@ -2383,7 +2383,7 @@ def update_mailer():
 
     cursor = connection.cursor()
 
-    cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations, job.part_number, job.description, job.ext_description, job.order_quantity, job.customer_po from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE()) and change_history.new_text = 'C' and job.job not like '%-%'")
+    cursor.execute("select job.job, user_values.text3, user_values.note_text, job.open_operations, job.part_number, job.description, job.ext_description, job.order_quantity, job.customer_po, job.customer from user_values left join job on user_values.user_values = job.user_values left join change_history on job.job = change_history.job where job.user_values not like 'None' and user_values.text3 not like 'None' and user_values.note_text not like 'None' and change_history.change_type = '14' and change_history.change_date > DATEADD(HOUR, -1, GETDATE()) and change_history.new_text = 'C' and job.job not like '%-%'")
     query = [list(x) for x in cursor.fetchall()]
 
     data = []
@@ -2633,6 +2633,7 @@ def orders_report():
     chart_data['med_lead_time'] = med_lead_time
     chart_data['max_lead_time'] = max_lead_time
 
+    cursor.execute("select job, wc_vendor from change_history where change_date > Dateadd(day, -30, getdate()) and new_text = 'C'")
     return render_template('orders_report.html', data = chart_data)
 '''
 @app.route("reports/orders/<cust>/<length>")

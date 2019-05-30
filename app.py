@@ -2436,13 +2436,13 @@ def update_mailer():
                 update_jobs.append(job)
 
     for job in update_jobs:
-        msg = Message("Order Update",
-            sender="no-reply@iconicmetalgear.com",
-            recipients=['colin@iconicmetalgear.com'])
 #        msg = Message("Order Update",
 #            sender="no-reply@iconicmetalgear.com",
-#            recipients=job[2].split(', '),
-#            bcc=['colin@iconicmetalgear.com'])
+#            recipients=['colin@iconicmetalgear.com'])
+        msg = Message("Order Update",
+            sender="no-reply@iconicmetalgear.com",
+            recipients=job[2].split(', '),
+            bcc=['colin@iconicmetalgear.com'])
 
         msg.html = render_template('update_mailer.html', update_jobs = [job])
         try:

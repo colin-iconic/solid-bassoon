@@ -27,7 +27,7 @@
 			<div id="progressbar_c"><b>{{ job[-1]|int }}% Complete</b></div>
 		</div>
 		<h2>In Progress: {{ job[-2] }}</h2>
-		{% if job[-2]=='COMPLETE' %}<p>This job has been completed.</p>
+		{% if job[-2]=='COMPLETE' %}<p>This job has been completed. &#1F44D;</p>
 	  {% else %}<p>This job has progressed to the {{ job[-2] }} station. There are {{ job[3] }} operations remaining.</p>
 	  {% endif %}
 		<p>{{ job[9] }}</p>

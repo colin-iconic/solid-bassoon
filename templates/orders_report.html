@@ -27,7 +27,7 @@
 </table>
 <div style="margin-left: 80px; width: 1100px;">
   <p>Average Lead Time: {{ data['avg_lead_time'] }}<br />
-     Month/Month: {{ data['prev_avg_lead_time'] }}</p>
+     Month/Month: {{ data['prev_avg_lead_time'] - data['avg_lead_time'] }}</p>
 </div>
 <h3>In the last 30 days...</h3>
 <div id="orders"></div>

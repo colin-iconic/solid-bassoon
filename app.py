@@ -2662,6 +2662,7 @@ def customer_sales(cust, length):
         d = {'date': job[3].strftime('%d-%b-%y'), 'price': job[5]}
         jobs.append(d)
 
+    jobs.sort(key=itemgetter('date'))
     data_json = json.dumps(jobs, indent=2, default=str)
     chart_data = {'jobs': data_json}
 

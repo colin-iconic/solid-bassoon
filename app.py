@@ -2657,7 +2657,7 @@ def customer_sales(cust, length):
         if job[4] == 2: #if currency is CAD do nothing
             pass
         elif job[4] == 1: #if currency is USD convert to CAD
-            job[5] = Decimal(job[5])*Decimal(1.3)
+            job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
 
         d = {'date': job[3].strftime('%d-%b-%y'), 'price': job[5]}
         jobs.append(d)

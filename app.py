@@ -1176,7 +1176,7 @@ def daimler_reminder():
 
             centers = [list(x) for x in cursor.fetchall()]
             centers.sort(key=itemgetter(1))
-            if len(centers) == [];
+            if len(centers) == []
                 centers = [['COMPLETE']]
 
             cursor.execute("select promised_date from delivery where job = '" + job[0] + "'")

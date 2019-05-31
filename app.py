@@ -2642,7 +2642,7 @@ def orders_report():
     return render_template('orders_report.html', data = chart_data)
 
 @app.route('/reports/customer_sales/<cust>/<length>')
-def customer_quotes(cust, length):
+def customer_sales(cust, length):
     if not length:
         length = 30
 

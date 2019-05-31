@@ -2657,7 +2657,7 @@ def customer_sales(cust, length):
         if job[4] == 2: #if currency is CAD do nothing
             pass
         elif job[4] == 1: #if currency is USD convert to CAD
-            job[5] = Decimal(quote[5])*Decimal(1.3)
+            job[5] = Decimal(job[5])*Decimal(1.3)
 
         d = {'date': job[3], 'price': job[5]}
         jobs.append(d)
@@ -2666,7 +2666,7 @@ def customer_sales(cust, length):
     chart_data = {'jobs': data_json}
 
 
-    return render_template('customer_sales.html', customer = cust, length = length, title = '{0} Quotes'.format(cust), chart_data = chart_data)
+    return render_template('customer_sales.html', customer = cust, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data)
 
 
 '''

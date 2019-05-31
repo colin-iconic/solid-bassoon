@@ -1176,8 +1176,9 @@ def daimler_reminder():
 
             centers = [list(x) for x in cursor.fetchall()]
             centers.sort(key=itemgetter(1))
-            if len(centers) = 0;
+            if len(centers) == [];
                 centers = [['COMPLETE']]
+
             cursor.execute("select promised_date from delivery where job = '" + job[0] + "'")
             promised = [list(x) for x in cursor.fetchall()]
             if not promised:
@@ -2639,6 +2640,35 @@ def orders_report():
 
     cursor.execute("select job, wc_vendor from change_history where change_date > Dateadd(day, -30, getdate()) and new_text = 'C'")
     return render_template('orders_report.html', data = chart_data)
+
+@app.route('/reports/customer_sales/<cust>/<length>')
+def customer_quotes(cust, length):
+    if not length:
+        length = 30
+
+    connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+    cursor = connection.cursor()
+
+    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}'".format(length, cust))
+    data = [list(x) for x in cursor.fetchall()]
+
+    jobs = []
+    for job in data:
+        if job[4] == 2: #if currency is CAD do nothing
+            pass
+        elif job[4] == 1: #if currency is USD convert to CAD
+            job[5] = Decimal(quote[5])*Decimal(1.3)
+
+        d = {'date': job[3], 'price': job[5]}
+        jobs.append(d)
+
+    data_json = json.dumps(jobs, indent=2, default=str)
+    chart_data = {'jobs': data_json}
+
+
+    return render_template('customer_sales.html', customer = cust, length = length, title = '{0} Quotes'.format(cust), chart_data = chart_data)
+
+
 '''
 @app.route("reports/orders/<cust>/<length>")
 def customer_orders(cust):
@@ -2646,7 +2676,7 @@ def customer_orders(cust):
         return render_template('customer_orders.html')
 
     if not length:
-        length = 60
+        length = 30
 
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()

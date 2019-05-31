@@ -1176,7 +1176,8 @@ def daimler_reminder():
 
             centers = [list(x) for x in cursor.fetchall()]
             centers.sort(key=itemgetter(1))
-
+            if len(centers) = 0;
+                centers = [['COMPLETE']]
             cursor.execute("select promised_date from delivery where job = '" + job[0] + "'")
             promised = [list(x) for x in cursor.fetchall()]
             if not promised:
@@ -1191,7 +1192,7 @@ def daimler_reminder():
                 j.append([job[0], promised, centers[0][0], quantity[0][0], quantity[0][1]])
             except:
                 pass
-                
+
         po_list.append([po[0], j])
 
     msg = Message("Daimler - Daily Update",

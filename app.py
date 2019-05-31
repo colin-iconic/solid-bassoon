@@ -1187,8 +1187,11 @@ def daimler_reminder():
             cursor.execute("select order_quantity, description from job where job = '" + job[0] + "'")
             quantity = [list(x) for x in cursor.fetchall()]
 
-            j.append([job[0], promised, centers[0][0], quantity[0][0], quantity[0][1]])
-
+            try:
+                j.append([job[0], promised, centers[0][0], quantity[0][0], quantity[0][1]])
+            except:
+                pass
+                
         po_list.append([po[0], j])
 
     msg = Message("Daimler - Daily Update",

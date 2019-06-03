@@ -2683,7 +2683,12 @@ def customer_sales(cust, length):
     data_json = json.dumps(jobs, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
-    return render_template('customer_sales.html', customer = jobs[0][2], length = length, title = '{0} Sales'.format(cust), chart_data = chart_data)
+    try:
+        customer = jobs[0][2]
+    except:
+        customer = ''
+        
+    return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data)
 
 
 '''

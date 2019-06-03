@@ -2649,7 +2649,7 @@ def customer_sales_search(name=None):
 def customer_sales(cust, length):
     if not cust:
         return render_template('customer_sales_search.html')
-        
+
     if not length:
         length = 30
 
@@ -2658,6 +2658,10 @@ def customer_sales(cust, length):
 
     cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}' order by order_date".format(length, cust))
     data = [list(x) for x in cursor.fetchall()]
+
+    if not data:
+        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '%{1}%' order by order_date".format(length, cust))
+        data = [list(x) for x in cursor.fetchall()]
 
     jobs = []
     for job in data:

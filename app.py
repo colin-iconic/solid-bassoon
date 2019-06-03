@@ -2644,14 +2644,15 @@ def orders_report():
 @app.route('/reports/customer_sales')
 def customer_sales(name=None):
     if request.args.get('cust'):
-        cust = request.args.get('part')
+        cust = request.args.get('cust')
     else:
         render_template('customer_sales.html', customer = '', length = '', title = 'Sales', chart_data = [])
+
     if request.args.get('length'):
         length = request.args.get('length')
     else:
         length = 30
-        
+
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 

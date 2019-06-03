@@ -2684,10 +2684,10 @@ def customer_sales(cust, length):
     chart_data = {'jobs': data_json}
 
     try:
-        customer = jobs[0][2]
+        customer = data[0][2]
     except:
         customer = ''
-        
+
     return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data)
 
 

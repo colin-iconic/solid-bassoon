@@ -2660,7 +2660,7 @@ def customer_sales(cust, length):
             job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
 
         if not any(j['date'] == job[3] for j in jobs):
-            weekly_hours_data.append({'date': job[3], 'price': job[5]})
+            jobs.append({'date': job[3], 'price': job[5]})
         else:
             for d in jobs:
                 if d['date'] == job[3]:

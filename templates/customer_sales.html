@@ -1,16 +1,28 @@
 {% extends "layout.html" %}
 {% block body %}
-<div id="customer_sales"></div>
+<div id="all_time_orders"></div>
 <style> /* set the CSS */
+
 .line {
   fill: none;
   stroke: #52ef99;
   stroke-width: 3px;
 }
+.sm_line {
+  fill: none;
+  stroke: #125cb9;
+  stroke-width: 2px;
+}
+.long_sm_line {
+  fill: none;
+  stroke: #fa9cc3;
+  stroke-width: 2px;
+}
+
 </style>
 <script src="http://d3js.org/d3.v4.min.js"></script>
 <script>
-  var data = {{ chart_data.jobs | safe }};
+  var data = {{ data.all_time_orders | safe }};
 
   // set the dimensions and margins of the graph
   var margin = {top: 20, right: 20, bottom: 30, left: 70},
@@ -29,6 +41,13 @@
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.price); });
 
+  var smoothline = d3.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.sm_price); });
+
+  var longline = d3.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.long_price); });
   // append the svg obgect to the body of the page
   // appends a 'group' element to 'svg'
   // moves the 'group' element to the top left margin
@@ -43,6 +62,8 @@
   data.forEach(function(d) {
       d.date = parseTime(d.date);
       d.price = +d.price;
+      d.sm_price = +d.sm_price;
+      d.long_price = +d.long_price;
   });
 
   // Scale the range of the data
@@ -54,6 +75,16 @@
       .data([data])
       .attr("class", "line")
       .attr("d", valueline);
+
+  svg.append("path")
+      .data([data])
+      .attr("class", "sm_line")
+      .attr("d", smoothline);
+
+  svg.append("path")
+      .data([data])
+      .attr("class", "long_sm_line")
+      .attr("d", longline);
 
   // Add the X Axis
   svg.append("g")
@@ -89,7 +120,7 @@
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Order Value");
+    .text("Weekly Order Value");
 
   // title
   svg.append("text")
@@ -98,7 +129,7 @@
     .attr("text-anchor", "middle")
     .style("font-size", "16px")
     .style("text-decoration", "underline")
-    .text("Customer Order Values");
+    .text("Weekly Order Values with 5 Week Moving Average");
 
 </script>
 {% endblock %}

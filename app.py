@@ -2659,7 +2659,7 @@ def customer_sales(cust, length):
         elif job[4] == 1: #if currency is USD convert to CAD
             job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
 
-        d = {'date': job[3].strftime('%d-%b-%y'), 'price': job[5]}
+        d = {'date': job[3].strftime('%d-%b-%y'), 'price': str(job[5])}
         jobs.append(d)
 
     jobs.sort(key=itemgetter('date'))

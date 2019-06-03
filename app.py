@@ -2641,11 +2641,17 @@ def orders_report():
     cursor.execute("select job, wc_vendor from change_history where change_date > Dateadd(day, -30, getdate()) and new_text = 'C'")
     return render_template('orders_report.html', data = chart_data)
 
-@app.route('/reports/customer_sales/<cust>/<length>')
-def customer_sales(cust, length):
-    if not length:
+@app.route('/reports/customer_sales')
+def customer_sales(name=None):
+    if request.args.get('cust'):
+        cust = request.args.get('part')
+    else:
+        render_template('customer_sales.html', customer = '', length = '', title = 'Sales', chart_data = [])
+    if request.args.get('length'):
+        length = request.args.get('length')
+    else:
         length = 30
-
+        
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 

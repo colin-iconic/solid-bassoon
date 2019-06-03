@@ -12,7 +12,8 @@
           fixedData2 = '/',
           userEntry1 = $('#cust').val(),
           userEntry2 = $('#length').val();
-
+          
+      if (!userEntry2) { userEntry2 = 30;}
       if (userEntry1) {
         window.location.href = fixedData1 + userEntry1 + fixedData2 + userEntry2;
       }

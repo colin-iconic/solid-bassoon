@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
+<div>
+  Customer: <input id="cust" type="text"><br />
+  Length: <input id="length" type="text">
+  <button id="search">Go</button>
+</div>
 
 <div id="all_time_orders"></div>
 <style> /* set the CSS */
@@ -11,6 +16,16 @@
 }
 
 </style>
+<script>
+  $('#search').click(function() {
+      var fixedData1 = 'http://192.168.2.81/reports/customer_sales/',
+          fixedData2 = '/',
+          userEntry1 = $('#cust').val(),
+          userEntry2 = $('#length').val();
+
+      var newWindow = window.open(fixedData1 + userEntry1 + fixedData2 + userEntry2);
+  });
+</script>
 <script src="http://d3js.org/d3.v4.min.js"></script>
 <script>
   var data = {{ chart_data.jobs | safe }};

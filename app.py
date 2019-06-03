@@ -2647,6 +2647,9 @@ def customer_sales_search(name=None):
 
 @app.route('/reports/customer_sales/<cust>/<length>')
 def customer_sales(cust, length):
+    if not cust:
+        return render_template('customer_sales_search.html')
+        
     if not length:
         length = 30
 

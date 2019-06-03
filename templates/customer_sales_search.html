@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+Customer: <input id="cust" type="text"><br />
+Length: <input id="length" type="text">
+<button id="search">Go</button>
+<script>
+  $('#search').click(function() {
+      var fixedData1 = 'http://192.168.2.81/reports/customer_sales/',
+          fixedData2 = '/',
+          userEntry1 = $('#cust').val(),
+          userEntry2 = $('#length').val();
+
+      var newWindow = window.open(fixedData1 + userEntry1 + fixedData2 + two, '_blank');
+      newWindow.focus();
+  });
+</script
+{% endblock %}

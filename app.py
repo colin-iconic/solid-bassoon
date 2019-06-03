@@ -2666,8 +2666,6 @@ def customer_sales(cust, length):
                 if d['date'] == job[3]:
                     d['price'] += job[5]
 
-        jobs.append(d)
-
     jobs.sort(key=itemgetter('date'))
     data_json = json.dumps(jobs, indent=2, default=str)
     chart_data = {'jobs': data_json}

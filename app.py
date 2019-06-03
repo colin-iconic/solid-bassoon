@@ -2649,7 +2649,7 @@ def customer_sales(cust, length):
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}'".format(length, cust))
+    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}' order by order_date".format(length, cust))
     data = [list(x) for x in cursor.fetchall()]
 
     jobs = []
@@ -2668,7 +2668,7 @@ def customer_sales(cust, length):
 
     for job in jobs:
         job['price'] = str(job['price'])
-    jobs.sort(key=itemgetter('date'))
+
     data_json = json.dumps(jobs, indent=2, default=str)
     chart_data = {'jobs': data_json}
 

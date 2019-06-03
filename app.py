@@ -2660,7 +2660,7 @@ def customer_sales(cust, length):
     data = [list(x) for x in cursor.fetchall()]
 
     if not data:
-        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '%{1}%' order by order_date".format(length, cust))
+        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price  from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer like '%{1}%' order by order_date".format(length, cust))
         data = [list(x) for x in cursor.fetchall()]
 
     jobs = []

@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
-Customer: <input id="cust" type="text"><br />
-Length: <input id="length" type="text">
-<button id="search">Go</button>
+<h2>Customer Sales History</h2>
+<div style="padding: 20px;">
+  Customer: <input id="cust" type="text"><br />
+  Length: <input id="length" type="text">
+  <button id="search">Go</button>
+</div>
 <script>
   $('#search').click(function() {
       var fixedData1 = 'http://192.168.2.81/reports/customer_sales/',

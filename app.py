@@ -2656,15 +2656,15 @@ def customer_sales(cust, length):
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}' order by order_date".format(length, cust))
+    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}' and job not like '%-%' order by order_date".format(length, cust))
     data = [list(x) for x in cursor.fetchall()]
 
     if not data:
-        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer like '%{1}%' order by order_date".format(length, cust))
+        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer like '%{1}%' and job not like '%-%' order by order_date".format(length, cust))
         data = [list(x) for x in cursor.fetchall()]
 
     jobs = []
-    delta = data[-1][3] - data[0][3]
+    delta = datetime.datetime.now() - data[0][3]
     for i in range(delta.days + 1):
         d = data[0][3] + datetime.timedelta(days=i)
         d = d.strftime('%d-%b-%y')

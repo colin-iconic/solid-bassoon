@@ -72,9 +72,10 @@ var categoriesNames = data.map(function(d) { return d.categorie; });
 var rateNames = data[0].values.map(function(d) { return d.rate; });
 
 x0.domain(categoriesNames);
+console.log(categoriesNames);
 x1.domain(rateNames).rangeRoundBands([0, x0.rangeBand()]);
 y.domain([0, d3.max(data, function(categorie) { return d3.max(categorie.values, function(d) { return d.value; }); })]);
-
+console.log(rateNames);
 svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")

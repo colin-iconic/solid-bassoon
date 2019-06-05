@@ -2691,7 +2691,7 @@ def customer_sales(cust, length):
             job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
         job[3] = job[3].strftime(time_str)
         if not any(j['date'] == job[3] for j in jobs):
-            jobs.append({'date': job[3], 'price': job[5]})
+            jobs.append({'date': job[3].strftime('%d-%b-%y'), 'price': job[5]})
         else:
             for d in jobs:
                 if d['date'] == job[3]:

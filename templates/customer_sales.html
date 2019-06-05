@@ -7,23 +7,21 @@
   <button id="search">Go</button>
 </div>
 <div id="all_time_orders"></div>
-<div>
-  <table id="details" border=1 frame=void rules=rows>
-  	<thead>
-  		<tr>
-  	{% for header in head %}
-  			<th>{{header}}</th>
-  	{% endfor %}
-  	</thead>
-  {% for row in job_details %}
-  	<tr>
-  	{% for column in row %}
-  		<td>{{column}}</td>
-  	{% endfor %}
-  	</tr>
-  {% endfor %}
-  </table>
-</div>
+<table id="details" border=1 frame=void rules=rows>
+	<thead>
+		<tr>
+	{% for header in head %}
+			<th>{{header}}</th>
+	{% endfor %}
+	</thead>
+{% for row in job_details %}
+	<tr>
+	{% for column in row %}
+		<td>{{column}}</td>
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
 <style> /* set the CSS */
   .bar { fill: steelblue; }
 </style>
@@ -58,7 +56,7 @@ var y = d3.scaleLinear()
 // append the svg object to the body of the page
 // append a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#all_time_orders").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

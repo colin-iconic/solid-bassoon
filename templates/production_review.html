@@ -1,5 +1,16 @@
-{% extends "layout.html" %}
-{% block body %}
+<!doctype html>
+<head>
+	<title>Iconic Metalgear Portal</title>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='chart.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='tablesort.min.js') }}"></script>
+	<!-- Include sort types you need -->
+	<script src="{{ url_for('static', filename='tablesort.date.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='tablesort.number.min.js') }}"></script>
+ <meta charset="utf-8">
+</head>
 <style>
 
 body {
@@ -19,6 +30,9 @@ body {
 
 </style>
 <body>
+<div class="page">
+	<h1 class="no-print">Iconic Metalgear List Portal<a class="nav" href="{{ url_for('home') }}">Production</a><a class="nav" href="{{ url_for('office') }}">Office</a></h1>
+
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
 
@@ -132,4 +146,3 @@ legend.append("text")
 legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
 
 </script>
-{% endblock %}

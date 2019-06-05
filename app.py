@@ -2685,10 +2685,9 @@ def customer_sales(cust, length):
         jobs.append({'date': d, 'price': 0})
 
     job_details = []
-    head = ['Job', 'Part Number', 'Quantity', 'Description']
-    
+    head = ['Job', 'Part Number', 'Quantity', 'Description', 'Total Price']
+
     for job in data:
-        job_details.append([job[0], job[1], job[7], job[6]])
         if job[4] == 2: #if currency is CAD do nothing
             pass
         elif job[4] == 1: #if currency is USD convert to CAD
@@ -2700,6 +2699,7 @@ def customer_sales(cust, length):
             for d in jobs:
                 if d['date'] == job[3]:
                     d['price'] += job[5]
+        job_details.append([job[0], job[1], job[7], job[6], job[5]])
 
     for job in jobs:
         job['price'] = str(job['price'])

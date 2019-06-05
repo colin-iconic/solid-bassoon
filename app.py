@@ -2665,13 +2665,11 @@ def customer_sales(cust, length):
 
     jobs = []
 
-    for i in range(int(length)):
+    for i in reversed(range(int(length))):
         d = datetime.date.today() - datetime.timedelta(days=i)
         d = d.strftime('%d-%b-%y')
         jobs.append({'date': d, 'price': 0})
 
-    jobs.sort(key=itemgetter('date'))
-    
     for job in data:
         if job[4] == 2: #if currency is CAD do nothing
             pass

@@ -2699,11 +2699,11 @@ def customer_sales(cust, length):
 
     for job in jobs:
         job['price'] = str(job['price'])
-    '''
+    
     if chunk == 'Weekly':
         for job in jobs:
-            job['date'] = datetime.datetime.strptime(job['date'], '%Y %W').strftime('%d-%b-%y')
-    '''
+            job['date'] = datetime.datetime.strptime(job['date']+'-1', '%Y %W-%w').strftime('%d-%b-%y')
+
     data_json = json.dumps(jobs, indent=2, default=str)
     chart_data = {'jobs': data_json}
 

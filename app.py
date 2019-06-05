@@ -2684,7 +2684,11 @@ def customer_sales(cust, length):
         d = d.strftime(time_str)
         jobs.append({'date': d, 'price': 0})
 
+    job_details = []
+    head = ['Job', 'Part Number', 'Quantity', 'Description']
+    
     for job in data:
+        job_details.append([job[0], job[1], job[7], job[6]])
         if job[4] == 2: #if currency is CAD do nothing
             pass
         elif job[4] == 1: #if currency is USD convert to CAD
@@ -2697,12 +2701,8 @@ def customer_sales(cust, length):
                 if d['date'] == job[3]:
                     d['price'] += job[5]
 
-    job_details = []
-    for job in data:
+    for job in jobs:
         job['price'] = str(job['price'])
-        job_details.append([job[0], job[1], job[7], job[6]])
-
-    head = ['Job', 'Part Number', 'Quantity', 'Description']
 
     if chunk == 'Weekly':
         for job in jobs:

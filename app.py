@@ -2728,7 +2728,7 @@ def production_review(name=None):
     cursor.execute("select change_history.job, change_history.wc_vendor, job_operation.est_total_hrs from change_history inner join job_operation on change_history.job = job_operation.job and change_history.wc_vendor = job_operation.wc_vendor where change_history.change_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0) and change_history.job not like '%-%' and change_history.change_type = '14' and change_history.wc_vendor in ('laser', 'toyokoki', 'welding', 'shop')")
     change_data = [list(x) for x in cursor.fetchall()]
 
-    graph_data = [{'wc': 'laser', 'job_count': 0, 'hour_count': 0},{'wc': 'toyokoki', 'job_count': 0, 'hour_count': 0},{'wc': 'welding', 'job_count': 0, 'hour_count': 0},{'wc': 'shop', 'job_count': 0, 'hour_count': 0}]
+    graph_data = [{'wc': 'LASER', 'job_count': 0, 'hour_count': 0},{'wc': 'TOYOKOKI', 'job_count': 0, 'hour_count': 0},{'wc': 'WELDING', 'job_count': 0, 'hour_count': 0},{'wc': 'SHOP', 'job_count': 0, 'hour_count': 0}]
 
     for each in change_data:
         my_item = next((item for item in graph_data if item['wc'] == each[1]), None)

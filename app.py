@@ -2698,7 +2698,7 @@ def customer_sales(cust, length):
                     d['price'] += job[5]
 
     job_details = []
-    for job in jobs:
+    for job in data:
         job['price'] = str(job['price'])
         job_details.append([job[0], job[1], job[7], job[6]])
 

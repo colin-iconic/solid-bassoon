@@ -2702,7 +2702,7 @@ def customer_sales(cust, length):
 
     if chunk == 'Weekly':
         for job in jobs:
-            job['date'] = job['date'].strftime('%d-%b-%y')
+            job['date'] = datetime.strptime(job['date'], '%Y %W').strftime('%d-%b-%y')
 
     data_json = json.dumps(jobs, indent=2, default=str)
     chart_data = {'jobs': data_json}

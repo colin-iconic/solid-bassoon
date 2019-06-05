@@ -2665,23 +2665,68 @@ def customer_sales(cust, length):
 
     jobs = []
 
-    for i in reversed(range(int(length))):
-        d = datetime.date.today() - datetime.timedelta(days=i)
-        d = d.strftime('%d-%b-%y')
-        jobs.append({'date': d, 'price': 0})
+    if length < 101:
+        chunk = 'Daily'
 
-    for job in data:
-        if job[4] == 2: #if currency is CAD do nothing
-            pass
-        elif job[4] == 1: #if currency is USD convert to CAD
-            job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
-        job[3] = job[3].strftime('%d-%b-%y')
-        if not any(j['date'] == job[3] for j in jobs):
-            jobs.append({'date': job[3], 'price': job[5]})
-        else:
-            for d in jobs:
-                if d['date'] == job[3]:
-                    d['price'] += job[5]
+        for i in reversed(range(int(length))):
+            d = datetime.date.today() - datetime.timedelta(days=i)
+            d = d.strftime('%d-%b-%y')
+            jobs.append({'date': d, 'price': 0})
+
+        for job in data:
+            if job[4] == 2: #if currency is CAD do nothing
+                pass
+            elif job[4] == 1: #if currency is USD convert to CAD
+                job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
+            job[3] = job[3].strftime('%d-%b-%y')
+            if not any(j['date'] == job[3] for j in jobs):
+                jobs.append({'date': job[3], 'price': job[5]})
+            else:
+                for d in jobs:
+                    if d['date'] == job[3]:
+                        d['price'] += job[5]
+
+    if 100 < length < 730:
+        chunk = 'Weekly'
+        for i in reversed(range(int(length))):
+            d = datetime.date.today() - datetime.timedelta(days=i)
+            d = d.strftime('%y %W')
+            if not any(j['date'] == d for j in jobs):
+            jobs.append({'date': d, 'price': 0})
+
+        for job in data:
+            if job[4] == 2: #if currency is CAD do nothing
+                pass
+            elif job[4] == 1: #if currency is USD convert to CAD
+                job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
+            job[3] = job[3].strftime('%y %W')
+            if not any(j['date'] == job[3] for j in jobs):
+                jobs.append({'date': job[3], 'price': job[5]})
+            else:
+                for d in jobs:
+                    if d['date'] == job[3]:
+                        d['price'] += job[5]
+
+    if length > 729:
+        chunk = 'Monthly'
+        for i in reversed(range(int(length))):
+            d = datetime.date.today() - datetime.timedelta(days=i)
+            d = d.strftime('%y %b')
+            if not any(j['date'] == d for j in jobs):
+            jobs.append({'date': d, 'price': 0})
+
+        for job in data:
+            if job[4] == 2: #if currency is CAD do nothing
+                pass
+            elif job[4] == 1: #if currency is USD convert to CAD
+                job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
+            job[3] = job[3].strftime('%y %b')
+            if not any(j['date'] == job[3] for j in jobs):
+                jobs.append({'date': job[3], 'price': job[5]})
+            else:
+                for d in jobs:
+                    if d['date'] == job[3]:
+                        d['price'] += job[5]
 
     for job in jobs:
         job['price'] = str(job['price'])
@@ -2694,7 +2739,7 @@ def customer_sales(cust, length):
     except:
         customer = ''
 
-    return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data)
+    return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data, chunk = chunk)
 
 
 '''

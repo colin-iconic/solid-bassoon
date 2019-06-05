@@ -2697,9 +2697,13 @@ def customer_sales(cust, length):
                 if d['date'] == job[3]:
                     d['price'] += job[5]
 
+    job_details = []
     for job in jobs:
         job['price'] = str(job['price'])
-    
+        job_details.append([job[0], job[1], job[7], job[6]])
+
+    head = ['Job', 'Part Number', 'Quantity', 'Description']
+
     if chunk == 'Weekly':
         for job in jobs:
             job['date'] = datetime.datetime.strptime(job['date']+'-1', '%Y %W-%w').strftime('%d-%b-%y')
@@ -2712,7 +2716,7 @@ def customer_sales(cust, length):
     except:
         customer = ''
 
-    return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data, chunk = chunk)
+    return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data, chunk = chunk, job_details = job_details, head=head)
 
 
 '''

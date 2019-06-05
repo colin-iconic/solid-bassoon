@@ -8,6 +8,21 @@
 </div>
 
 <div id="all_time_orders"></div>
+<table id="details" border=1 frame=void rules=rows>
+	<thead>
+		<tr>
+	{% for header in head %}
+			<th>{{header}}</th>
+	{% endfor %}
+	</thead>
+{% for row in job_details %}
+	<tr>
+	{% for column in row %}
+		<td>{{column}}</td>
+	{% endfor %}
+	</tr>
+{% endfor %}
+</table>
 <style> /* set the CSS */
   .bar { fill: steelblue; }
 </style>
@@ -123,5 +138,8 @@ svg.append("text")
   .style("text-decoration", "underline")
   .text("{{ customer }} {{ chunk }} Order Values");
 
+</script>
+<script>
+	new Tablesort(document.getElementById('details'));
 </script>
 {% endblock %}

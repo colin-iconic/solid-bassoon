@@ -2664,7 +2664,7 @@ def customer_sales(cust, length):
         data = [list(x) for x in cursor.fetchall()]
 
     jobs = []
-    delta = datetime.datetime.now() - data[0][3]
+    delta = datetime.datetime.today() - data[0][3]
     for i in range(delta.days + 1):
         d = data[0][3] + datetime.timedelta(days=i)
         d = d.strftime('%d-%b-%y')

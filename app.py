@@ -2666,7 +2666,7 @@ def customer_sales(cust, length):
     jobs = []
 
     for i in range(int(length)):
-        d = data[0][3] + datetime.timedelta(days=i)
+        d = datetime.date.today() - datetime.timedelta(days=i)
         d = d.strftime('%d-%b-%y')
         jobs.append({'date': d, 'price': 0})
 

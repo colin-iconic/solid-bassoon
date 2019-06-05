@@ -2670,6 +2670,8 @@ def customer_sales(cust, length):
         d = d.strftime('%d-%b-%y')
         jobs.append({'date': d, 'price': 0})
 
+    jobs.sort(key=itemgetter('date'))
+    
     for job in data:
         if job[4] == 2: #if currency is CAD do nothing
             pass

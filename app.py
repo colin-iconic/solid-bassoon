@@ -2664,7 +2664,7 @@ def customer_sales(cust, length):
         data = [list(x) for x in cursor.fetchall()]
 
     jobs = []
-    delta = data[0][3] - data[-1][3]
+    delta = data[-1][3] - data[0][3]
     for i in range(delta.days + 1):
         jobs.append({'date': data[0][3] + datetime.timedelta(days=i), 'price': 0})
 

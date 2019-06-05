@@ -2658,77 +2658,44 @@ def customer_sales(cust, length):
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}' and job not like '%-%' order by order_date".format(length, cust))
+    cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price, description, order_quantity from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer = '{1}' and job not like '%-%' order by order_date".format(length, cust))
     data = [list(x) for x in cursor.fetchall()]
 
     if not data:
-        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer like '%{1}%' and job not like '%-%' order by order_date".format(length, cust))
+        cursor.execute("select job, part_number, customer, cast(order_date as date), trade_currency, total_price, description, order_quantity from job where order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - {0}), 0) and customer like '%{1}%' and job not like '%-%' order by order_date".format(length, cust))
         data = [list(x) for x in cursor.fetchall()]
 
     jobs = []
 
     if length < 101:
         chunk = 'Daily'
-
-        for i in reversed(range(int(length))):
-            d = datetime.date.today() - datetime.timedelta(days=i)
-            d = d.strftime('%d-%b-%y')
-            jobs.append({'date': d, 'price': 0})
-
-        for job in data:
-            if job[4] == 2: #if currency is CAD do nothing
-                pass
-            elif job[4] == 1: #if currency is USD convert to CAD
-                job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
-            job[3] = job[3].strftime('%d-%b-%y')
-            if not any(j['date'] == job[3] for j in jobs):
-                jobs.append({'date': job[3], 'price': job[5]})
-            else:
-                for d in jobs:
-                    if d['date'] == job[3]:
-                        d['price'] += job[5]
+        time_str = '%d-%b-%y'
 
     if 100 < length < 730:
         chunk = 'Weekly'
-        for i in reversed(range(int(length))):
-            d = datetime.date.today() - datetime.timedelta(days=i)
-            d = d.strftime('%y %W')
-            if not any(j['date'] == d for j in jobs):
-                jobs.append({'date': d, 'price': 0})
-
-        for job in data:
-            if job[4] == 2: #if currency is CAD do nothing
-                pass
-            elif job[4] == 1: #if currency is USD convert to CAD
-                job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
-            job[3] = job[3].strftime('%y %W')
-            if not any(j['date'] == job[3] for j in jobs):
-                jobs.append({'date': job[3], 'price': job[5]})
-            else:
-                for d in jobs:
-                    if d['date'] == job[3]:
-                        d['price'] += job[5]
+        time_str = '%Y %W'
 
     if length > 729:
         chunk = 'Monthly'
-        for i in reversed(range(int(length))):
-            d = datetime.date.today() - datetime.timedelta(days=i)
-            d = d.strftime('%y %b')
-            if not any(j['date'] == d for j in jobs):
-                jobs.append({'date': d, 'price': 0})
+        time_str = '%Y %b'
 
-        for job in data:
-            if job[4] == 2: #if currency is CAD do nothing
-                pass
-            elif job[4] == 1: #if currency is USD convert to CAD
-                job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
-            job[3] = job[3].strftime('%y %b')
-            if not any(j['date'] == job[3] for j in jobs):
-                jobs.append({'date': job[3], 'price': job[5]})
-            else:
-                for d in jobs:
-                    if d['date'] == job[3]:
-                        d['price'] += job[5]
+    for i in reversed(range(int(length))):
+        d = datetime.date.today() - datetime.timedelta(days=i)
+        d = d.strftime(time_str)
+        jobs.append({'date': d, 'price': 0})
+
+    for job in data:
+        if job[4] == 2: #if currency is CAD do nothing
+            pass
+        elif job[4] == 1: #if currency is USD convert to CAD
+            job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
+        job[3] = job[3].strftime(time_str)
+        if not any(j['date'] == job[3] for j in jobs):
+            jobs.append({'date': job[3], 'price': job[5]})
+        else:
+            for d in jobs:
+                if d['date'] == job[3]:
+                    d['price'] += job[5]
 
     for job in jobs:
         job['price'] = str(job['price'])

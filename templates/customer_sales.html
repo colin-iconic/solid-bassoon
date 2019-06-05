@@ -28,7 +28,7 @@
 <script>
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+var margin = {top: 60, right: 20, bottom: 60, left: 60},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -78,6 +78,42 @@ svg.append("g")
 // add the y Axis
 svg.append("g")
     .call(d3.axisLeft(y));
+
+// gridlines in y axis function
+function make_y_gridlines() {
+    return d3.axisLeft(y)
+        .ticks(10)
+}
+// add the Y gridlines
+svg.append("g")
+    .attr("class", "grid")
+    .call(make_y_gridlines()
+        .tickSize(-width)
+        .tickFormat("")
+    )
+// text label for the x axis
+svg.append("text")
+  .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+  .style("text-anchor", "middle")
+  .text("Date");
+
+// text label for the y axis
+svg.append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("y", 0 - margin.left)
+  .attr("x",0 - (height / 2))
+  .attr("dy", "1em")
+  .style("text-anchor", "middle")
+  .text("Daily Order Value");
+
+// title
+svg.append("text")
+  .attr("x", (width / 2))
+  .attr("y", 0 - (margin.top / 2))
+  .attr("text-anchor", "middle")
+  .style("font-size", "16px")
+  .style("text-decoration", "underline")
+  .text("{{ customer }} Daily Order Values");
 
 </script>
 <!--

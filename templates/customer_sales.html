@@ -6,23 +6,24 @@
   Length: <input id="length" type="text"><br />
   <button id="search">Go</button>
 </div>
-
 <div id="all_time_orders"></div>
-<table id="details" border=1 frame=void rules=rows>
-	<thead>
-		<tr>
-	{% for header in head %}
-			<th>{{header}}</th>
-	{% endfor %}
-	</thead>
-{% for row in job_details %}
-	<tr>
-	{% for column in row %}
-		<td>{{column}}</td>
-	{% endfor %}
-	</tr>
-{% endfor %}
-</table>
+<div>
+  <table id="details" border=1 frame=void rules=rows>
+  	<thead>
+  		<tr>
+  	{% for header in head %}
+  			<th>{{header}}</th>
+  	{% endfor %}
+  	</thead>
+  {% for row in job_details %}
+  	<tr>
+  	{% for column in row %}
+  		<td>{{column}}</td>
+  	{% endfor %}
+  	</tr>
+  {% endfor %}
+  </table>
+</div>
 <style> /* set the CSS */
   .bar { fill: steelblue; }
 </style>

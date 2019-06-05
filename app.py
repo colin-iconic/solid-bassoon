@@ -2685,13 +2685,14 @@ def customer_sales(cust, length):
         jobs.append({'date': d, 'price': 0})
 
     job_details = []
-    head = ['Job', 'Part Number', 'Quantity', 'Description', 'Total Price']
+    head = ['Date', 'Job', 'Part Number', 'Quantity', 'Description', 'Total Price']
 
     for job in data:
         if job[4] == 2: #if currency is CAD do nothing
             pass
         elif job[4] == 1: #if currency is USD convert to CAD
             job[5] = round(Decimal(job[5])*Decimal(1.3), 2)
+        job_details.append([job[3], job[0], job[1], job[7], job[6], job[5]])
         job[3] = job[3].strftime(time_str)
         if not any(j['date'] == job[3] for j in jobs):
             jobs.append({'date': job[3], 'price': job[5]})
@@ -2699,7 +2700,7 @@ def customer_sales(cust, length):
             for d in jobs:
                 if d['date'] == job[3]:
                     d['price'] += job[5]
-        job_details.append([job[0], job[1], job[7], job[6], job[5]])
+
 
     for job in jobs:
         job['price'] = str(job['price'])

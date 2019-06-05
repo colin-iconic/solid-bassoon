@@ -2652,6 +2652,8 @@ def customer_sales(cust, length):
 
     if not length:
         length = 30
+    else:
+        length = int(length)
 
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()

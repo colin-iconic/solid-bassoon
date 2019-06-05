@@ -2719,36 +2719,25 @@ def customer_sales(cust, length):
 
     return render_template('customer_sales.html', customer = customer, length = length, title = '{0} Sales'.format(cust), chart_data = chart_data, chunk = chunk, job_details = job_details, head=head)
 
-
-'''
-@app.route("reports/orders/<cust>/<length>")
-def customer_orders(cust):
-    if not cust:
-        return render_template('customer_orders.html')
-
-    if not length:
-        length = 30
+@app.route('/production_review')
+def production_review(name=None):
 
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    cursor.execute("select job.job, job.part, job.")
+    cursor.execute("select change_history.job, change_history.wc_vendor, job_operation.est_total_hrs from change_history inner join job_operation on change_history.job = job_operation.job and change_history.wc_vendor = job_operation.wc_vendor where change_history.change_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0) and change_history.job not like '%-%' and change_history.change_type = '14' and change_history.wc_vendor in ('laser', 'toyokoki', 'welding', 'shop')")
+    change_data = [list(x) for x in cursor.fetchall()]
 
-@app.route("/sales_analytics")
-def sales_analytics():
-    connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+    graph_data = [{'wc': 'laser', 'job_count': 0, 'hour_count': 0},{'wc': 'toyokoki', 'job_count': 0, 'hour_count': 0},{'wc': 'welding', 'job_count': 0, 'hour_count': 0},{'wc': 'shop', 'job_count': 0, 'hour_count': 0}]
 
-    cursor = connection.cursor()
+    for each in change_data:
+        my_item = next((item for item in graph_data if item['wc'] == each[1]), None)
+        my_item['job_count'] += 1
+        my_item['hour_count'] += each[2]
 
-    cursor.execute("select cast(order_date as date), total_price from job where Order_Date > Dateadd(Month, Datediff(Month, 0, DATEADD(m, -1, current_timestamp)), 0) and total_price > 0 and job not like '%-%' and customer not like 'I-H%'")
-    job_data = [list(x) for x in cursor.fetchall()]
+    data_json = json.dumps(graph_data, indent=2, default=str)
+    chart_data = {'jobs': data_json}
 
-    cursor.execute("select cast(rfq.quote_date as date), quote_qty.total_price from (quote inner join rfq on quote.rfq = rfq.rfq) left join quote_qty on quote.quote = quote_qty.quote where rfq.quote_date > Dateadd(Month, Datediff(Month, 0, DATEADD(m, -1, current_timestamp)), 0)")
-    quote_data = [list(x) for x in cursor.fetchall()]
-
-
-    return render_template('sales_analytics.html', rows = data)
-'''
-
+    return render_template('production_review.html', chart_data = chart_data)
 if __name__ == '__main__':
     app.run()

@@ -2692,7 +2692,7 @@ def customer_sales(cust, length):
             d = datetime.date.today() - datetime.timedelta(days=i)
             d = d.strftime('%y %W')
             if not any(j['date'] == d for j in jobs):
-            jobs.append({'date': d, 'price': 0})
+                jobs.append({'date': d, 'price': 0})
 
         for job in data:
             if job[4] == 2: #if currency is CAD do nothing
@@ -2713,7 +2713,7 @@ def customer_sales(cust, length):
             d = datetime.date.today() - datetime.timedelta(days=i)
             d = d.strftime('%y %b')
             if not any(j['date'] == d for j in jobs):
-            jobs.append({'date': d, 'price': 0})
+                jobs.append({'date': d, 'price': 0})
 
         for job in data:
             if job[4] == 2: #if currency is CAD do nothing

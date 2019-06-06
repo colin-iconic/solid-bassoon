@@ -2744,6 +2744,7 @@ def production_review(name=None):
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 
     #flow? Average age? Oldest Jobs?
+    cursor.execute("select job, customer, part_number, ")
 
     return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data)
 if __name__ == '__main__':

@@ -38,13 +38,13 @@
 <h2>NCRs From Past Week</h2>
 <table style="width: 800px; padding: 20px;">
   <thead>
-		<tr style="border-bottom 1px solid black;">
+		<tr style="border-bottom: 1px solid black;">
 	{% for header in ncr_data['head'] %}
 			<th>{{header}}</th>
 	{% endfor %}
 	</thead>
 {% for row in ncr_data['ncrs'] %}
-	<tr style="border-bottom 1px solid black;">
+	<tr style="border-bottom: 1px solid black;">
 	{% for column in row %}
 		<td>{{column}}</td>
 	{% endfor %}

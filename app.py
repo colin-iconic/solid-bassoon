@@ -2740,6 +2740,11 @@ def production_review(name=None):
     data_json = json.dumps(graph_data, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
-    return render_template('production_review.html', chart_data = chart_data)
+    cursor.execute("select job, part, customer, customer_po, ext_description from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
+    ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
+
+    #flow? Average age? Oldest Jobs?
+
+    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data)
 if __name__ == '__main__':
     app.run()

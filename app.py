@@ -2740,7 +2740,7 @@ def production_review(name=None):
     data_json = json.dumps(graph_data, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
-    cursor.execute("select job, part_number, customer, customer_po, ext_description from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
+    cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 
     #flow? Average age? Oldest Jobs?

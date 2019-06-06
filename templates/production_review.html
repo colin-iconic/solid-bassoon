@@ -56,6 +56,9 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
+    .ticks(10)
+    .tickSize(-width, 0, 0)
+    .tickFormat( function(d) { return d } );
 
 var color = d3.scale.ordinal()
     .range(["#f4a582","#92c5de"]);
@@ -93,19 +96,7 @@ svg.append("g")
     .style('font-weight','bold')
     .text("Count");
 
-// gridlines in y axis function
-function make_y_gridlines() {
-    return d3.axisLeft(y)
-        .ticks(10)
-}
-// add the Y gridlines
-svg.append("g")
-    .attr("class", "grid")
-    .call(make_y_gridlines()
-        .tickSize(-width)
-        .tickFormat("")
-        .attr("class", "y axis")
-    )
+
 svg.select('.y').transition().duration(500).delay(1300).style('opacity','1');
 
 

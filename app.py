@@ -2752,14 +2752,14 @@ def wso():
     connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
     cursor = connection.cursor()
 
-    now = '2019-5-13'
+    now = str(datetime.datetime.now().date())
 
     cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and order_date < '2019-05-13 00:00:00' order by job.order_date desc")
 
     data = cursor.fetchall()
 
     data_wk1 = []
-    weeks = [x for x in range(1,49)]
+    weeks = [x for x in range(1,53)]
     for each in data:
         each[1] = each[1].isocalendar()[:-1]
         try:
@@ -2787,10 +2787,10 @@ def wso():
 
     table1 = pd.pivot_table(df1, values='price', columns='week', aggfunc=np.sum)
 
-    week_order = list(table1)
+    week_order = list(table1)[:-4]
 
     values_order1 = table1.values.tolist()
-    values_order1 = [float(x) for x in values_order1[0]]
+    values_order1 = [float(x) for x in values_order1[0]][:-4]
     i = len(values_order1)
     d1 = pd.DataFrame({
     'week' : [float(x) for x in range(1,i+1)],
@@ -2803,7 +2803,7 @@ def wso():
 
     data = cursor.fetchall()
     data_wk2 = []
-    weeks = [x for x in range(1,49)]
+    weeks = [x for x in range(1,53)]
     for each in data:
         each[0] = each[0].isocalendar()[:-1]
         try:
@@ -2832,7 +2832,7 @@ def wso():
     table2 = pd.pivot_table(df2, values='price', columns='week', aggfunc=np.sum)
 
     values_order2 = table2.values.tolist()
-    values_order2 = [float(x) for x in values_order2[0]]
+    values_order2 = [float(x) for x in values_order2[0]][:-4]
     i = len(values_order2)
     d2 = pd.DataFrame({
     'week' : [float(x) for x in range(1,i+1)],

@@ -2803,7 +2803,7 @@ def wso():
 
     data = cursor.fetchall()
     data_wk2 = []
-    weeks = [x for x in range(1,53)]
+    weeks = [x for x in range(1,49)]
     for each in data:
         each[0] = each[0].isocalendar()[:-1]
         try:

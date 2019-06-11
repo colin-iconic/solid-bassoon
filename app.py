@@ -2746,6 +2746,111 @@ def production_review(name=None):
     #flow? Average age? Oldest Jobs?
     #cursor.execute("select job, customer, part_number, ")
 
+
+@app.route("/chart/weekly_s&o") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.
+def wso():
+    connection = pyodbc.connect(r'DRIVER={ODBC Driver 13 for SQL Server};Server=192.168.2.157;DATABASE=Production;UID=support;PWD=lonestar;')
+    cursor = connection.cursor()
+
+    now = str(datetime.datetime.now().date())
+
+    cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
+
+    data = cursor.fetchall()
+
+    data_wk1 = []
+    weeks = [x for x in range(1,53)]
+    for each in data:
+        each[1] = each[1].isocalendar()[:-1]
+        try:
+            weeks.remove(each[0][1])
+        except ValueError:
+            pass
+        if each[3] == 2: #if currency is CAD do nothing
+            pass
+        elif each[3] == 1: #if currency is USD convert to CAD
+            each[2] = Decimal(each[2])*Decimal(1.34)
+        else:
+            pass
+        data_wk1.append(each[1:])
+
+    for wk in weeks:
+        n = datetime.datetime.now().isocalendar()[1]
+        if n < wk:
+            yr = datetime.datetime.now().year - 1
+        else:
+            yr = datetime.datetime.now().year
+        data_wk1.append([(yr, wk), 0])
+
+    df1 = pd.DataFrame(data_wk1, columns=['week', 'price', 'currency'])
+    df1.drop(columns='currency')
+
+    table1 = pd.pivot_table(df1, values='price', columns='week', aggfunc=np.sum)
+
+    week_order = list(table1)
+
+    values_order1 = table1.values.tolist()
+    values_order1 = [float(x) for x in values_order1[0]]
+    i = len(values_order1)
+    d1 = pd.DataFrame({
+    'week' : [float(x) for x in range(1,i+1)],
+    'value' : values_order1
+    })
+    values_trend1 = np.polyfit(d1.week, d1.value, 1)
+    r_x1, r_y1 = zip(*((i, i*values_trend1[0] + values_trend1[1]) for i in d1.week))
+
+    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+
+    data = cursor.fetchall()
+    data_wk2 = []
+    weeks = [x for x in range(1,53)]
+    for each in data:
+        each[0] = each[0].isocalendar()[:-1]
+        try:
+            weeks.remove(each[0][1])
+        except ValueError:
+            pass
+        if each[4] == 2: #if currency is CAD do nothing
+            pass
+        elif each[4] == 1: #if currency is USD convert to CAD
+            each[1] = Decimal(each[1])*Decimal(1.34)
+        else:
+            pass
+        price = round(each[1] * each[2], 2)
+        data_wk2.append([each[0], price])
+
+    for wk in weeks:
+        n = datetime.datetime.now().isocalendar()[1]
+        if n < wk:
+            yr = datetime.datetime.now().year - 1
+        else:
+            yr = datetime.datetime.now().year
+        data_wk2.append([(yr, wk), 0])
+
+    df2 = pd.DataFrame(data_wk2, columns=['week', 'price'])
+
+    table2 = pd.pivot_table(df2, values='price', columns='week', aggfunc=np.sum)
+
+    values_order2 = table2.values.tolist()
+    values_order2 = [float(x) for x in values_order2[0]]
+    i = len(values_order2)
+    d2 = pd.DataFrame({
+    'week' : [float(x) for x in range(1,i+1)],
+    'value' : values_order2
+    })
+    values_trend2 = np.polyfit(d2.week, d2.value, 1)
+    r_x2, r_y2 = zip(*((i, i*values_trend2[0] + values_trend2[1]) for i in d2.week))
+
+    avg_order = round(sum(values_order1)/len(values_order1),2)
+    avg_ship = round(sum(values_order2)/len(values_order2),2)
+    so_diff = avg_order - avg_ship
+    averages = "Average Orders: " + str(avg_order) + " | Average Shipments: " + str(avg_ship) + " | Order Surplus: " + str(so_diff)
+    title = 'Past Year Shipped & Ordered Totals'
+    legend = ['','Orders Trend', 'Weekly Order Totals', 'Shipment Trend', 'Weekly Shipment Totals']
+    caption = [averages, "Order totals calculated from total price of customer orders totaled each week. Shipment totals calculated from Packing List values totaled each week."]
+    values = [r_y1, values_order1, r_y2, values_order2]
+    return render_template('chart.html', values=values, labels=week_order, legend=legend, title=title, caption=caption)
+
     return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data)
 if __name__ == '__main__':
     app.run()

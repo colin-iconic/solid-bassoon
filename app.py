@@ -2754,7 +2754,7 @@ def wso():
 
     now = str(datetime.datetime.now().date())
 
-    cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by job.order_date desc")
+    cursor.execute("SELECT Job.Job, cast(Job.Order_Date as date), Job.Total_Price, job.trade_currency FROM Job WHERE (Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%') AND CURRENT_TIMESTAMP > Job.Order_Date and job.order_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' and order_date < '2019-05-13 00:00:00' order by job.order_date desc")
 
     data = cursor.fetchall()
 
@@ -2799,7 +2799,7 @@ def wso():
     values_trend1 = np.polyfit(d1.week, d1.value, 1)
     r_x1, r_y1 = zip(*((i, i*values_trend1[0] + values_trend1[1]) for i in d1.week))
 
-    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
+    cursor.execute("SELECT cast(packlist_header.packlist_date as date), packlist_detail.unit_price, packlist_detail.quantity, job.customer, job.trade_currency FROM (packlist_header inner join packlist_detail on packlist_header.packlist = packlist_detail.packlist) inner join job on packlist_detail.job = job.job WHERE Job.Customer Not Like '%GARAGESCAP%' And Job.Customer Not Like '%I-H%' AND packlist_header.packlist_date > Dateadd(year, -1, getdate()) and packlist_header.packlist_date < '2019-05-13 00:00:00' AND Job.Job Not Like '%-%' order by packlist_header.packlist_date desc")
 
     data = cursor.fetchall()
     data_wk2 = []

@@ -2787,7 +2787,7 @@ def wso():
 
     table1 = pd.pivot_table(df1, values='price', columns='week', aggfunc=np.sum)
 
-    week_order = list(table1)[:-4]
+    week_order = list(table1)[:-5]
 
     values_order1 = table1.values.tolist()
     values_order1 = [float(x) for x in values_order1[0]][:-4]

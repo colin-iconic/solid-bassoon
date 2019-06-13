@@ -2765,9 +2765,10 @@ def production_review(name=None):
         if jobs[job]['current']['work_center'] in stalled_jobs:
             if age > stalled_jobs[jobs[job]['current']['work_center']][0][0]:
                 if len(stalled_jobs[jobs[job]['current']['work_center']]) > 4:
-                    stalled_jobs[jobs[job]['current']['work_center']].pop(4)
+                    stalled_jobs[jobs[job]['current']['work_center']].pop()
 
             stalled_jobs[jobs[job]['current']['work_center']].append([age, job])
+            stalled_jobs.sort(key=itemgetter(0))
         else:
             stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
 

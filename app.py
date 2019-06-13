@@ -2772,6 +2772,10 @@ def production_review(name=None):
         else:
             stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
 
+    for wc in ['LASER', 'TOYOKOKI', 'WELDING', 'SHOP']:
+        if wc not in stalled_jobs:
+            stalled_jobs[wc] = []
+
     for wc in stalled_jobs:
         for i in range(5 - len(stalled_jobs[wc])):
             stalled_jobs[wc].append(['',''])

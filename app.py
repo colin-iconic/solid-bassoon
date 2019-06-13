@@ -2758,9 +2758,9 @@ def production_review(name=None):
         elif wc[4] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:
             jobs[wc[0]]['previous'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
 
-    for job in jobs:
-        if job['current']['work_center'] == 'SCHEDULE':
-            jobs.pop(job)
+    #for job in jobs:
+    #    if job['current']['work_center'] == 'SCHEDULE':
+    #        jobs.pop(job)
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}

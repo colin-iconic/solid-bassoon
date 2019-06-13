@@ -2750,11 +2750,11 @@ def production_review(name=None):
                 jobs[wc[0]]['current'] = {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
         if wc[4] == 'c':
             if wc[0] not in jobs:
-                jobs[wc[0]]['previous'] = {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}}
+                jobs[wc[0]]['previous'] = {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
         elif wc[4] == 'o' and jobs[wc[0]]['current']['sequence'] > wc[3]:
-            jobs[wc[0]]['current'] =  {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}}
+            jobs[wc[0]]['current'] =  {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
         elif wc[4] == 'c' and jobs[wc[0]]['previous']['sequence'] < wc[3]:
-            jobs[wc[0]]['previous'] =  {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}}
+            jobs[wc[0]]['previous'] =  {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
 
     for job in jobs:
         if job['current']['work_center'] == 'SCHEDULE':

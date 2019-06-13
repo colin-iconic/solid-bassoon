@@ -2765,7 +2765,7 @@ def production_review(name=None):
 
     #flow? Average age? Oldest Jobs?
     #cursor.execute("select job, customer, part_number, ")
-    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = wc_data)
+    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = jobs)
 
 
 @app.route("/chart/weekly_s&o") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.

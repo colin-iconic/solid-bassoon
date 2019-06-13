@@ -2759,14 +2759,12 @@ def production_review(name=None):
         if job['schedule']['status'] == 'o':
             jobs.pop('job')
 
-    print(jobs)
-
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 
     #flow? Average age? Oldest Jobs?
     #cursor.execute("select job, customer, part_number, ")
-    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data)
+    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = jobs)
 
 
 @app.route("/chart/weekly_s&o") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.

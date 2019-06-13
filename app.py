@@ -2744,7 +2744,6 @@ def production_review(name=None):
     wc_data = [list(x) for x in cursor.fetchall()]
 
     jobs = {}
-    stalled_jobs = {}
     for wc in wc_data:
         if wc[0] not in jobs:
             jobs[wc[0]] = {'current': {'work_center': '', 'sequence': 10, 'updated': ''}, 'previous': {'work_center': '', 'sequence': 0, 'updated': ''}}
@@ -2756,21 +2755,31 @@ def production_review(name=None):
         elif wc[3] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:
             jobs[wc[0]]['previous'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
 
+    stalled_jobs = {}
     for job in jobs:
         try:
-            age = (datetime.datetime.now() - job['current']['updated']).days
+            age = datetime.datetime.now() - jobs[job]['current']['updated']
         except:
             age = 0
 
-        stalled_jobs[job] = age
+        try:
+            if jobs[job]['current']['work_center'] in stalled_jobs:
+                if age > stalled_jobs[jobs[job]['current']['work_center']][0][0]:
+                    if len(stalled_jobs[jobs[job]['current']['work_center']][0]) > 4:
+                        stalled_jobs[jobs[job]['current']['work_center']].pop(4)
 
+                stalled_jobs[jobs[job]['current']['work_center']].append([age, job])
+            else:
+                stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
+        except:
+            pass
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 
     #flow? Average age? Oldest Jobs?
     #cursor.execute("select job, customer, part_number, ")
-    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = jobs)
+    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = stalled_jobs)
 
 
 @app.route("/chart/weekly_s&o") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.

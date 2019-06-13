@@ -44,7 +44,7 @@
 			<th>Welding</th>
 			<th>Shop</th>
 	</thead>
-	{% for i in range(5) %}
+	{% for i in range(10) %}
 	<tr>
 		{% for w in ['LASER', 'TOYOKOKI', 'WELDING', 'SHOP'] %}
 			{% if jobs[w][i][1]|length > 1 %}

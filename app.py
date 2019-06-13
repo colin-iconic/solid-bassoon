@@ -2746,7 +2746,7 @@ def production_review(name=None):
     jobs = {}
     for wc in wc_data:
         if wc[0] not in jobs:
-            jobs[wc[0]] = {'current': {'work_center': '', 'sequence': 10, 'updated': ''}, 'previous': {'work_center': '', 'sequence': 0, 'updated': ''}}
+            jobs[wc[0]] = {'current': {'work_center': 'None', 'sequence': 10, 'updated': datetime.datetime.now()}, 'previous': {'work_center': 'None', 'sequence': 0, 'updated': datetime.datetime.now()}}
         if not wc[1]:
             wc[1] = 'None'
 

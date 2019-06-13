@@ -35,6 +35,24 @@
 <div id="chart"></div>
 <p>Number of jobs and work hours (as estimated in JobBOSS) completed by each station in the past week.</p>
 
+<h2>Oldest Jobs</h2>
+<table style="width: 800px; padding: 20px;" border=1 frame=void rules=columns>
+  <thead>
+		<tr>
+			<th>Laser</th>
+			<th>Toyokoki</th>
+			<th>Welding</th>
+			<th>Shop</th>
+	</thead>
+	{% i in range(5) %}
+	<tr>
+		<td>{{ jobs['LASER'][i] }}</td>
+		<td>{{ jobs['TOYOKOKI'][i] }}</td>
+		<td>{{ jobs['WELDING'][i] }}</td>
+		<td>{{ jobs['SHOP'][i] }}</td>
+	</tr>
+	{% endfor %}
+</table>
 <h2>NCRs From Past Week</h2>
 <table style="width: 800px; padding: 20px;" border=1 frame=void rules=rows>
   <thead>
@@ -51,7 +69,6 @@
 	</tr>
 {% endfor %}
 </table>
-{{ jobs }}
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
 

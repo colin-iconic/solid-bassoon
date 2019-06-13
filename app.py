@@ -2772,6 +2772,10 @@ def production_review(name=None):
         else:
             stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
 
+    for wc in stalled_jobs:
+        for i in range(5 - len(stalled_jobs[wc])):
+            stalled_jobs[wc].append(['',''])
+            
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 

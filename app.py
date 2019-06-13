@@ -2749,7 +2749,7 @@ def production_review(name=None):
             if wc[4] == 'o':
                 jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}, 'previous': {}}
             if wc[4] == 'c':
-                jobs[wc[0]] = {}, 'previous': {'sequence': , 'updated': wc[5]}}
+                jobs[wc[0]] = {'current': {}, 'previous': {'sequence': , 'updated': wc[5]}}
         elif wc[4] == 'o' && jobs[wc[0]]['current']['sequence'] > wc[3]:
             jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}}
         elif wc[4] == 'c' && jobs[wc[0]]['current']['sequence'] < wc[3]:
@@ -2760,7 +2760,7 @@ def production_review(name=None):
             jobs.pop('job')
 
     print(jobs)
-    
+
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 

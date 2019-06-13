@@ -2740,7 +2740,7 @@ def production_review(name=None):
     data_json = json.dumps(graph_data, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
-    cursor.execute("select job_operation.job, job_operation.work_center, cast(job_operation.sequence as int), job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active' and job_operation.work_center in ('DESIGN', 'PROGRAMMIN', 'SCHEDULE', 'LASER', 'TOYOKOKI', 'WELDING', 'SHOP', 'SHIPPING') and job_operation.job not like '%-%'")
+    cursor.execute("select job_operation.job, job_operation.work_center, cast(job_operation.sequence as int), job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active' and job_operation.work_center in ('DESIGN', 'PROGRAMMIN', 'SCHEDULE', 'LASER', 'TOYOKOKI', 'WELDING', 'SHOP', 'SHIPPING') and job_operation.job not like '%-%' and job.customer not like '%I-H%'")
     wc_data = [list(x) for x in cursor.fetchall()]
 
     jobs = {}
@@ -2775,7 +2775,7 @@ def production_review(name=None):
     for wc in stalled_jobs:
         for i in range(5 - len(stalled_jobs[wc])):
             stalled_jobs[wc].append(['',''])
-            
+
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 

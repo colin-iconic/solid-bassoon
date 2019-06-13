@@ -2752,16 +2752,25 @@ def production_review(name=None):
         elif wc[3] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:
             jobs[wc[0]]['previous'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
 
-    #for job in jobs:
-    #    if job['current']['work_center'] == 'SCHEDULE':
-    #        jobs.pop(job)
+    stalled_jobs = {}
+    for job in jobs:
+        age = datetime.datetime.now() - job['current']['updated']
+        if job['current']['work_center'] in stalled_jobs:
+            if age > stalled_jobs[job['current']['work_center']][0][0]:
+                if len(stalled_jobs[job['current']['work_center']][0]) > 4:
+                    stalled_jobs[job['current']['work_center']].pop(4)
+                for key, value in job.iteritems():
+                    stalled_jobs[job['current']['work_center']].append([age, key])
+        else:
+            for key, value in job.iteritems():
+                stalled_jobs[job['current']['work_center']] = [[age, key]]
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 
     #flow? Average age? Oldest Jobs?
     #cursor.execute("select job, customer, part_number, ")
-    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = jobs)
+    return render_template('production_review.html', chart_data = chart_data, ncr_data = ncr_data, jobs = stalled_jobs)
 
 
 @app.route("/chart/weekly_s&o") # Chart with weekly totals for Shipped, Ordered, and PO values. Also lines of best fit for each.

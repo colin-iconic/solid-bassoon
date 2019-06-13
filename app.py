@@ -2749,7 +2749,7 @@ def production_review(name=None):
             if wc[4] == 'o':
                 jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}, 'previous': {}}
             if wc[4] == 'c':
-                jobs[wc[0]] = {'current': {}, 'previous': {'sequence': , 'updated': wc[5]}}
+                jobs[wc[0]] = {'current': {}, 'previous': {'sequence': wc[3], 'updated': wc[5]}}
         elif wc[4] == 'o' && jobs[wc[0]]['current']['sequence'] > wc[3]:
             jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}}
         elif wc[4] == 'c' && jobs[wc[0]]['current']['sequence'] < wc[3]:

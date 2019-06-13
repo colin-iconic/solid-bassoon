@@ -2758,7 +2758,7 @@ def production_review(name=None):
     stalled_jobs = {}
     for job in jobs:
         try:
-            age = (datetime.datetime.now() - jobs[job]['current']['updated']).days
+            age = (datetime.datetime.now() - jobs[job]['previous']['updated']).days
         except:
             age = 0
 

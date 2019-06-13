@@ -2745,15 +2745,15 @@ def production_review(name=None):
 
     jobs = {}
     for wc in wc_data:
-        if wc[4] == 'o':
+        if wc[4] == 'O':
             if wc[0] not in jobs:
                 jobs[wc[0]]['current'] = {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
-        if wc[4] == 'c':
+        if wc[4] == 'C':
             if wc[0] not in jobs:
                 jobs[wc[0]]['previous'] = {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
-        elif wc[4] == 'o' and jobs[wc[0]]['current']['sequence'] > wc[3]:
+        elif wc[4] == 'O' and jobs[wc[0]]['current']['sequence'] > wc[3]:
             jobs[wc[0]]['current'] =  {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
-        elif wc[4] == 'c' and jobs[wc[0]]['previous']['sequence'] < wc[3]:
+        elif wc[4] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[3]:
             jobs[wc[0]]['previous'] =  {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}
 
     for job in jobs:

@@ -2773,7 +2773,7 @@ def production_review(name=None):
 
     for wc in stalled_jobs:
         stalled_jobs[wc].sort(key=itemgetter(0), reverse=True)
-        for i in range(5 - len(stalled_jobs[wc])):
+        for i in range(10 - len(stalled_jobs[wc])):
             stalled_jobs[wc].append(['',''])
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")

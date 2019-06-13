@@ -47,7 +47,7 @@
 	{% for i in range(5) %}
 	<tr>
 		{% for w in ['LASER', 'TOYOKOKI', 'WELDING', 'SHOP'] %}
-			{% if len(jobs[w][i][1]) > 1 %}
+			{% if jobs[w][i][1]|length > 1 %}
 				<td><a href="/mobile_traveler?job={{ jobs[w][i][1] }}">{{ jobs[w][i][1] }}</a>: {{ jobs[w][i][0] }} days</td>
 			{% else %}
 				<td></td>

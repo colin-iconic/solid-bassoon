@@ -46,10 +46,13 @@
 	</thead>
 	{% for i in range(5) %}
 	<tr>
-		<td><a href="/mobile_traveler?job={{ jobs['LASER'][i][1] }}">{{ jobs['LASER'][i][1] }}</a>: {{ jobs['LASER'][i][0] }} days</td>
-		<td><a href="/mobile_traveler?job={{ jobs['TOYOKOKI'][i][1] }}">{{ jobs['TOYOKOKI'][i][1] }}</a>: {{ jobs['TOYOKOKI'][i][0] }} days</td>
-		<td><a href="/mobile_traveler?job={{ jobs['WELDING'][i][1] }}">{{ jobs['WELDING'][i][1] }}</a>: {{ jobs['WELDING'][i][0] }} days</td>
-		<td><a href="/mobile_traveler?job={{ jobs['SHOP'][i][1] }}">{{ jobs['SHOP'][i][1] }}</a>: {{ jobs['SHOP'][i][0] }} days</td>
+		{% for w in ['LASER', 'TOYOKOKI', 'WELDING', 'SHOP'] %}
+			{% if len(jobs[w][i][1]) > 1 %}
+				<td><a href="/mobile_traveler?job={{ jobs[w][i][1] }}">{{ jobs[w][i][1] }}</a>: {{ jobs[w][i][0] }} days</td>
+			{% else %}
+				<td></td>
+			{% endif %}
+		{% endfor %}
 	</tr>
 	{% endfor %}
 </table>

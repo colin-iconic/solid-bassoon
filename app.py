@@ -2762,8 +2762,7 @@ def production_review(name=None):
         except:
             age = 0
 
-        for key, value in job.iteritems():
-            stalled_jobs[key] = age
+        stalled_jobs[job] = age
 
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")

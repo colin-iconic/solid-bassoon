@@ -2745,7 +2745,7 @@ def production_review(name=None):
 
     jobs = {}
     for wc in wc_data:
-        if not jobs[wc[0]]:
+        if wc[0] not in jobs:
             if wc[4] == 'o':
                 jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}, 'previous': {}}
             if wc[4] == 'c':

@@ -2768,7 +2768,7 @@ def production_review(name=None):
                     stalled_jobs[jobs[job]['current']['work_center']].pop()
 
             stalled_jobs[jobs[job]['current']['work_center']].append([age, job])
-            stalled_jobs.sort(key=itemgetter(0))
+            stalled_jobs[jobs[job]['current']['work_center']].sort(key=itemgetter(0))
         else:
             stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
 

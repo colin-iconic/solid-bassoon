@@ -2762,15 +2762,18 @@ def production_review(name=None):
         except:
             age = 0
 
-        if job['current']['work_center'] in stalled_jobs:
-            if age > stalled_jobs[job['current']['work_center']][0][0]:
-                if len(stalled_jobs[job['current']['work_center']][0]) > 4:
-                    stalled_jobs[job['current']['work_center']].pop(4)
+        try:
+            if job['current']['work_center'] in stalled_jobs:
+                if age > stalled_jobs[job['current']['work_center']][0][0]:
+                    if len(stalled_jobs[job['current']['work_center']][0]) > 4:
+                        stalled_jobs[job['current']['work_center']].pop(4)
+                    for key, value in job.iteritems():
+                        stalled_jobs[job['current']['work_center']].append([age, key])
+            else:
                 for key, value in job.iteritems():
-                    stalled_jobs[job['current']['work_center']].append([age, key])
-        else:
-            for key, value in job.iteritems():
-                stalled_jobs[job['current']['work_center']] = [[age, key]]
+                    stalled_jobs[job['current']['work_center']] = [[age, key]]
+        except:
+            pass
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}

@@ -2758,21 +2758,18 @@ def production_review(name=None):
     stalled_jobs = {}
     for job in jobs:
         try:
-            age = datetime.datetime.now() - jobs[job]['current']['updated']
+            age = (datetime.datetime.now() - jobs[job]['current']['updated']).days
         except:
             age = 0
 
-        try:
-            if jobs[job]['current']['work_center'] in stalled_jobs:
-                if age > stalled_jobs[jobs[job]['current']['work_center']][0][0]:
-                    if len(stalled_jobs[jobs[job]['current']['work_center']][0]) > 4:
-                        stalled_jobs[jobs[job]['current']['work_center']].pop(4)
+        if jobs[job]['current']['work_center'] in stalled_jobs:
+            if age > stalled_jobs[jobs[job]['current']['work_center']][0][0]:
+                if len(stalled_jobs[jobs[job]['current']['work_center']]) > 4:
+                    stalled_jobs[jobs[job]['current']['work_center']].pop(4)
 
-                stalled_jobs[jobs[job]['current']['work_center']].append([age, job])
-            else:
-                stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
-        except:
-            pass
+            stalled_jobs[jobs[job]['current']['work_center']].append([age, job])
+        else:
+            stalled_jobs[jobs[job]['current']['work_center']] = [[age, job]]
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}

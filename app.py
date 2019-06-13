@@ -2747,16 +2747,16 @@ def production_review(name=None):
     for wc in wc_data:
         if wc[0] not in jobs:
             if wc[4] == 'o':
-                jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}, 'previous': {}}
+                jobs[wc[0]] = {'current': {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}, 'previous': {}}
             if wc[4] == 'c':
-                jobs[wc[0]] = {'current': {}, 'previous': {'sequence': wc[3], 'updated': wc[5]}}
+                jobs[wc[0]] = {'current': {}, 'previous': {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}}
         elif wc[4] == 'o' and jobs[wc[0]]['current']['sequence'] > wc[3]:
-            jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}}
+            jobs[wc[0]] = {'current': {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}}
         elif wc[4] == 'c' and jobs[wc[0]]['current']['sequence'] < wc[3]:
-            jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}}
+            jobs[wc[0]] = {'current': {'work_center': wc[2], 'sequence': wc[3], 'updated': wc[5]}}
 
     for job in jobs:
-        if job['schedule']['status'] == 'o':
+        if job['current']['work_center'] == 'SCHEDULE':
             jobs.pop('job')
 
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")

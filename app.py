@@ -2747,7 +2747,8 @@ def production_review(name=None):
     for wc in wc_data:
         if wc[0] not in jobs:
             jobs[wc[0]] = {'current': {'work_center': '', 'sequence': 10, 'updated': ''}, 'previous': {'work_center': '', 'sequence': 0, 'updated': ''}}
-        elif wc[3] == 'O' and jobs[wc[0]]['current']['sequence'] > wc[2]:
+
+        if wc[3] == 'O' and jobs[wc[0]]['current']['sequence'] > wc[2]:
             jobs[wc[0]]['current'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
         elif wc[3] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:
             jobs[wc[0]]['previous'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
@@ -2758,7 +2759,7 @@ def production_review(name=None):
             age = datetime.datetime.now() - job['current']['updated']
         except:
             age = 0
-            
+
         if job['current']['work_center'] in stalled_jobs:
             if age > stalled_jobs[job['current']['work_center']][0][0]:
                 if len(stalled_jobs[job['current']['work_center']][0]) > 4:

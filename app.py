@@ -2740,19 +2740,13 @@ def production_review(name=None):
     data_json = json.dumps(graph_data, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
-    cursor.execute("select job_operation.job, job_operation.work_center, job_operation.sequence, job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active'")
+    cursor.execute("select job_operation.job, job_operation.work_center, cast(job_operation.sequence as int), job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active'")
     wc_data = [list(x) for x in cursor.fetchall()]
 
     jobs = {}
     for wc in wc_data:
-        if wc[3] == 'O':
-            if wc[0] not in jobs:
-                jobs[wc[0]] = {'current': {'work_center': '', 'sequence': '', 'updated': ''}, 'previous': {'work_center': '', 'sequence': '', 'updated': ''}}
-                jobs[wc[0]]['current'] = {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
-        if wc[3] == 'C':
-            if wc[0] not in jobs:
-                jobs[wc[0]] = {'current': {'work_center': '', 'sequence': '', 'updated': ''}, 'previous': {'work_center': '', 'sequence': '', 'updated': ''}}
-                jobs[wc[0]]['previous'] = {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[3]}
+        if wc[0] not in jobs:
+            jobs[wc[0]] = {'current': {'work_center': '', 'sequence': 10, 'updated': ''}, 'previous': {'work_center': '', 'sequence': 0, 'updated': ''}}
         elif wc[3] == 'O' and jobs[wc[0]]['current']['sequence'] > wc[2]:
             jobs[wc[0]]['current'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
         elif wc[3] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:

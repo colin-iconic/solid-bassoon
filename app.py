@@ -2740,7 +2740,7 @@ def production_review(name=None):
     data_json = json.dumps(graph_data, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
-    cursor.execute("select job_operation.job, job_operation.work_center, job_operation.sequence, job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active' and job_operation.work_center in ('SCHEDULE', 'LASER', 'TOYOKOKI', 'WELDING', 'SHOP', 'SHIPPING')")
+    cursor.execute("select job_operation.job, job_operation.work_center, job_operation.sequence, job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active'")
     wc_data = [list(x) for x in cursor.fetchall()]
 
     jobs = {}

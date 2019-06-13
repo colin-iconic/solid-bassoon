@@ -2755,7 +2755,7 @@ def production_review(name=None):
                 jobs[wc[0]]['previous'] = {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[3]}
         elif wc[3] == 'O' and jobs[wc[0]]['current']['sequence'] > wc[2]:
             jobs[wc[0]]['current'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
-        elif wc[4] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:
+        elif wc[3] == 'C' and jobs[wc[0]]['previous']['sequence'] < wc[2]:
             jobs[wc[0]]['previous'] =  {'work_center': wc[1], 'sequence': wc[2], 'updated': wc[4]}
 
     #for job in jobs:

@@ -2740,6 +2740,27 @@ def production_review(name=None):
     data_json = json.dumps(graph_data, indent=2, default=str)
     chart_data = {'jobs': data_json}
 
+    cursor.execute("select job_operation.job, job_operation.work_center, job_operation.sequence, job_operation.status, job_operation.last_updated from job_operation left join job on job_operation.job = job.job where job.status = 'Active' and job_operation.work_center in ('SCHEDULE', 'LASER', 'TOYOKOKI', 'WELDING', 'SHOP', 'SHIPPING')")
+    wc_data = [list(x) for x in cursor.fetchall()]
+
+    jobs = {}
+    for wc in wc_data:
+        if not jobs[wc[0]]:
+            if wc[4] == 'o':
+                jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}, 'previous': {}}
+            if wc[4] == 'c':
+                jobs[wc[0]] = {}, 'previous': {'sequence': , 'updated': wc[5]}}
+        elif wc[4] == 'o' && jobs[wc[0]]['current']['sequence'] > wc[3]:
+            jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}}
+        elif wc[4] == 'c' && jobs[wc[0]]['current']['sequence'] < wc[3]:
+            jobs[wc[0]] = {'current': {'sequence': wc[3], 'updated': wc[5]}}
+
+    for job in jobs:
+        if job['schedule']['status'] == 'o':
+            jobs.pop('job')
+
+    print(jobs)
+    
     cursor.execute("select job, part_number, customer, customer_po, note_text from job where job like '%-NCR%' and order_date > DATEADD(DAY, DATEDIFF(DAY, 0, getDate() - 7), 0)")
     ncr_data = {'head': ['Job', 'Part', 'Customer', 'NCR Number', 'Description'], 'ncrs': [list(x) for x in cursor.fetchall()]}
 

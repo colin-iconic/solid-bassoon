@@ -2754,7 +2754,11 @@ def production_review(name=None):
 
     stalled_jobs = {}
     for job in jobs:
-        age = datetime.datetime.now() - job['current']['updated']
+        try:
+            age = datetime.datetime.now() - job['current']['updated']
+        except:
+            age = 0
+            
         if job['current']['work_center'] in stalled_jobs:
             if age > stalled_jobs[job['current']['work_center']][0][0]:
                 if len(stalled_jobs[job['current']['work_center']][0]) > 4:

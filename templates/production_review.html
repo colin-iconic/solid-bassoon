@@ -46,10 +46,10 @@
 	</thead>
 	{% for i in range(5) %}
 	<tr>
-		<td>{{ jobs['LASER'][i] }}</td>
-		<td>{{ jobs['TOYOKOKI'][i] }}</td>
-		<td>{{ jobs['WELDING'][i] }}</td>
-		<td>{{ jobs['SHOP'][i] }}</td>
+		<td><a href="/mobile_traveler?job={{ jobs['LASER'][i][1] }}">{{ jobs['LASER'][i][1] }}</a>: {{ jobs['LASER'][i][0] }} days</td>
+		<td><a href="/mobile_traveler?job={{ jobs['TOYOKOKI'][i][1] }}">{{ jobs['TOYOKOKI'][i][1] }}</a>: {{ jobs['TOYOKOKI'][i][0] }} days</td>
+		<td><a href="/mobile_traveler?job={{ jobs['WELDING'][i][1] }}">{{ jobs['WELDING'][i][1] }}</a>: {{ jobs['WELDING'][i][0] }} days</td>
+		<td><a href="/mobile_traveler?job={{ jobs['SHOP'][i][1] }}">{{ jobs['SHOP'][i][1] }}</a>: {{ jobs['SHOP'][i][0] }} days</td>
 	</tr>
 	{% endfor %}
 </table>

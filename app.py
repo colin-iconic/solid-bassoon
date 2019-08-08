@@ -967,7 +967,7 @@ def wsop():
     values_trend2 = np.polyfit(d2.week, d2.value, 1)
     r_x2, r_y2 = zip(*((i, i*values_trend2[0] + values_trend2[1]) for i in d2.week))
 
-    cursor.execute("SELECT cast(po_header.order_date as date), po_detail.order_quantity, po_detail.unit_cost, po_header.trade_currency from po_header inner join po_detail on po_header.po = po_detail.po where po_header.status not like 'unissued' and po_detail.po not like '19981' and po_header.order_date > Dateadd(year, -1, getdate()) order by po_header.order_date desc")
+    cursor.execute("SELECT cast(po_header.order_date as date), po_detail.order_quantity, po_detail.unit_cost, po_header.trade_currency from po_header inner join po_detail on po_header.po = po_detail.po where po_header.status not like 'unissued' and po_detail.po not in ['19981', '20200'] and po_header.order_date > Dateadd(year, -1, getdate()) order by po_header.order_date desc")
 
     data = cursor.fetchall()
 
